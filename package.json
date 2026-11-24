@@ -1,0 +1,28 @@
+{
+  "name": "mengxi-ark",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "eslint .",
+    "deps:check": "node internal/build-scripts/check-deps.mjs",
+    "peer:check": "node internal/build-scripts/check-peer-deps.mjs",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.3",
+    "@mengxi-ark-internal/eslint-config": "workspace:*",
+    "eslint": "^10.15.0",
+    "prettier": "^3.10.1",
+    "turbo": "^2.11.13"
+  }
+}

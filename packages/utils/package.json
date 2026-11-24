@@ -1,0 +1,32 @@
+﻿{
+  "name": "@mengxi-ark/utils",
+  "version": "0.0.0",
+  "license": "MIT",
+  "type": "module",
+  "files": ["dist"],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "@mengxi-ark-internal/build-scripts": "workspace:*",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.8",
+    "vite-plugin-dts": "^5.1.2",
+    "vitest": "^5.1.1"
+  }
+}
