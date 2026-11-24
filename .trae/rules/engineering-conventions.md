@@ -261,7 +261,7 @@ packages/runtime/src/
 
 ## 13. Git 分支与 PR 协作规范（开源协作）
 
-1. 分支模型：`main`（稳定，可随时打 tag 发布）/ `feature/*`（新功能）/ `fix/*`（修复）/ `docs/*`（文档）/ `release/*`（发版准备）。
+1. 分支模型：`master`（稳定，可随时打 tag 发布）/ `feature/*`（新功能）/ `fix/*`（修复）/ `docs/*`（文档）/ `release/*`（发版准备）。
 2. PR 规范：一个 PR 只解决一个问题；标题格式 `[包名] 描述`（如 `[biz-components] Lov组件增加独立模式params自动防抖`）；必须关联 Issue；单测补齐；至少一名维护者 review 通过且 CI 全绿方可合并。
 3. 标签体系：`bug` `feature` `documentation` `good first issue`。
 4. 版本公告：每次 Release 在 Discussions 发布，写明变更与迁移要点。
@@ -269,7 +269,7 @@ packages/runtime/src/
 
 ## 14. 验证（core-protocol DoD 的项目级补充）
 
-**CI 门禁（GitHub Actions，对应实施方案 4.2，全绿方可合并 main）：**
+**CI 门禁（GitHub Actions，对应实施方案 4.2，全绿方可合并 master）：**
 
 1. 依赖链路检查脚本（反向 import 直接阻断）
 2. ESLint + 类型检查 `tsc --noEmit`
