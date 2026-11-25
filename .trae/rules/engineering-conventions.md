@@ -12,8 +12,8 @@
 | 运行框架 | Vue 3（Composition API） |
 | 构建 | Vite + esbuild |
 | 语言 | TypeScript 5.x，`strict: true`，全量 TS，契约优先 |
-| 状态管理 | Pinia |
-| 路由 | Vue Router 4 |
+| 状态管理 | Pinia 4（ESM-only，peer `^4.1.0`） |
+| 路由 | Vue Router 5（peer `^5.5.1`） |
 | 包管理 / Monorepo | pnpm + Turborepo |
 | 样式 | SCSS + CSS Variables（Design Token） |
 | 测试 | Vitest（单元）、Playwright（E2E） |
@@ -207,7 +207,7 @@ packages/theme/src/
 
 ### 8.4 红线（重申，违反即 CI 门禁阻断）
 
-* 仅依赖 Vue / Pinia / VueRouter；禁止 import runtime、biz-components、components。
+* 仅依赖 Vue / Pinia / VueRouter；禁止 import runtime、biz-components、components。（hooks 当前实现未引入 Pinia/VueRouter，peer 仅声明 `vue ^3.5.0`；后续实际引入时按 `pinia ^4.1.0` / `vue-router ^5.5.1` 声明 peer）
 * 禁止劫持路由原生 API（`router.push` / `beforeEach` 等），路由守卫交给业务或 runtime 注册。
 * 禁止在 hook 内写业务字典、业务接口地址；请求实例（axios / fetch 封装）由业务注入。
 

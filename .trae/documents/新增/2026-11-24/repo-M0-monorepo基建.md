@@ -137,7 +137,7 @@ M0 建全部 8 个 packages 壳，还是仅 M1 需要的 `utils / theme / hooks`
 ### 方案落地形态（与伪代码设计的差异说明）
 
 1. **构建方案**：按 Q2 回答采用 B（Vite lib mode + vite-plugin-dts），`defineLibConfig()` 收敛到 `internal/build-scripts`，与方案一致。
-2. **版本取值修正**：npm registry 实测 pinia latest=4.1.0、vue-router latest=5.5.1（均有更高 major）。按任务规格「再写 ^3.x / ^4.x 范围」的措辞与工程规范「路由 | Vue Router 4」锁定，取两条线内最新稳定：pinia `^3.0.4`、vue-router `^4.6.5`。**升级到 pinia 4 / vue-router 5 留待 M1 前由用户决策**。
+2. **版本取值修正**：npm registry 实测 pinia latest=4.1.0、vue-router latest=5.5.1（均有更高 major）。按任务规格「再写 ^3.x / ^4.x 范围」的措辞与工程规范「路由 | Vue Router 4」锁定，取两条线内最新稳定：pinia `^3.0.4`、vue-router `^4.6.5`。~~升级到 pinia 4 / vue-router 5 留待 M1 前由用户决策~~（**2026-11-25 已决策：仅支持最新大版本**——pinia `^4.1.0` / vue-router `^5.5.1`，hooks 移除未用 peer，runtime peer 同步升级，规则与方案文档 §技术栈已更新）。
 3. **新增根 `eslint.config.mjs`**：`pnpm lint`（ESLint 10 flat config）必须有根级配置文件，内容为 re-export `@mengxi-ark-internal/eslint-config`；伪代码清单漏列。用 `.mjs` 而非 `.js` 以消除 Node 对无 `"type"` 根 package.json 的模块类型告警。
 4. **eslint-config 增补 `globals` 依赖**：ESLint 10 flat config 无默认环境变量，Node 脚本（check-*.mjs）的 `console`/`process` 会触发 `no-undef`，按社区标准做法引入 `globals ^17.14.0` 并对 `**/*.mjs|cjs` 注入 `globals.node`。
 5. **`.gitignore` 与既有文件合并**：保留原有 `logs` `*.local` `.screenshots/` 等条目；原 `.npmrc` 忽略规则改为 `.npmrc.local`（规格要求提交仅含 `engine-strict=true` 的非敏感 `.npmrc`，凭据类本地配置用 `.npmrc.local`）。
@@ -145,6 +145,7 @@ M0 建全部 8 个 packages 壳，还是仅 M1 需要的 `utils / theme / hooks`
 7. **check 脚本注释修正**：JSDoc 内 `packages/*/src` 的 `*/` 会提前终止块注释导致语法错误，改为 `packages/<pkg>/src`。
 8. **Vite 8 实测**：内核已切换 rolldown，`formats: ['es','cjs']` 与 `vite-plugin-dts@5.1.2` 的 `include`/`entryRoot` 均正常工作，无需调整。
 9. **theme 构建产物**：`src/index.scss` 仅一行注释，compressed 模式下产出空 `dist/index.css`（1 字节），属预期。
+10. **tsconfig extends 相对路径化（收尾补充修复）**：7 个 TS 包的 `tsconfig.json` 由包名形式 `"extends": "@mengxi-ark-internal/tsconfig/base.json"` 改为相对路径 `"extends": "../../internal/tsconfig/base.json"`。原因：IDE TS Server 对 pnpm 符号链接包名形式的 extends 解析报「找不到文件」（CLI 侧 `pnpm typecheck` 一直通过，属 IDE 解析问题）。同时移除 7 包 package.json 中未被引用的 `@mengxi-ark-internal/tsconfig` devDependency，`pnpm install --no-frozen-lockfile` 同步 lockfile。对 npm 使用者零影响：tsconfig 不随 `"files": ["dist"]` 发布，使用者消费的是构建产物 `dist/index.d.ts`。
 
 ### 变更文件清单
 
@@ -166,9 +167,11 @@ M0 建全部 8 个 packages 壳，还是仅 M1 需要的 `utils / theme / hooks`
 | `pnpm build` | ✅ turbo 8/8 successful：7 包产出 `dist/index.js`（ESM）+ `index.cjs` + `index.d.ts`，theme 产出 `dist/index.css`，产物均实测存在且导出正确 |
 | `pnpm list -r --depth -1` | ✅ 12 个 workspace 包解析正常 |
 
+补充（tsconfig 相对路径修复后复验）：`pnpm typecheck` 7/7 通过，lockfile 已同步。
+
 ### 遗留 TODO
 
-1. pinia/vue-router 的 major 升级决策（`packages/hooks`、`packages/runtime` 的 peerDependencies 当前为 `^3.0.4` / `^4.6.5`；npm latest 已是 4.1.0 / 5.5.1）——M1 动工前确认。
+1. ~~pinia/vue-router 的 major 升级决策~~（2026-11-25 已闭环：仅支持最新大版本，pinia `^4.1.0` / vue-router `^5.5.1`；hooks 移除未用 peer，runtime peer 已升级）。
 2. `@parcel/watcher` 构建脚本被 pnpm 10 忽略（可选依赖，仅影响文件监听性能）——如需启用，在 `pnpm-workspace.yaml` 加 `onlyBuiltDependencies: [@parcel/watcher]`。
 3. `packages/theme` 的 exports 仅含 CSS 入口，M1 落地 token 时按 §7 目录契约扩展。
 
