@@ -1,0 +1,42 @@
+// ==============================================================
+// @mengxi-ark/theme — 暗色主题
+// 约定：宿主根节点挂 data-theme="dark"（或 .mx-theme-dark）。
+// 只覆盖语义层变量与阴影，禁止重定义基础色板
+// （primary 梯度与 gray 灰阶主题间保持不变）。
+// ==============================================================
+
+@use './tokens/color' as color;
+@use './tokens/shadow' as shadow;
+
+[data-theme='dark'],
+.mx-theme-dark {
+  // —— 品牌色派生 ——
+  --mx-color-primary-hover: #{color.$mx-dark-primary-hover};
+  --mx-color-primary-active: #{color.$mx-dark-primary-active};
+
+  // —— 功能色 ——
+  --mx-color-success: #{color.$mx-dark-success};
+  --mx-color-warning: #{color.$mx-dark-warning};
+  --mx-color-danger: #{color.$mx-dark-danger};
+  --mx-color-info: #{color.$mx-dark-info};
+
+  // —— 文本色 ——
+  --mx-color-text-primary: #{color.$mx-dark-text-primary};
+  --mx-color-text-secondary: #{color.$mx-dark-text-secondary};
+  --mx-color-text-disabled: #{color.$mx-dark-text-disabled};
+
+  // —— 背景色 ——
+  --mx-color-bg-container: #{color.$mx-dark-bg-container};
+  --mx-color-bg-layout: #{color.$mx-dark-bg-layout};
+  --mx-color-bg-hover: #{color.$mx-dark-bg-hover};
+  --mx-color-bg-disabled: #{color.$mx-dark-bg-disabled};
+
+  // —— 边框色 ——
+  --mx-color-border-base: #{color.$mx-dark-border-base};
+  --mx-color-border-split: #{color.$mx-dark-border-split};
+
+  // —— 阴影（暗色加深） ——
+  --mx-shadow-sm: #{shadow.$mx-shadow-sm-dark};
+  --mx-shadow-base: #{shadow.$mx-shadow-base-dark};
+  --mx-shadow-lg: #{shadow.$mx-shadow-lg-dark};
+}

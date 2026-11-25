@@ -1,0 +1,49 @@
+// ==============================================================
+// @mengxi-ark/theme — 基础层：字体排版
+// 字号 / 行高 / 字重 / 字体族，不含颜色（颜色见 color.scss）。
+// 字体族输出用 meta.inspect 保留多词字体名的引号。
+// ==============================================================
+
+@use 'sass:meta';
+
+// ---------- 字号梯度 ----------
+$mx-font-size-xs: 12px;
+$mx-font-size-sm: 14px;
+$mx-font-size-md: 16px;
+$mx-font-size-lg: 20px;
+$mx-font-size-xl: 24px;
+
+// ---------- 行高梯度（无单位） ----------
+$mx-line-height-sm: 1.4;
+$mx-line-height-base: 1.5715;
+$mx-line-height-lg: 1.8;
+
+// ---------- 字重 ----------
+$mx-font-weight-normal: 400;
+$mx-font-weight-medium: 500;
+$mx-font-weight-bold: 600;
+
+// ---------- 字体族 ----------
+$mx-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+  'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans', sans-serif, 'Apple Color Emoji',
+  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+$mx-font-family-code: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+
+:root {
+  --mx-font-size-xs: #{$mx-font-size-xs};
+  --mx-font-size-sm: #{$mx-font-size-sm};
+  --mx-font-size-md: #{$mx-font-size-md};
+  --mx-font-size-lg: #{$mx-font-size-lg};
+  --mx-font-size-xl: #{$mx-font-size-xl};
+
+  --mx-line-height-sm: #{$mx-line-height-sm};
+  --mx-line-height-base: #{$mx-line-height-base};
+  --mx-line-height-lg: #{$mx-line-height-lg};
+
+  --mx-font-weight-normal: #{$mx-font-weight-normal};
+  --mx-font-weight-medium: #{$mx-font-weight-medium};
+  --mx-font-weight-bold: #{$mx-font-weight-bold};
+
+  --mx-font-family-base: #{meta.inspect($mx-font-family-base)};
+  --mx-font-family-code: #{meta.inspect($mx-font-family-code)};
+}

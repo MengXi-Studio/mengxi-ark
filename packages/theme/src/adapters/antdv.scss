@@ -1,0 +1,37 @@
+// ==============================================================
+// @mengxi-ark/theme — Ant Design Vue 变量桥接
+// 把 --ant-* 主要变量映射到 --mx-* token，保证 antdv 宿主视觉一致；
+// 未映射的 antd 变量不得在组件中直接消费（§7.4）。
+// ==============================================================
+
+:root {
+  // —— 品牌色 ——
+  --ant-primary-color: var(--mx-color-primary);
+  --ant-primary-color-hover: var(--mx-color-primary-hover);
+  --ant-primary-color-active: var(--mx-color-primary-active);
+
+  // —— 功能色 ——
+  --ant-success-color: var(--mx-color-success);
+  --ant-warning-color: var(--mx-color-warning);
+  --ant-error-color: var(--mx-color-danger);
+  --ant-info-color: var(--mx-color-info);
+
+  // —— 文本色 ——
+  --ant-text-color: var(--mx-color-text-primary);
+  --ant-text-color-secondary: var(--mx-color-text-secondary);
+  --ant-text-color-disabled: var(--mx-color-text-disabled);
+
+  // —— 背景 / 边框 ——
+  --ant-layout-body-background: var(--mx-color-bg-layout);
+  --ant-background-color-base: var(--mx-color-bg-container);
+  --ant-background-color-light: var(--mx-color-bg-hover);
+  --ant-border-color-base: var(--mx-color-border-base);
+  --ant-border-color-split: var(--mx-color-border-split);
+
+  // —— 圆角 / 字体 / 阴影 ——
+  --ant-border-radius-base: var(--mx-radius-base);
+  --ant-font-size-base: var(--mx-font-size-sm);
+  --ant-font-family: var(--mx-font-family-base);
+  --ant-box-shadow-base: var(--mx-shadow-base);
+  --ant-box-shadow-secondary: var(--mx-shadow-sm);
+}

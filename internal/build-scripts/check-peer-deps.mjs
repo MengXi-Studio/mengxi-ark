@@ -46,7 +46,7 @@ for (const entry of readdirSync(packagesDir, { withFileTypes: true })) {
   const pkgDir = join(packagesDir, entry.name);
   const manifestPath = join(pkgDir, 'package.json');
   if (!existsSync(manifestPath)) continue;
-  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8').replace(/^\uFEFF/, ''));
   const dependencies = manifest.dependencies ?? {};
   const peerDependencies = manifest.peerDependencies ?? {};
   const srcDir = join(pkgDir, 'src');

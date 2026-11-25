@@ -21,9 +21,9 @@
 
 | 包名 | 职责 | 状态 |
 | --- | --- | --- |
-| `@mengxi-ark/utils` | 纯函数工具层（数据格式化 / 数据结构 / 浏览器工具 / 校验编码） | 🚧 M1 |
-| `@mengxi-ark/theme` | Design Token 纯样式层（CSS Variables `--mx-*`） | 🚧 M1 |
-| `@mengxi-ark/hooks` | 通用组合式函数（useRequest / useAuth / useTable 等） | 🚧 M1 |
+| `@mengxi-ark/utils` | 纯函数工具层（数据格式化 / 数据结构 / 浏览器工具 / 校验编码） | ✅ |
+| `@mengxi-ark/theme` | Design Token 纯样式层（CSS Variables `--mx-*`） | ✅ |
+| `@mengxi-ark/hooks` | 通用组合式函数（useRequest / useAuth / useTable 等） | ✅ |
 | `@mengxi-ark/components` | 通用增强组件（props 驱动优先，插槽兜底） | 🚧 M2 |
 | `@mengxi-ark/biz-components` | 双模式业务语义组件（Lov / 单据 Table / 审批面板等） | 🚧 M2 |
 | `@mengxi-ark/runtime` | 中台基座（Tab 工作台 / 菜单 / 模块注册 / 会话 / 上下文） | 🚧 M3 |
@@ -45,8 +45,16 @@ pnpm create mengxi-ark
 
 ## 示例
 
-```vue
-<!-- 示例占位：M1 落地后在此补充 hooks / 组件真实可运行代码 -->
+```ts
+import { formatDate, formatMoney } from '@mengxi-ark/utils';
+import { useRequest } from '@mengxi-ark/hooks';
+
+// utils：格式化
+formatDate(Date.now(), 'YYYY-MM-DD');   // '2026-11-25'
+formatMoney(12345.6, { symbol: '¥' });  // '¥12,345.60'
+
+// hooks：请求状态管理（竞态保护 / 取消 / 重试内置）
+const { data, loading, run } = useRequest(() => fetchUser(id), { immediate: true });
 ```
 
 ## Roadmap
@@ -54,7 +62,7 @@ pnpm create mengxi-ark
 | 里程碑 | 内容 | 状态 |
 | --- | --- | --- |
 | M0 | monorepo + turbo + pnpm 骨架；CI、eslint、tsconfig、changesets、GitHub 工作流；仓库基础文件 | ✅ |
-| M1 | 底层基础包：utils / theme / hooks，配套单元测试与基础文档 | ⬜ |
+| M1 | 底层基础包：utils / theme / hooks，配套单元测试与基础文档 | ✅ |
 | M2 | 组件层：components / biz-components（Lov、单据 Table 双模式）；demo-light | ⬜ |
 | M3 | 中台基座：runtime 工作台、模块注册、Tab 管理器；demo-platform | ⬜ |
 | M4 | DSL 渲染引擎 + CLI 脚手架；文档站点完善 | ⬜ |

@@ -1,0 +1,16 @@
+// ==============================================================
+// @mengxi-ark/theme — 基础层：圆角梯度
+// round 用于胶囊 / 圆形，取极大值由浏览器按尺寸收敛。
+// ==============================================================
+
+$mx-radius-sm: 4px;
+$mx-radius-base: 6px;
+$mx-radius-lg: 8px;
+$mx-radius-round: 9999px;
+
+:root {
+  --mx-radius-sm: #{$mx-radius-sm};
+  --mx-radius-base: #{$mx-radius-base};
+  --mx-radius-lg: #{$mx-radius-lg};
+  --mx-radius-round: #{$mx-radius-round};
+}

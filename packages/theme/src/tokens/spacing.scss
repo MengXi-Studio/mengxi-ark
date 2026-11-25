@@ -1,0 +1,17 @@
+// ==============================================================
+// @mengxi-ark/theme — 基础层：间距梯度
+// ==============================================================
+
+$mx-spacing-xs: 4px;
+$mx-spacing-sm: 8px;
+$mx-spacing-md: 12px;
+$mx-spacing-lg: 16px;
+$mx-spacing-xl: 24px;
+
+:root {
+  --mx-spacing-xs: #{$mx-spacing-xs};
+  --mx-spacing-sm: #{$mx-spacing-sm};
+  --mx-spacing-md: #{$mx-spacing-md};
+  --mx-spacing-lg: #{$mx-spacing-lg};
+  --mx-spacing-xl: #{$mx-spacing-xl};
+}

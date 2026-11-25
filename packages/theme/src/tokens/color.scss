@@ -1,0 +1,98 @@
+// ==============================================================
+// @mengxi-ark/theme — 基础层：色板
+// 基础值（色板 / 功能色 / 语义源值）只在此以 SCSS 变量定义，
+// 语义层 semantic.scss 与暗色 dark.scss 引用本文件变量，禁止直写色值。
+// 命名契约：语义命名优先，禁止具体色名做语义（gray 为中性梯度刻度）。
+// ==============================================================
+
+// ---------- primary 蓝系梯度（seed: #1677ff，取值参考 antd 色板） ----------
+$mx-primary-1: #e6f4ff;
+$mx-primary-2: #bae0ff;
+$mx-primary-3: #91caff;
+$mx-primary-4: #69b1ff;
+$mx-primary-5: #4096ff;
+$mx-primary-6: #1677ff;
+$mx-primary-7: #0958d9;
+$mx-primary-8: #003eb3;
+$mx-primary-9: #002c8c;
+$mx-primary-10: #001d66;
+
+// ---------- 中性灰阶（gray-1 最浅 → gray-14 最深，取值参考 antd 中性板） ----------
+$mx-gray-1: #ffffff;
+$mx-gray-2: #fafafa;
+$mx-gray-3: #f5f5f5;
+$mx-gray-4: #f0f0f0;
+$mx-gray-5: #d9d9d9;
+$mx-gray-6: #bfbfbf;
+$mx-gray-7: #8c8c8c;
+$mx-gray-8: #595959;
+$mx-gray-9: #434343;
+$mx-gray-10: #262626;
+$mx-gray-11: #1f1f1f;
+$mx-gray-12: #141414;
+$mx-gray-13: #0a0a0a;
+$mx-gray-14: #000000;
+
+// ---------- 功能色基础值（语义变量见 semantic.scss，暗色取值见下） ----------
+$mx-success: #52c41a;
+$mx-warning: #faad14;
+$mx-danger: #ff4d4f;
+$mx-info: $mx-primary-6;
+
+// ---------- 语义源值：亮色（semantic.scss 引用） ----------
+$mx-text-primary: rgba(0, 0, 0, 0.88);
+$mx-text-secondary: rgba(0, 0, 0, 0.65);
+$mx-text-disabled: rgba(0, 0, 0, 0.25);
+$mx-bg-layout: $mx-gray-3;
+$mx-bg-container: $mx-gray-1;
+$mx-bg-hover: rgba(0, 0, 0, 0.06);
+$mx-bg-disabled: rgba(0, 0, 0, 0.04);
+$mx-border-base: $mx-gray-5;
+$mx-border-split: $mx-gray-4;
+
+// ---------- 语义源值：暗色（dark.scss 引用，取值参考 antd 暗色板） ----------
+$mx-dark-success: #49aa19;
+$mx-dark-warning: #d89614;
+$mx-dark-danger: #d32029;
+$mx-dark-info: #1668dc;
+$mx-dark-primary-hover: #3c89e8;
+$mx-dark-primary-active: #1554ad;
+$mx-dark-text-primary: rgba(255, 255, 255, 0.85);
+$mx-dark-text-secondary: rgba(255, 255, 255, 0.65);
+$mx-dark-text-disabled: rgba(255, 255, 255, 0.25);
+$mx-dark-bg-layout: #000000;
+$mx-dark-bg-container: $mx-gray-12;
+$mx-dark-bg-hover: $mx-gray-11;
+$mx-dark-bg-disabled: rgba(255, 255, 255, 0.08);
+$mx-dark-border-base: #424242;
+$mx-dark-border-split: #333333;
+
+// ---------- 基础层 CSS Variables（primary 梯度 + 灰阶，主题间保持不变） ----------
+:root {
+  --mx-color-primary: #{$mx-primary-6};
+  --mx-color-primary-1: #{$mx-primary-1};
+  --mx-color-primary-2: #{$mx-primary-2};
+  --mx-color-primary-3: #{$mx-primary-3};
+  --mx-color-primary-4: #{$mx-primary-4};
+  --mx-color-primary-5: #{$mx-primary-5};
+  --mx-color-primary-6: #{$mx-primary-6};
+  --mx-color-primary-7: #{$mx-primary-7};
+  --mx-color-primary-8: #{$mx-primary-8};
+  --mx-color-primary-9: #{$mx-primary-9};
+  --mx-color-primary-10: #{$mx-primary-10};
+
+  --mx-gray-1: #{$mx-gray-1};
+  --mx-gray-2: #{$mx-gray-2};
+  --mx-gray-3: #{$mx-gray-3};
+  --mx-gray-4: #{$mx-gray-4};
+  --mx-gray-5: #{$mx-gray-5};
+  --mx-gray-6: #{$mx-gray-6};
+  --mx-gray-7: #{$mx-gray-7};
+  --mx-gray-8: #{$mx-gray-8};
+  --mx-gray-9: #{$mx-gray-9};
+  --mx-gray-10: #{$mx-gray-10};
+  --mx-gray-11: #{$mx-gray-11};
+  --mx-gray-12: #{$mx-gray-12};
+  --mx-gray-13: #{$mx-gray-13};
+  --mx-gray-14: #{$mx-gray-14};
+}

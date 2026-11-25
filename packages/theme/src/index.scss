@@ -1,1 +1,17 @@
-/* MengXi Ark theme tokens — M1 实现 */
+// ==============================================================
+// @mengxi-ark/theme — 唯一入口（业务项目只 import 这一个文件）
+// import '@mengxi-ark/theme';
+// 顺序：基础层 tokens → 语义层 → 基础样式 → 暗色 → UI 库桥接
+// ==============================================================
+
+@use './tokens/color';
+@use './tokens/typography';
+@use './tokens/spacing';
+@use './tokens/radius';
+@use './tokens/shadow';
+@use './tokens/z-index';
+@use './semantic';
+@use './base';
+@use './dark';
+@use './adapters/antdv';
+@use './adapters/element-plus';

@@ -1,0 +1,4 @@
+{
+  "extends": "@mengxi-ark-internal/tsconfig/base.json",
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "vite.config.ts"]
+}

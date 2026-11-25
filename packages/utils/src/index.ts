@@ -1,2 +1,11 @@
-// M0 包壳占位入口：实现分别落地于 M1(utils/theme/hooks)、M2(components/biz-components)、M3(runtime)、M4(dsl-render/cli)。
-export const MENGXI_ARK_VERSION = '0.0.0';
+// 按分类 re-export（Tree-Shaking 友好）：仅汇总导出，实现一律位于各分类目录，本文件禁止编写实现逻辑。
+// 使用方建议按需导入：import { formatDate } from '@mengxi-ark/utils';
+export * from './array';
+export * from './browser';
+export * from './format/date';
+export * from './format/dict';
+export * from './format/money';
+export * from './format/number';
+export * from './object';
+export * from './tree';
+export * from './validate';

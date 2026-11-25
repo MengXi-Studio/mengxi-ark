@@ -5,7 +5,7 @@ import tseslint from 'typescript-eslint';
 
 export default [
   {
-    ignores: ['dist/**', 'node_modules/**', 'coverage/**', '.turbo/**', 'pnpm-lock.yaml'],
+    ignores: ['**/dist/**', 'node_modules/**', 'coverage/**', '.turbo/**', 'pnpm-lock.yaml'],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -27,6 +27,12 @@ export default [
   {
     rules: {
       'vue/multi-word-component-names': 'off',
+    },
+  },
+  {
+    files: ['**/__tests__/**'],
+    rules: {
+      'vue/one-component-per-file': 'off',
     },
   },
 ];

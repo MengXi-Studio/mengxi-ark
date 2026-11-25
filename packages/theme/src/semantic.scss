@@ -1,0 +1,34 @@
+// ==============================================================
+// @mengxi-ark/theme — 语义层
+// 两级分层（§7.2.2）：本文件只引用 tokens/ 基础层 SCSS 变量，
+// 禁止直写色值；暗色取值见 dark.scss 同名变量覆盖。
+// ==============================================================
+
+@use './tokens/color' as color;
+
+:root {
+  // —— 品牌色派生（antd 色板规律：hover 浅一档，active 深一档） ——
+  --mx-color-primary-hover: #{color.$mx-primary-5};
+  --mx-color-primary-active: #{color.$mx-primary-7};
+
+  // —— 功能色 ——
+  --mx-color-success: #{color.$mx-success};
+  --mx-color-warning: #{color.$mx-warning};
+  --mx-color-danger: #{color.$mx-danger};
+  --mx-color-info: #{color.$mx-info};
+
+  // —— 文本色 ——
+  --mx-color-text-primary: #{color.$mx-text-primary};
+  --mx-color-text-secondary: #{color.$mx-text-secondary};
+  --mx-color-text-disabled: #{color.$mx-text-disabled};
+
+  // —— 背景色 ——
+  --mx-color-bg-container: #{color.$mx-bg-container};
+  --mx-color-bg-layout: #{color.$mx-bg-layout};
+  --mx-color-bg-hover: #{color.$mx-bg-hover};
+  --mx-color-bg-disabled: #{color.$mx-bg-disabled};
+
+  // —— 边框色 ——
+  --mx-color-border-base: #{color.$mx-border-base};
+  --mx-color-border-split: #{color.$mx-border-split};
+}
