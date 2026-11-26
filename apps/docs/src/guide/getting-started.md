@@ -103,6 +103,6 @@ document.documentElement.dataset.theme = 'dark'; // 传 '' 恢复亮色
 
 ## 下一步
 
-- [@mengxi-ark/utils API](/packages/utils)
-- [@mengxi-ark/theme API](/packages/theme)
-- [@mengxi-ark/hooks API](/packages/hooks)
+- [@mengxi-ark/utils API](/api/utils)
+- [@mengxi-ark/theme API](/api/theme)
+- [@mengxi-ark/hooks API](/api/hooks)

@@ -24,11 +24,11 @@
 | `@mengxi-ark/utils` | 纯函数工具层（数据格式化 / 数据结构 / 浏览器工具 / 校验编码） | ✅ |
 | `@mengxi-ark/theme` | Design Token 纯样式层（CSS Variables `--mx-*`） | ✅ |
 | `@mengxi-ark/hooks` | 通用组合式函数（useRequest / useAuth / useTable 等） | ✅ |
-| `@mengxi-ark/components` | 通用增强组件（props 驱动优先，插槽兜底） | 🚧 M2 |
-| `@mengxi-ark/biz-components` | 双模式业务语义组件（Lov / 单据 Table / 审批面板等） | 🚧 M2 |
-| `@mengxi-ark/runtime` | 中台基座（Tab 工作台 / 菜单 / 模块注册 / 会话 / 上下文） | 🚧 M3 |
-| `@mengxi-ark/dsl-render` | DSL 配置渲染引擎（Schema 强类型，渲染器只渲染） | 🚧 M4 |
-| `@mengxi-ark/cli` | 脚手架（`create-mengxi-ark`） | 🚧 M4 |
+| `@mengxi-ark/components` | 通用增强组件（props 驱动优先，插槽兜底） | ✅ |
+| `@mengxi-ark/biz-components` | 双模式业务语义组件（Lov / 单据 Table / 审批面板等） | ✅ |
+| `@mengxi-ark/runtime` | 中台基座（Tab 工作台 / 菜单 / 模块注册 / 会话 / 上下文） | ✅ |
+| `@mengxi-ark/dsl-render` | DSL 配置渲染引擎（Schema 强类型，渲染器只渲染） | ✅ |
+| `@mengxi-ark/cli` | 脚手架（`create-mengxi-ark`） | ✅ |
 
 ## 快速安装
 
@@ -39,7 +39,7 @@ pnpm add @mengxi-ark/utils @mengxi-ark/theme @mengxi-ark/hooks @mengxi-ark/compo
 # 中台项目，额外引入基座
 pnpm add @mengxi-ark/runtime @mengxi-ark/dsl-render
 
-# 脚手架（M4 可用）
+# 脚手架
 pnpm create mengxi-ark
 ```
 
@@ -63,10 +63,10 @@ const { data, loading, run } = useRequest(() => fetchUser(id), { immediate: true
 | --- | --- | --- |
 | M0 | monorepo + turbo + pnpm 骨架；CI、eslint、tsconfig、changesets、GitHub 工作流；仓库基础文件 | ✅ |
 | M1 | 底层基础包：utils / theme / hooks，配套单元测试与基础文档 | ✅ |
-| M2 | 组件层：components / biz-components（Lov、单据 Table 双模式）；demo-light | ⬜ |
-| M3 | 中台基座：runtime 工作台、模块注册、Tab 管理器；demo-platform | ⬜ |
-| M4 | DSL 渲染引擎 + CLI 脚手架；文档站点完善 | ⬜ |
-| M5 | Beta 公测与社区反馈，发布 v1.0.0 正式版 | ⬜ |
+| M2 | 组件层：components / biz-components（Lov、单据 Table 双模式）；demo-light | ✅ |
+| M3 | 中台基座：runtime 工作台、模块注册、Tab 管理器；demo-platform | ✅ |
+| M4 | DSL 渲染引擎 + CLI 脚手架；文档站点完善 | ✅ |
+| M5 | Beta 公测（`1.0.0-beta.x`）与社区反馈，发布 v1.0.0 正式版 | 🚧 beta |
 
 ## 对比参考
 
@@ -77,6 +77,11 @@ const { data, loading, run } = useRequest(() => fetchUser(id), { immediate: true
 ## 贡献
 
 欢迎参与贡献，请先阅读 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+
+## 反馈
+
+- Bug / 功能建议 / 文档问题：请使用 [Issue 模板](https://github.com/MengXi-Studio/mengxi-ark/issues/new/choose)；
+- 版本公告与讨论：[GitHub Discussions](https://github.com/MengXi-Studio/mengxi-ark/discussions)。
 
 ## 协议
 

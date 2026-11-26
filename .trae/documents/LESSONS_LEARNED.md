@@ -74,3 +74,10 @@
 ### eslint-config 全局环境按文件类型收敛
 
 - no-undef 对 TS 文件默认关闭，但 .vue 文件走 js.configs.recommended 仍会报 console / MouseEvent 等未定义；在 `internal/eslint-config/index.js` 给 `**/*.ts` / `**/*.vue` 统一加 `globals.browser`、`packages/cli/**` 加 `globals.node` 一次性修复（cli 为 Node 包，需覆盖而非共享 browser）。
+
+## 2026-11-26 · M5 Playwright E2E 首次落地
+
+- **Windows 下 chromium 安装**：`playwright install chromium` 下载含 headless shell 的完整套件；中断后重跑会撞 `__dirlock` 残留，先删 `%LOCALAPPDATA%\ms-playwright\__dirlock` 再装。
+- **多 demo baseURL**：`page.goto('/')` 无 `use.baseURL` 时直接报 invalid URL；多端口 demo 场景在 config 设默认 baseURL，另一端口用绝对地址。
+- **antdv 选择器**：下拉选项用 `.ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option` 定位（antdv dropdown 常驻 DOM 靠 hidden 类切换）；hash 路由 demo 首路由直接 `waitForURL(/#\//)` 即可，不要假设存在「首页」菜单。
+- **E2E 与单测分工**：E2E 断言 console.error / pageerror 为空 + 关键路径可见性，不重复单测的 props/emit 细粒度断言；webServer 以 `pnpm --filter <demo> dev --strictPort` 自动拉起，测试完自动回收。

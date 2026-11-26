@@ -11,6 +11,7 @@
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
+    "test:e2e": "playwright test",
     "lint": "eslint .",
     "deps:check": "node internal/build-scripts/check-deps.mjs",
     "peer:check": "node internal/build-scripts/check-peer-deps.mjs",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
     "@mengxi-ark-internal/eslint-config": "workspace:*",
+    "@playwright/test": "^1.60.0",
     "eslint": "^10.15.0",
     "prettier": "^3.10.1",
     "turbo": "^2.11.13"
