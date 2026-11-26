@@ -34,16 +34,16 @@
 
 ### 包清单（@mengxi-ark/*）
 
-| 包 | 职责 |
-| --- | --- |
-| utils | 纯函数工具层（日期 / 金额 / 树 / 校验 / 浏览器） |
-| theme | Design Token（--mx-* CSS Variables，暗色内置） |
-| hooks | useRequest / useAuth / useSession / useTable / useForm |
-| components | SearchForm / EnhanceTable 等通用组件 + UI 适配层 |
-| biz-components | Lov / DocumentTable 双模式业务组件 |
-| runtime | 中台基座：Tab 工作台 / 菜单 / 模块注册 / 会话 / 上下文 |
-| dsl-render | Schema 三件套 + 三渲染器（加速方案，手写 SFC 一等公民） |
-| cli | pnpm create mengxi-ark（双模板 + 分档 AI 规则） |
+| 包             | 职责                                                    |
+| -------------- | ------------------------------------------------------- |
+| utils          | 纯函数工具层（日期 / 金额 / 树 / 校验 / 浏览器）        |
+| theme          | Design Token（--mx-* CSS Variables，暗色内置）          |
+| hooks          | useRequest / useAuth / useSession / useTable / useForm  |
+| components     | SearchForm / EnhanceTable 等通用组件 + UI 适配层        |
+| biz-components | Lov / DocumentTable 双模式业务组件                      |
+| runtime        | 中台基座：Tab 工作台 / 菜单 / 模块注册 / 会话 / 上下文  |
+| dsl-render     | Schema 三件套 + 三渲染器（加速方案，手写 SFC 一等公民） |
+| cli            | pnpm create mengxi-ark（双模板 + 分档 AI 规则）         |
 
 ### 安装
 
@@ -68,7 +68,8 @@ Bug / 建议 / 文档问题请走 Issue 模板（见 docs 反馈渠道页）；�
 1. Issue / Discussions 分诊（打标签：bug / feature / documentation / good first issue）；
 2. 修复走 `fix/*` 分支 + patch changeset（pre 模式下自动递增 `1.0.0-beta.x`）；
 3. 每个 beta 版本发布后同步更新 Discussions 公告或追加回复；
-4. **更新 docs 更新日志页**：`pnpm --filter docs build` 会经 `apps/docs/scripts/gen-changelog.mjs` 从各包 CHANGELOG.md 自动聚合生成 `src/changelog.md`（中英两份），无需手工编辑；仅需在发布后跑一次构建确认页面已包含新版本小节；
+4. **更新 docs 更新日志页**：`pnpm --filter docs build` 会经 `apps/docs/scripts/gen-changelog.mjs` 从各包 CHANGELOG.md 自动聚合生成
+   `src/changelog.md`（中英两份），无需手工编辑；仅需在发布后跑一次构建确认页面已包含新版本小节；
 5. 反馈收敛后：`pnpm changeset pre exit` → `pnpm changeset version`（1.0.0 正式版）→ 按「发布步骤」重复执行（正式版走 `latest` dist-tag）→ 发布 v1.0.0 正式公告。
 
 ## 五、回滚预案

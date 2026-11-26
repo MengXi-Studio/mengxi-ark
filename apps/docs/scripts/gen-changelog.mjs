@@ -8,97 +8,86 @@
  * 用法：node scripts/gen-changelog.mjs（已挂入 docs 的 dev / build script 前置）。
  * 生成文件带 AUTO-GENERATED 标记，手工编辑会在下次构建被覆盖。
  */
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const docsRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const docsRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 /** monorepo 根目录下的 packages/ */
-const packagesRoot = resolve(docsRoot, '..', '..', 'packages');
+const packagesRoot = resolve(docsRoot, '..', '..', 'packages')
 
 /** 包展示顺序（按依赖分层，底层在前） */
-const PACKAGE_ORDER = [
-  'utils',
-  'theme',
-  'hooks',
-  'components',
-  'biz-components',
-  'dsl-render',
-  'runtime',
-  'cli',
-];
+const PACKAGE_ORDER = ['utils', 'theme', 'hooks', 'components', 'biz-components', 'dsl-render', 'runtime', 'cli']
 
 /**
  * 解析 changesets 生成的 CHANGELOG.md：`## <版本>` 切节。
  * @returns {Array<{ version: string, body: string }>}
  */
 function parseChangelog(text) {
-  const sections = [];
-  let current = null;
-  for (const line of text.split(/\r?\n/)) {
-    const match = /^##\s+(.+)$/.exec(line);
-    if (match) {
-      // 兼容 `## 1.0.0-beta.0` 与 `## @mengxi-ark/utils@1.0.0-beta.0` 两种头部
-      const version = match[1].trim().replace(/^@[a-z0-9-]+\/[a-z0-9-]+@/, '');
-      current = { version, lines: [] };
-      sections.push(current);
-    } else if (current) {
-      current.lines.push(line);
-    }
-  }
-  return sections.map((s) => ({ ...s, body: s.lines.join('\n').trim() }));
+	const sections = []
+	let current = null
+	for (const line of text.split(/\r?\n/)) {
+		const match = /^##\s+(.+)$/.exec(line)
+		if (match) {
+			// 兼容 `## 1.0.0-beta.0` 与 `## @mengxi-ark/utils@1.0.0-beta.0` 两种头部
+			const version = match[1].trim().replace(/^@[a-z0-9-]+\/[a-z0-9-]+@/, '')
+			current = { version, lines: [] }
+			sections.push(current)
+		} else if (current) {
+			current.lines.push(line)
+		}
+	}
+	return sections.map(s => ({ ...s, body: s.lines.join('\n').trim() }))
 }
 
 /** SemVer 比较（含 prerelease：release > prerelease），返回值 >0 表示 a 更新 */
 function compareVersions(a, b) {
-  const re = /^(\d+)\.(\d+)\.(\d+)(?:-([\w.]+))?$/;
-  const ma = re.exec(a);
-  const mb = re.exec(b);
-  if (!ma || !mb) return a < b ? -1 : a > b ? 1 : 0;
-  for (let i = 1; i <= 3; i++) {
-    const diff = Number(ma[i]) - Number(mb[i]);
-    if (diff !== 0) return diff;
-  }
-  // 无 prerelease（正式版）更新
-  if (!ma[4] || !mb[4]) return (ma[4] ? -1 : 0) + (mb[4] ? 1 : 0);
-  const pa = ma[4].split('.');
-  const pb = mb[4].split('.');
-  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
-    const na = Number(pa[i]);
-    const nb = Number(pb[i]);
-    const ca = Number.isNaN(na) ? pa[i] : na;
-    const cb = Number.isNaN(nb) ? pb[i] : nb;
-    if (ca !== cb) return ca > cb ? 1 : -1;
-  }
-  return 0;
+	const re = /^(\d+)\.(\d+)\.(\d+)(?:-([\w.]+))?$/
+	const ma = re.exec(a)
+	const mb = re.exec(b)
+	if (!ma || !mb) return a < b ? -1 : a > b ? 1 : 0
+	for (let i = 1; i <= 3; i++) {
+		const diff = Number(ma[i]) - Number(mb[i])
+		if (diff !== 0) return diff
+	}
+	// 无 prerelease（正式版）更新
+	if (!ma[4] || !mb[4]) return (ma[4] ? -1 : 0) + (mb[4] ? 1 : 0)
+	const pa = ma[4].split('.')
+	const pb = mb[4].split('.')
+	for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+		const na = Number(pa[i])
+		const nb = Number(pb[i])
+		const ca = Number.isNaN(na) ? pa[i] : na
+		const cb = Number.isNaN(nb) ? pb[i] : nb
+		if (ca !== cb) return ca > cb ? 1 : -1
+	}
+	return 0
 }
 
 /** 扫描 packages 目录下各包 CHANGELOG.md，聚合为「版本 → 包条目」结构 */
 function collect() {
-  const byVersion = new Map();
-  const dirs = readdirSync(packagesRoot, { withFileTypes: true })
-    .filter((d) => d.isDirectory())
-    .map((d) => d.name)
-    .sort((x, y) => PACKAGE_ORDER.indexOf(x) - PACKAGE_ORDER.indexOf(y));
+	const byVersion = new Map()
+	const dirs = readdirSync(packagesRoot, { withFileTypes: true })
+		.filter(d => d.isDirectory())
+		.map(d => d.name)
+		.sort((x, y) => PACKAGE_ORDER.indexOf(x) - PACKAGE_ORDER.indexOf(y))
 
-  for (const dir of dirs) {
-    const file = resolve(packagesRoot, dir, 'CHANGELOG.md');
-    let text;
-    try {
-      text = readFileSync(file, 'utf-8');
-    } catch {
-      continue; // 无 CHANGELOG 的包跳过
-    }
-    for (const { version, body } of parseChangelog(text)) {
-      if (!body) continue;
-      if (!byVersion.has(version)) byVersion.set(version, []);
-      byVersion.get(version).push({ name: `@mengxi-ark/${dir}`, body });
-    }
-  }
+	for (const dir of dirs) {
+		const file = resolve(packagesRoot, dir, 'CHANGELOG.md')
+		let text
+		try {
+			text = readFileSync(file, 'utf-8')
+		} catch {
+			continue // 无 CHANGELOG 的包跳过
+		}
+		for (const { version, body } of parseChangelog(text)) {
+			if (!body) continue
+			if (!byVersion.has(version)) byVersion.set(version, [])
+			byVersion.get(version).push({ name: `@mengxi-ark/${dir}`, body })
+		}
+	}
 
-  return [...byVersion.entries()]
-    .sort(([a], [b]) => compareVersions(b, a))
-    .map(([version, entries]) => ({ version, entries }));
+	return [...byVersion.entries()].sort(([a], [b]) => compareVersions(b, a)).map(([version, entries]) => ({ version, entries }))
 }
 
 /**
@@ -107,49 +96,49 @@ function collect() {
  * @param {string} body
  */
 function cleanBody(body) {
-  const out = [];
-  let skippingDeps = false;
-  for (const line of body.split('\n')) {
-    if (/^###\s+\w+\s+Changes\s*$/.test(line)) continue;
-    if (/^-\s+Updated dependencies/.test(line)) {
-      skippingDeps = true;
-      continue;
-    }
-    if (skippingDeps) {
-      // 依赖列表为「  - @pkg@version」缩进行，连同跳过
-      if (/^\s+-\s+@\S+/.test(line)) continue;
-      skippingDeps = false;
-    }
-    out.push(line.replace(/^-\s+[0-9a-f]{7,}:\s*/, '- '));
-  }
-  // 压缩连续空行为单个
-  return out
-    .join('\n')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
+	const out = []
+	let skippingDeps = false
+	for (const line of body.split('\n')) {
+		if (/^###\s+\w+\s+Changes\s*$/.test(line)) continue
+		if (/^-\s+Updated dependencies/.test(line)) {
+			skippingDeps = true
+			continue
+		}
+		if (skippingDeps) {
+			// 依赖列表为「  - @pkg@version」缩进行，连同跳过
+			if (/^\s+-\s+@\S+/.test(line)) continue
+			skippingDeps = false
+		}
+		out.push(line.replace(/^-\s+[0-9a-f]{7,}:\s*/, '- '))
+	}
+	// 压缩连续空行为单个
+	return out
+		.join('\n')
+		.replace(/\n{3,}/g, '\n\n')
+		.trim()
 }
 
 /** 渲染单个版本小节 */
 function renderVersion({ version, entries }) {
-  const lines = [`## v${version}`, ''];
-  for (const { name, body } of entries) {
-    lines.push(`### ${name}`, '', cleanBody(body), '');
-  }
-  return lines.join('\n');
+	const lines = [`## v${version}`, '']
+	for (const { name, body } of entries) {
+		lines.push(`### ${name}`, '', cleanBody(body), '')
+	}
+	return lines.join('\n')
 }
 
-const data = collect();
+const data = collect()
 if (data.length === 0) {
-  throw new Error('未在任何 packages/*/CHANGELOG.md 中解析到版本条目');
+	throw new Error('未在任何 packages/*/CHANGELOG.md 中解析到版本条目')
 }
 
-const marker = '<!-- AUTO-GENERATED by apps/docs/scripts/gen-changelog.mjs — 请勿手工编辑，改动会在下次构建被覆盖 -->';
-const zhIntro = '本页由各包 CHANGELOG.md 于构建期自动聚合，按版本倒序排列；逐条完整日志以各包 CHANGELOG.md 为准。';
+const marker = '<!-- AUTO-GENERATED by apps/docs/scripts/gen-changelog.mjs — 请勿手工编辑，改动会在下次构建被覆盖 -->'
+const zhIntro = '本页由各包 CHANGELOG.md 于构建期自动聚合，按版本倒序排列；逐条完整日志以各包 CHANGELOG.md 为准。'
 const enIntro =
-  'This page is aggregated from each package\'s CHANGELOG.md at build time, newest version first. Entry contents are kept in Chinese (as written in the changesets); see each package\'s CHANGELOG.md for the authoritative log.';
+	"This page is aggregated from each package's CHANGELOG.md at build time, newest version first. Entry contents are kept in Chinese (as written in the changesets); see each package's CHANGELOG.md for the authoritative log."
 
-const body = data.map(renderVersion).join('\n');
-writeFileSync(resolve(docsRoot, 'src', 'changelog.md'), `# 更新日志\n\n${zhIntro}\n\n${marker}\n\n${body}\n`);
-writeFileSync(resolve(docsRoot, 'src', 'en', 'changelog.md'), `# Changelog\n\n${enIntro}\n\n${marker}\n\n${body}\n`);
+const body = data.map(renderVersion).join('\n')
+writeFileSync(resolve(docsRoot, 'src', 'changelog.md'), `# 更新日志\n\n${zhIntro}\n\n${marker}\n\n${body}\n`)
+writeFileSync(resolve(docsRoot, 'src', 'en', 'changelog.md'), `# Changelog\n\n${enIntro}\n\n${marker}\n\n${body}\n`)
 
-console.log(`[gen-changelog] 已聚合 ${data.length} 个版本（最新 v${data[0].version}），覆盖 ${data.reduce((n, v) => n + v.entries.length, 0)} 个包条目`);
+console.log(`[gen-changelog] 已聚合 ${data.length} 个版本（最新 v${data[0].version}），覆盖 ${data.reduce((n, v) => n + v.entries.length, 0)} 个包条目`)

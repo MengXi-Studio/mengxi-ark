@@ -2,16 +2,17 @@
 
 > **前置知识**：本页是[核心概念](/guide/core-concepts)中「双模式业务组件契约」在基座侧的完整展开；请先完成 [createArkRuntime 与工作台](/platform/)与 [registerModule 模块开发](/platform/module)。
 
-runtime 经 `provide(MX_RUNTIME_CONTEXT_KEY, reactive(context))` 下发全局上下文；biz-components 组件 `inject` 探测同一键（`MX_RUNTIME_CONTEXT_KEY`，与 runtime **零 import 耦合**，仅共享契约类型）。这条契约同时兼容两种运行形态：
+runtime 经 `provide(MX_RUNTIME_CONTEXT_KEY, reactive(context))` 下发全局上下文；biz-components 组件 `inject` 探测同一键（`MX_RUNTIME_CONTEXT_KEY`，与 runtime
+**零 import 耦合**，仅共享契约类型）。这条契约同时兼容两种运行形态：
 
 ## 上下文字段与 props 兜底对应
 
-| 上下文字段 | 组件 props 兜底 | 说明 |
-| --- | --- | --- |
-| `user` / `tenant` / `org` | — | 业务可直接 `useRuntimeContext()` 读取 |
-| `permissions` | `permissions`（DocumentTable） | 权限源；上下文命中优先，缺失回退 props |
-| `lovListApi` | `lovApi`（Lov） | 值集列表接口 |
-| `lovCache` | `lovCache`（Lov） | 静态值集缓存（key 同值集编码） |
+| 上下文字段                | 组件 props 兜底                | 说明                                   |
+| ------------------------- | ------------------------------ | -------------------------------------- |
+| `user` / `tenant` / `org` | —                              | 业务可直接 `useRuntimeContext()` 读取  |
+| `permissions`             | `permissions`（DocumentTable） | 权限源；上下文命中优先，缺失回退 props |
+| `lovListApi`              | `lovApi`（Lov）                | 值集列表接口                           |
+| `lovCache`                | `lovCache`（Lov）              | 静态值集缓存（key 同值集编码）         |
 
 ## 三级数据源解析
 

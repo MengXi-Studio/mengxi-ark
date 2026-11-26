@@ -1,23 +1,23 @@
 // DocumentTable 单据表格：工具栏与行编辑态样式仅引用 --mx-* token（§6.4）
 .mx-doc-table__toolbar {
-  display: flex;
-  align-items: center;
-  gap: var(--mx-spacing-sm);
-  margin-bottom: var(--mx-spacing-md);
+	display: flex;
+	align-items: center;
+	gap: var(--mx-spacing-sm);
+	margin-bottom: var(--mx-spacing-md);
 }
 
 .mx-doc-table__editor {
-  display: flex;
-  flex-direction: column;
-  gap: var(--mx-spacing-xs);
-  width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: var(--mx-spacing-xs);
+	width: 100%;
 }
 
 .mx-doc-table__editor--error :first-child {
-  border-color: var(--mx-color-danger);
+	border-color: var(--mx-color-danger);
 }
 
 .mx-doc-table__error {
-  font-size: var(--mx-font-size-xs);
-  color: var(--mx-color-danger);
+	font-size: var(--mx-font-size-xs);
+	color: var(--mx-color-danger);
 }

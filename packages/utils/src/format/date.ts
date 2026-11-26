@@ -14,19 +14,19 @@
  * formatDate('not-a-date'); // ''
  */
 export function formatDate(input: number | Date | string, pattern = 'YYYY-MM-DD HH:mm:ss'): string {
-  const date = input instanceof Date ? input : new Date(input);
-  if (Number.isNaN(date.getTime())) return '';
-  const pad = (n: number, len = 2): string => String(n).padStart(len, '0');
-  const tokenMap: Record<string, string> = {
-    YYYY: String(date.getFullYear()),
-    MM: pad(date.getMonth() + 1),
-    DD: pad(date.getDate()),
-    HH: pad(date.getHours()),
-    mm: pad(date.getMinutes()),
-    ss: pad(date.getSeconds()),
-    SSS: pad(date.getMilliseconds(), 3),
-    S: String(date.getMilliseconds()),
-  };
-  // 替换表按「长 token 优先」排列，保证 SSS 先于 S 匹配
-  return pattern.replace(/YYYY|SSS|MM|DD|HH|mm|ss|S/g, (token) => tokenMap[token]);
+	const date = input instanceof Date ? input : new Date(input)
+	if (Number.isNaN(date.getTime())) return ''
+	const pad = (n: number, len = 2): string => String(n).padStart(len, '0')
+	const tokenMap: Record<string, string> = {
+		YYYY: String(date.getFullYear()),
+		MM: pad(date.getMonth() + 1),
+		DD: pad(date.getDate()),
+		HH: pad(date.getHours()),
+		mm: pad(date.getMinutes()),
+		ss: pad(date.getSeconds()),
+		SSS: pad(date.getMilliseconds(), 3),
+		S: String(date.getMilliseconds())
+	}
+	// 替换表按「长 token 优先」排列，保证 SSS 先于 S 匹配
+	return pattern.replace(/YYYY|SSS|MM|DD|HH|mm|ss|S/g, token => tokenMap[token])
 }

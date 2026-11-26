@@ -1,2 +1,2 @@
-export { default } from './MxUpload.vue';
-export type { MxUploadEmits, MxUploadProps, MxUploadSlots } from './types';
+export { default } from './MxUpload.vue'
+export type { MxUploadEmits, MxUploadProps, MxUploadSlots } from './types'

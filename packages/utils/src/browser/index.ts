@@ -1,5 +1,5 @@
 function isBrowser(): boolean {
-  return typeof window !== 'undefined' && typeof document !== 'undefined';
+	return typeof window !== 'undefined' && typeof document !== 'undefined'
 }
 
 /**
@@ -14,32 +14,32 @@ function isBrowser(): boolean {
  * download('/api/export?id=1', '导出.xlsx'); // 浏览器中 true，Node 中 false
  */
 export function download(source: Blob | string, filename: string): boolean {
-  if (!isBrowser()) return false;
-  const isBlob = source instanceof Blob;
-  const href = isBlob ? URL.createObjectURL(source) : source;
-  const anchor = document.createElement('a');
-  anchor.href = href;
-  anchor.download = filename;
-  document.body.appendChild(anchor);
-  anchor.click();
-  document.body.removeChild(anchor);
-  if (isBlob) URL.revokeObjectURL(href);
-  return true;
+	if (!isBrowser()) return false
+	const isBlob = source instanceof Blob
+	const href = isBlob ? URL.createObjectURL(source) : source
+	const anchor = document.createElement('a')
+	anchor.href = href
+	anchor.download = filename
+	document.body.appendChild(anchor)
+	anchor.click()
+	document.body.removeChild(anchor)
+	if (isBlob) URL.revokeObjectURL(href)
+	return true
 }
 
 /**
  * exportCsv 可选配置。
  */
 export interface ExportCsvOptions {
-  /** 表头文案数组，与列顺序一一对应（列顺序取首行数据的字段名顺序）；不传时表头直接使用字段名 */
-  headers?: string[];
+	/** 表头文案数组，与列顺序一一对应（列顺序取首行数据的字段名顺序）；不传时表头直接使用字段名 */
+	headers?: string[]
 }
 
 function escapeCsvField(field: string): string {
-  if (/[",\n\r]/.test(field)) {
-    return `"${field.replace(/"/g, '""')}"`;
-  }
-  return field;
+	if (/[",\n\r]/.test(field)) {
+		return `"${field.replace(/"/g, '""')}"`
+	}
+	return field
 }
 
 /**
@@ -56,19 +56,13 @@ function escapeCsvField(field: string): string {
  * @example
  * exportCsv([{ name: '张三', age: 18 }], 'users.csv', { headers: ['姓名', '年龄'] }); // 浏览器中 true，Node 中 false
  */
-export function exportCsv(
-  rows: Record<string, unknown>[],
-  filename: string,
-  options?: ExportCsvOptions,
-): boolean {
-  if (!isBrowser()) return false;
-  const columns = rows.length > 0 ? Object.keys(rows[0]) : [];
-  const headerRow = options?.headers ?? columns;
-  const lines = [headerRow, ...rows.map((row) => columns.map((col) => row[col]))].map((cells) =>
-    cells.map((cell) => escapeCsvField(cell == null ? '' : String(cell))).join(','),
-  );
-  const content = `\uFEFF${lines.join('\r\n')}`;
-  return download(new Blob([content], { type: 'text/csv;charset=utf-8' }), filename);
+export function exportCsv(rows: Record<string, unknown>[], filename: string, options?: ExportCsvOptions): boolean {
+	if (!isBrowser()) return false
+	const columns = rows.length > 0 ? Object.keys(rows[0]) : []
+	const headerRow = options?.headers ?? columns
+	const lines = [headerRow, ...rows.map(row => columns.map(col => row[col]))].map(cells => cells.map(cell => escapeCsvField(cell == null ? '' : String(cell))).join(','))
+	const content = `\uFEFF${lines.join('\r\n')}`
+	return download(new Blob([content], { type: 'text/csv;charset=utf-8' }), filename)
 }
 
 /**
@@ -84,15 +78,15 @@ export function exportCsv(
  * getUrlParam('b', 'https://x.com/p'); // null
  */
 export function getUrlParam(name: string, url?: string): string | null {
-  let target = url;
-  if (target === undefined) {
-    if (typeof window === 'undefined') return null;
-    target = window.location.href;
-  }
-  const queryStart = target.indexOf('?');
-  if (queryStart === -1) return null;
-  let query = target.slice(queryStart + 1);
-  const hashIndex = query.indexOf('#');
-  if (hashIndex !== -1) query = query.slice(0, hashIndex);
-  return new URLSearchParams(query).get(name);
+	let target = url
+	if (target === undefined) {
+		if (typeof window === 'undefined') return null
+		target = window.location.href
+	}
+	const queryStart = target.indexOf('?')
+	if (queryStart === -1) return null
+	let query = target.slice(queryStart + 1)
+	const hashIndex = query.indexOf('#')
+	if (hashIndex !== -1) query = query.slice(0, hashIndex)
+	return new URLSearchParams(query).get(name)
 }

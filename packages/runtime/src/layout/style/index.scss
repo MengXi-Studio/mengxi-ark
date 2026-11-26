@@ -3,56 +3,56 @@
  * antdv 组件变量经 theme/adapters/antdv.scss 桥接，暗色由宿主 data-theme="dark" 生效。
  */
 .ark-layout {
-  min-height: 100vh;
+	min-height: 100vh;
 
-  &__sider {
-    background-color: var(--mx-color-bg-container);
-  }
+	&__sider {
+		background-color: var(--mx-color-bg-container);
+	}
 
-  &__logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 48px;
-    font-size: var(--mx-font-size-md);
-    font-weight: var(--mx-font-weight-bold);
-    color: var(--mx-color-primary);
-    background-color: var(--mx-color-bg-container);
-    border-bottom: 1px solid var(--mx-color-border-split);
-  }
+	&__logo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 48px;
+		font-size: var(--mx-font-size-md);
+		font-weight: var(--mx-font-weight-bold);
+		color: var(--mx-color-primary);
+		background-color: var(--mx-color-bg-container);
+		border-bottom: 1px solid var(--mx-color-border-split);
+	}
 
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: var(--mx-spacing-md);
-    padding: 0 var(--mx-spacing-lg);
-    background-color: var(--mx-color-bg-container);
-    border-bottom: 1px solid var(--mx-color-border-split);
-  }
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: var(--mx-spacing-md);
+		padding: 0 var(--mx-spacing-lg);
+		background-color: var(--mx-color-bg-container);
+		border-bottom: 1px solid var(--mx-color-border-split);
+	}
 
-  &__user {
-    font-size: var(--mx-font-size-sm);
-    color: var(--mx-color-text-primary);
-  }
+	&__user {
+		font-size: var(--mx-font-size-sm);
+		color: var(--mx-color-text-primary);
+	}
 
-  &__tabs {
-    padding: var(--mx-spacing-xs) var(--mx-spacing-md) 0;
-    background-color: var(--mx-color-bg-container);
-    border-bottom: 1px solid var(--mx-color-border-split);
-  }
+	&__tabs {
+		padding: var(--mx-spacing-xs) var(--mx-spacing-md) 0;
+		background-color: var(--mx-color-bg-container);
+		border-bottom: 1px solid var(--mx-color-border-split);
+	}
 
-  &__content {
-    padding: var(--mx-spacing-md);
-    background-color: var(--mx-color-bg-layout);
-  }
+	&__content {
+		padding: var(--mx-spacing-md);
+		background-color: var(--mx-color-bg-layout);
+	}
 
-  &--missing {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    font-size: var(--mx-font-size-md);
-    color: var(--mx-color-text-secondary);
-  }
+	&--missing {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 100vh;
+		font-size: var(--mx-font-size-md);
+		color: var(--mx-color-text-secondary);
+	}
 }

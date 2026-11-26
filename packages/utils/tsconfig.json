@@ -1,5 +1,5 @@
 ﻿{
-  "extends": "../../internal/tsconfig/base.json",
-  "include": ["src"],
-  "exclude": ["src/**/__tests__/**"]
+	"extends": "../../internal/tsconfig/base.json",
+	"include": ["src"],
+	"exclude": ["src/**/__tests__/**"]
 }

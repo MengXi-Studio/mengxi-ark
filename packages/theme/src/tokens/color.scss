@@ -69,30 +69,30 @@ $mx-dark-border-split: #333333;
 
 // ---------- 基础层 CSS Variables（primary 梯度 + 灰阶，主题间保持不变） ----------
 :root {
-  --mx-color-primary: #{$mx-primary-6};
-  --mx-color-primary-1: #{$mx-primary-1};
-  --mx-color-primary-2: #{$mx-primary-2};
-  --mx-color-primary-3: #{$mx-primary-3};
-  --mx-color-primary-4: #{$mx-primary-4};
-  --mx-color-primary-5: #{$mx-primary-5};
-  --mx-color-primary-6: #{$mx-primary-6};
-  --mx-color-primary-7: #{$mx-primary-7};
-  --mx-color-primary-8: #{$mx-primary-8};
-  --mx-color-primary-9: #{$mx-primary-9};
-  --mx-color-primary-10: #{$mx-primary-10};
+	--mx-color-primary: #{$mx-primary-6};
+	--mx-color-primary-1: #{$mx-primary-1};
+	--mx-color-primary-2: #{$mx-primary-2};
+	--mx-color-primary-3: #{$mx-primary-3};
+	--mx-color-primary-4: #{$mx-primary-4};
+	--mx-color-primary-5: #{$mx-primary-5};
+	--mx-color-primary-6: #{$mx-primary-6};
+	--mx-color-primary-7: #{$mx-primary-7};
+	--mx-color-primary-8: #{$mx-primary-8};
+	--mx-color-primary-9: #{$mx-primary-9};
+	--mx-color-primary-10: #{$mx-primary-10};
 
-  --mx-gray-1: #{$mx-gray-1};
-  --mx-gray-2: #{$mx-gray-2};
-  --mx-gray-3: #{$mx-gray-3};
-  --mx-gray-4: #{$mx-gray-4};
-  --mx-gray-5: #{$mx-gray-5};
-  --mx-gray-6: #{$mx-gray-6};
-  --mx-gray-7: #{$mx-gray-7};
-  --mx-gray-8: #{$mx-gray-8};
-  --mx-gray-9: #{$mx-gray-9};
-  --mx-gray-10: #{$mx-gray-10};
-  --mx-gray-11: #{$mx-gray-11};
-  --mx-gray-12: #{$mx-gray-12};
-  --mx-gray-13: #{$mx-gray-13};
-  --mx-gray-14: #{$mx-gray-14};
+	--mx-gray-1: #{$mx-gray-1};
+	--mx-gray-2: #{$mx-gray-2};
+	--mx-gray-3: #{$mx-gray-3};
+	--mx-gray-4: #{$mx-gray-4};
+	--mx-gray-5: #{$mx-gray-5};
+	--mx-gray-6: #{$mx-gray-6};
+	--mx-gray-7: #{$mx-gray-7};
+	--mx-gray-8: #{$mx-gray-8};
+	--mx-gray-9: #{$mx-gray-9};
+	--mx-gray-10: #{$mx-gray-10};
+	--mx-gray-11: #{$mx-gray-11};
+	--mx-gray-12: #{$mx-gray-12};
+	--mx-gray-13: #{$mx-gray-13};
+	--mx-gray-14: #{$mx-gray-14};
 }

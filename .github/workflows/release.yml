@@ -29,4 +29,4 @@ jobs:
         with:
           version: pnpm version-packages
           publish: pnpm release
-          title: "chore(repo): 同步 changeset 版本"
+          title: 'chore(repo): 同步 changeset 版本'

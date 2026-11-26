@@ -1,72 +1,72 @@
 // Lov 值集选择器：触发器样式仅引用 --mx-* token（§6.4）
 .mx-lov__trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--mx-spacing-xs);
-  min-height: var(--mx-spacing-xl);
-  padding: 0 var(--mx-spacing-sm);
-  font-size: var(--mx-font-size-sm);
-  color: var(--mx-color-text-primary);
-  background-color: var(--mx-color-bg-container);
-  border: 1px solid var(--mx-color-border-base);
-  border-radius: var(--mx-radius-base);
-  cursor: pointer;
-  user-select: none;
-  transition: border-color 0.2s;
-  min-width: 140px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--mx-spacing-xs);
+	min-height: var(--mx-spacing-xl);
+	padding: 0 var(--mx-spacing-sm);
+	font-size: var(--mx-font-size-sm);
+	color: var(--mx-color-text-primary);
+	background-color: var(--mx-color-bg-container);
+	border: 1px solid var(--mx-color-border-base);
+	border-radius: var(--mx-radius-base);
+	cursor: pointer;
+	user-select: none;
+	transition: border-color 0.2s;
+	min-width: 140px;
 
-  &:hover {
-    border-color: var(--mx-color-primary);
-  }
+	&:hover {
+		border-color: var(--mx-color-primary);
+	}
 }
 
 .mx-lov__trigger--disabled {
-  color: var(--mx-color-text-disabled);
-  background-color: var(--mx-color-bg-disabled);
-  border-color: var(--mx-color-border-base);
-  cursor: not-allowed;
+	color: var(--mx-color-text-disabled);
+	background-color: var(--mx-color-bg-disabled);
+	border-color: var(--mx-color-border-base);
+	cursor: not-allowed;
 
-  &:hover {
-    border-color: var(--mx-color-border-base);
-  }
+	&:hover {
+		border-color: var(--mx-color-border-base);
+	}
 }
 
 .mx-lov__text {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .mx-lov__text--placeholder {
-  color: var(--mx-color-text-disabled);
+	color: var(--mx-color-text-disabled);
 }
 
 .mx-lov__clear {
-  flex-shrink: 0;
-  width: var(--mx-spacing-sm);
-  height: var(--mx-spacing-sm);
-  line-height: var(--mx-spacing-sm);
-  text-align: center;
-  font-size: var(--mx-font-size-md);
-  color: var(--mx-color-text-secondary);
-  border-radius: var(--mx-radius-round);
-  background-color: var(--mx-color-bg-hover);
+	flex-shrink: 0;
+	width: var(--mx-spacing-sm);
+	height: var(--mx-spacing-sm);
+	line-height: var(--mx-spacing-sm);
+	text-align: center;
+	font-size: var(--mx-font-size-md);
+	color: var(--mx-color-text-secondary);
+	border-radius: var(--mx-radius-round);
+	background-color: var(--mx-color-bg-hover);
 
-  &:hover {
-    color: var(--mx-color-text-primary);
-    background-color: var(--mx-color-bg-hover);
-  }
+	&:hover {
+		color: var(--mx-color-text-primary);
+		background-color: var(--mx-color-bg-hover);
+	}
 }
 
 .mx-lov__search {
-  display: flex;
-  align-items: center;
-  gap: var(--mx-spacing-sm);
-  margin-bottom: var(--mx-spacing-md);
+	display: flex;
+	align-items: center;
+	gap: var(--mx-spacing-sm);
+	margin-bottom: var(--mx-spacing-md);
 }
 
 .mx-lov__search :first-child {
-  flex: 1;
+	flex: 1;
 }

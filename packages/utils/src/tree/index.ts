@@ -2,15 +2,15 @@
  * 树操作可选配置。
  */
 export interface TreeOptions {
-  /** 子节点字段名，默认 'children' */
-  childrenField?: string;
+	/** 子节点字段名，默认 'children' */
+	childrenField?: string
 }
 
-const DEFAULT_CHILDREN_FIELD = 'children';
+const DEFAULT_CHILDREN_FIELD = 'children'
 
 function getChildren<T extends object>(node: T, childrenField: string): T[] | null {
-  const children = (node as Record<string, unknown>)[childrenField];
-  return Array.isArray(children) ? (children as T[]) : null;
+	const children = (node as Record<string, unknown>)[childrenField]
+	return Array.isArray(children) ? (children as T[]) : null
 }
 
 /**
@@ -26,20 +26,16 @@ function getChildren<T extends object>(node: T, childrenField: string): T[] | nu
  *   console.log(node.id, parent?.id ?? null);
  * });
  */
-export function forEachTree<T extends object>(
-  tree: T[],
-  callback: (node: T, parent: T | null) => void,
-  options?: TreeOptions,
-): void {
-  const childrenField = options?.childrenField ?? DEFAULT_CHILDREN_FIELD;
-  const walk = (nodes: T[], parent: T | null): void => {
-    for (const node of nodes) {
-      callback(node, parent);
-      const children = getChildren(node, childrenField);
-      if (children) walk(children, node);
-    }
-  };
-  walk(tree, null);
+export function forEachTree<T extends object>(tree: T[], callback: (node: T, parent: T | null) => void, options?: TreeOptions): void {
+	const childrenField = options?.childrenField ?? DEFAULT_CHILDREN_FIELD
+	const walk = (nodes: T[], parent: T | null): void => {
+		for (const node of nodes) {
+			callback(node, parent)
+			const children = getChildren(node, childrenField)
+			if (children) walk(children, node)
+		}
+	}
+	walk(tree, null)
 }
 
 /**
@@ -56,20 +52,16 @@ export function forEachTree<T extends object>(
  * @example
  * const tagged = mapTree(menus, (node) => ({ ...node, label: node.name }));
  */
-export function mapTree<T extends object, U extends object>(
-  tree: T[],
-  mapper: (node: T) => U,
-  options?: TreeOptions,
-): U[] {
-  const childrenField = options?.childrenField ?? DEFAULT_CHILDREN_FIELD;
-  return tree.map((node) => {
-    const mapped: U = { ...mapper(node) };
-    const children = getChildren(node, childrenField);
-    if (children) {
-      (mapped as Record<string, unknown>)[childrenField] = mapTree(children, mapper, options);
-    }
-    return mapped;
-  });
+export function mapTree<T extends object, U extends object>(tree: T[], mapper: (node: T) => U, options?: TreeOptions): U[] {
+	const childrenField = options?.childrenField ?? DEFAULT_CHILDREN_FIELD
+	return tree.map(node => {
+		const mapped: U = { ...mapper(node) }
+		const children = getChildren(node, childrenField)
+		if (children) {
+			;(mapped as Record<string, unknown>)[childrenField] = mapTree(children, mapper, options)
+		}
+		return mapped
+	})
 }
 
 /**
@@ -83,21 +75,17 @@ export function mapTree<T extends object, U extends object>(
  * @example
  * const target = findTree(menus, (node) => node.id === 121);
  */
-export function findTree<T extends object>(
-  tree: T[],
-  predicate: (node: T) => boolean,
-  options?: TreeOptions,
-): T | null {
-  const childrenField = options?.childrenField ?? DEFAULT_CHILDREN_FIELD;
-  for (const node of tree) {
-    if (predicate(node)) return node;
-    const children = getChildren(node, childrenField);
-    if (children) {
-      const found = findTree(children, predicate, options);
-      if (found) return found;
-    }
-  }
-  return null;
+export function findTree<T extends object>(tree: T[], predicate: (node: T) => boolean, options?: TreeOptions): T | null {
+	const childrenField = options?.childrenField ?? DEFAULT_CHILDREN_FIELD
+	for (const node of tree) {
+		if (predicate(node)) return node
+		const children = getChildren(node, childrenField)
+		if (children) {
+			const found = findTree(children, predicate, options)
+			if (found) return found
+		}
+	}
+	return null
 }
 
 /**
@@ -115,23 +103,19 @@ export function findTree<T extends object>(
  * // 菜单按关键词过滤：命中「菜单」的节点及其祖先链被保留
  * const matched = filterTree(menus, (node) => node.name.includes('菜单'));
  */
-export function filterTree<T extends object>(
-  tree: T[],
-  predicate: (node: T) => boolean,
-  options?: TreeOptions,
-): T[] {
-  const childrenField = options?.childrenField ?? DEFAULT_CHILDREN_FIELD;
-  const result: T[] = [];
-  for (const node of tree) {
-    const children = getChildren(node, childrenField);
-    const filteredChildren = children ? filterTree(children, predicate, options) : [];
-    if (predicate(node) || filteredChildren.length > 0) {
-      const cloned = { ...node };
-      if (children) {
-        (cloned as Record<string, unknown>)[childrenField] = filteredChildren;
-      }
-      result.push(cloned);
-    }
-  }
-  return result;
+export function filterTree<T extends object>(tree: T[], predicate: (node: T) => boolean, options?: TreeOptions): T[] {
+	const childrenField = options?.childrenField ?? DEFAULT_CHILDREN_FIELD
+	const result: T[] = []
+	for (const node of tree) {
+		const children = getChildren(node, childrenField)
+		const filteredChildren = children ? filterTree(children, predicate, options) : []
+		if (predicate(node) || filteredChildren.length > 0) {
+			const cloned = { ...node }
+			if (children) {
+				;(cloned as Record<string, unknown>)[childrenField] = filteredChildren
+			}
+			result.push(cloned)
+		}
+	}
+	return result
 }

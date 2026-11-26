@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import dts from 'vite-plugin-dts';
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import dts from 'vite-plugin-dts'
 
 /**
  * 构建库配置生成器（Vite lib mode + vite-plugin-dts）。
@@ -16,41 +16,34 @@ import dts from 'vite-plugin-dts';
  * @returns {import('vite').UserConfig} Vite 用户配置
  */
 export function defineLibConfig(options) {
-  const { name, sourcemap = false, externals = [], cssFileName } = options;
+	const { name, sourcemap = false, externals = [], cssFileName } = options
 
-  return defineConfig({
-    plugins: [
-      vue(),
-      dts({
-        include: ['src'],
-        entryRoot: 'src',
-        // SFC 声明支持：显式指定 vue processor（自动探测在本工程 include 形式下不生效，
-        // 缺失时 dist 中 `./Xxx.vue` 引用无对应 .d.ts，下游 TS2307）
-        processor: 'vue',
-        cleanVueFileName: true,
-      }),
-    ],
-    build: {
-      lib: {
-        entry: 'src/index.ts',
-        formats: ['es', 'cjs'],
-        fileName: (format) => (format === 'es' ? 'index.js' : 'index.cjs'),
-        name,
-        ...(cssFileName ? { cssFileName } : {}),
-      },
-      rollupOptions: {
-        external: [
-          /^vue($|\/)/,
-          /^pinia($|\/)/,
-          /^vue-router($|\/)/,
-          /^@vue\//,
-          /^@mengxi-ark\//,
-          ...externals,
-        ],
-      },
-      target: 'es2022',
-      emptyOutDir: true,
-      sourcemap,
-    },
-  });
+	return defineConfig({
+		plugins: [
+			vue(),
+			dts({
+				include: ['src'],
+				entryRoot: 'src',
+				// SFC 声明支持：显式指定 vue processor（自动探测在本工程 include 形式下不生效，
+				// 缺失时 dist 中 `./Xxx.vue` 引用无对应 .d.ts，下游 TS2307）
+				processor: 'vue',
+				cleanVueFileName: true
+			})
+		],
+		build: {
+			lib: {
+				entry: 'src/index.ts',
+				formats: ['es', 'cjs'],
+				fileName: format => (format === 'es' ? 'index.js' : 'index.cjs'),
+				name,
+				...(cssFileName ? { cssFileName } : {})
+			},
+			rollupOptions: {
+				external: [/^vue($|\/)/, /^pinia($|\/)/, /^vue-router($|\/)/, /^@vue\//, /^@mengxi-ark\//, ...externals]
+			},
+			target: 'es2022',
+			emptyOutDir: true,
+			sourcemap
+		}
+	})
 }

@@ -1,16 +1,16 @@
 {
-  "name": "@mengxi-ark-internal/build-scripts",
-  "version": "0.0.0",
-  "private": true,
-  "license": "MIT",
-  "type": "module",
-  "exports": {
-    "./define-lib-config": "./define-lib-config.mjs"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.11",
-    "typescript": "^5.9.3",
-    "vite": "^8.3.8",
-    "vite-plugin-dts": "^5.1.2"
-  }
+	"name": "@mengxi-ark-internal/build-scripts",
+	"version": "0.0.0",
+	"private": true,
+	"license": "MIT",
+	"type": "module",
+	"exports": {
+		"./define-lib-config": "./define-lib-config.mjs"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-vue": "^6.0.11",
+		"typescript": "^5.9.3",
+		"vite": "^8.3.8",
+		"vite-plugin-dts": "^5.1.2"
+	}
 }

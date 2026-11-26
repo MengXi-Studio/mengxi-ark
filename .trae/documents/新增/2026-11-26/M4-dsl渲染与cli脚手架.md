@@ -19,10 +19,12 @@
 ## 需求分析
 
 - **涉及包**：`packages/dsl-render`（占位壳 → 真实实现）；`packages/cli`（占位壳 → 真实实现）；demo-light / demo-platform 各加 DSL 演示入口；apps/docs「DSL 配置渲染」板块；changeset。
-- **依赖边界**：dsl-render 层级 4，可 import biz-components（3）/ components（2）/ hooks（1）；禁止 import runtime（双模式仍走 inject 探测）。cli 是应用层（层级表特视为 5），可引用全部 packages；`check-deps.mjs` 对 cli 有专门分支（CLI_LEVEL=5），src 内禁止 import `@mengxi-ark-internal/*`。
+- **依赖边界**：dsl-render 层级 4，可 import biz-components（3）/ components（2）/ hooks（1）；禁止 import runtime（双模式仍走 inject 探测）。cli 是应用层（层级表特视为 5），可引用全部 packages；`check-deps.mjs`
+  对 cli 有专门分支（CLI_LEVEL=5），src 内禁止 import `@mengxi-ark-internal/*`。
 - **Schema 类型分层**：`QuerySchema / FormSchema / TableSchema` 显式导出 + `validateSchema()`；禁止 `any` 直传渲染器（规范 §10）。
 - **组件映射**：`schema.type` → 注册表映射，业务可传映射表覆盖替换（渲染器不硬编码组件清单）。
-- **现有可复用资产**：components（SearchForm / EnhanceTable / MxDialog 等九组件 + 适配器契约）、biz-components（Lov / DocumentTable 双模式）、hooks（useTable / useForm / useRequest）、theme token、demo-light 的 BaseMockProvider（基座 mock）。
+- **现有可复用资产**：components（SearchForm / EnhanceTable / MxDialog 等九组件 + 适配器契约）、biz-components（Lov / DocumentTable 双模式）、hooks（useTable / useForm / useRequest）、theme
+  token、demo-light 的 BaseMockProvider（基座 mock）。
 - **构建/验证**：dsl-render 用 defineLibConfig（外部化 antdv/element-plus）；cli 为 Node 包（bin 入口，esbuild/rollup 打包或纯 ESM 直出，无 Vue）；门禁命令与 M3 相同。
 
 ## 伪代码设计
@@ -70,7 +72,11 @@ TableRenderer  { schema: TableSchema; dataSource?; ... }          → emit save 
 ```ts
 // bin: create-mengxi-ark（package.json bin 字段）
 // 流程：交互选择模板（轻量 / 中台基座）→ 目标目录 → 拷贝 templates/<name> → 包名/占位符替换 → 输出后续指引
-interface TemplateMeta { name: 'light' | 'platform'; label: string; description: string }
+interface TemplateMeta {
+	name: 'light' | 'platform'
+	label: string
+	description: string
+}
 // templates/light：Vite + Vue + utils/theme/hooks/components/biz-components + 精简演示页 + .trae/rules/ark-light.md
 // templates/platform：light 基础 + runtime + createArkRuntime + systemModule 示例 + .trae/rules/ark-platform.md
 // 版本绑定：模板 package.json 中 @mengxi-ark/* 版本占位符由 cli 自身版本注入（版本对齐）
@@ -91,6 +97,7 @@ interface TemplateMeta { name: 'light' | 'platform'; label: string; description:
 ## 疑问清单
 
 ### Q1 渲染器组件形态（影响：导出 API 与 Tree-Shaking）
+
 方案 a（推荐）：三个独立渲染器 `QueryRenderer / FormRenderer / TableRenderer`，共享映射表与类型；
 方案 b：单一 `SchemaRenderer` 按 `schema.kind` 分发。
 选哪个？
@@ -98,6 +105,7 @@ interface TemplateMeta { name: 'light' | 'platform'; label: string; description:
 回答：a——三个独立渲染器，共享映射表与类型。
 
 ### Q2 默认组件映射表首期覆盖范围（影响：工作量与文档示例）
+
 方案 a（推荐）：覆盖现有适配器原子（input / select / date 等）+ SearchForm / EnhanceTable / Lov / DocumentTable / MxDialog，约 10~12 项；
 方案 b：先只覆盖 6 个核心（input / select / lov / table / form / dialog）。
 选哪个？
@@ -105,6 +113,7 @@ interface TemplateMeta { name: 'light' | 'platform'; label: string; description:
 回答：a——全量 10~12 项。
 
 ### Q3 显隐/联动/校验的表达方式（影响：Schema 能否 JSON 序列化）
+
 方案 a（推荐）：函数式声明（`visible/rules` 直接是函数，TS 体验最好，无法纯 JSON 序列化）；
 方案 b：结构化声明（表达式字符串或条件 JSON，可序列化但实现重）。
 说明：方案宣称「标准 JSON Schema」指结构为 JSON 形态；函数字段建议作为 TS 增强能力。
@@ -113,6 +122,7 @@ interface TemplateMeta { name: 'light' | 'platform'; label: string; description:
 回答：a——函数式声明；结构为 JSON 形态，函数字段作为 TS 增强能力。
 
 ### Q4 cli 首期范围（影响：工作量边界）
+
 方案 a（推荐）：首期只做 `create-mengxi-ark` 初始化（两模板 + 占位符替换 + 版本绑定），「接口生成页面」「组件模板生成」列遗留 TODO；
 方案 b：首期包含接口→页面生成器（需定义接口描述格式，工作量显著增加）。
 选哪个？
@@ -120,6 +130,7 @@ interface TemplateMeta { name: 'light' | 'platform'; label: string; description:
 回答：a——仅初始化，页面生成器列遗留 TODO。
 
 ### Q5 cli 交互与模板技术选型（影响：cli 依赖）
+
 方案 a（推荐）：`@clack/prompts`（轻量、现代交互）+ 模板为仓库内静态目录（cli 构建时拷入 dist 或随包发布 templates/）；
 方案 b：`enquirer` / `inquirer`。
 选哪个？
@@ -127,7 +138,9 @@ interface TemplateMeta { name: 'light' | 'platform'; label: string; description:
 回答：a——`@clack/prompts` + 随包发布 templates/ 静态目录。
 
 ### Q6 交付范围确认（影响：DoD 边界）
-dsl-render 三渲染器 + Schema 类型 + validateSchema + 映射表覆盖 + 单测 + demo-light/demo-platform 演示 + docs 板块；cli 初始化 + 两模板（含 .trae/rules 分档规则）+ 模板生成单测 + 临时工程运行验证；changeset（dsl-render minor + cli minor）。确认？cli 临时工程验证方式（生成→pnpm install→dev 启动）是否认可？
+
+dsl-render 三渲染器 + Schema 类型 + validateSchema + 映射表覆盖 + 单测 + demo-light/demo-platform 演示 + docs 板块；cli 初始化 + 两模板（含 .trae/rules 分档规则）+ 模板生成单测 + 临时工程运行验证；changeset（dsl-render
+minor + cli minor）。确认？cli 临时工程验证方式（生成→pnpm install→dev 启动）是否认可？
 
 回答：确认；cli 验证方式认可（生成→pnpm install→dev 启动，验证后清理临时目录）。
 
@@ -135,18 +148,25 @@ dsl-render 三渲染器 + Schema 类型 + validateSchema + 映射表覆盖 + 单
 
 ### 方案落地形态（与伪代码设计差异）
 
-1. **渲染器形态**：按 Q1 落地三个独立渲染器（QueryRenderer / FormRenderer / TableRenderer），目录契约对齐组件规范（index.ts + Xxx.vue + __tests__）。
-2. **联动 / 校验**：按 Q3 函数式声明——`visible(values)` 实时联动（Query / Form 均基于当前值），`rules`（required / validator）在 FormRenderer submit 前统一执行，`defineExpose({ validate })` 供宿主主动校验；结构保持 JSON 形态。
-3. **映射表**：默认 13 项（input / select / dateRange / treeSelect / upload / button 原子 + lov / searchForm / enhanceTable / documentTable / dialog / statusTag / emptyState 实体），`createComponentMap(overrides, adapter)` 同 key 整体替换；组件统一 markRaw 防止 computed 深响应式代理组件对象。
-4. **TableRenderer**：mode=table 组合 EnhanceTable（数据外部驱动，pageChange / sortChange / rowClick / update:expandedRowKeys 透传）；mode=document 组合 DocumentTable（v-model 行数据、save / rowAdd / rowRemove 透传、addable / deletable / savable / permissions 下发）；toolbar / bodyCell / expandedRow / empty 槽按宿主写入透传。
+1. **渲染器形态**：按 Q1 落地三个独立渲染器（QueryRenderer / FormRenderer / TableRenderer），目录契约对齐组件规范（index.ts + Xxx.vue + **tests**）。
+2. **联动 / 校验**：按 Q3 函数式声明——`visible(values)` 实时联动（Query / Form 均基于当前值），`rules`（required / validator）在 FormRenderer submit 前统一执行，`defineExpose({ validate })`
+   供宿主主动校验；结构保持 JSON 形态。
+3. **映射表**：默认 13 项（input / select / dateRange / treeSelect / upload / button 原子 + lov / searchForm / enhanceTable / documentTable / dialog / statusTag /
+   emptyState 实体），`createComponentMap(overrides, adapter)` 同 key 整体替换；组件统一 markRaw 防止 computed 深响应式代理组件对象。
+4. **TableRenderer**：mode=table 组合 EnhanceTable（数据外部驱动，pageChange / sortChange / rowClick / update:expandedRowKeys 透传）；mode=document 组合 DocumentTable（v-model 行数据、save / rowAdd /
+   rowRemove 透传、addable / deletable / savable / permissions 下发）；toolbar / bodyCell / expandedRow / empty 槽按宿主写入透传。
 5. **差异**：QueryRenderer 未复用 SearchForm 而是自渲染行内布局——保证 `visible` 基于实时查询值联动（SearchForm 内部自持值无法支撑函数式显隐）；SearchForm 仍保留在映射表中供业务自组合。
-6. **cli**：按 Q4/Q5——@clack/prompts 交互（模板选择 / 目录名 / 非空目录确认）、templates/ 随包发布、占位符 `__PROJECT_NAME__` / `__ARK_VERSION__`（版本与 cli 自身绑定）；构建由 vite lib 改为 tsc -p tsconfig.build.json（Node ESM，NodeNext，相对导入带 .js 后缀）；bin 为薄 wrapper（bin/create-mengxi-ark.js → dist/index.js run()）。
+6. **cli**：按 Q4/Q5——@clack/prompts 交互（模板选择 / 目录名 / 非空目录确认）、templates/ 随包发布、占位符 `__PROJECT_NAME__` / `__ARK_VERSION__`（版本与 cli 自身绑定）；构建由 vite lib 改为 tsc -p
+   tsconfig.build.json（Node ESM，NodeNext，相对导入带 .js 后缀）；bin 为薄 wrapper（bin/create-mengxi-ark.js → dist/index.js run()）。
 7. **补充决策**：FormFieldSchema 增加可选 `options`（select 类字段直传）；eslint-config 给 ts/vue 补 globals.browser、cli 包补 globals.node（顺带修复 M3 遗留的 no-undef 误报，属 internal 修复）。
 
 ### 变更文件清单
 
-- `packages/dsl-render/`：src/{types/{common,query,form,table,index}, validate/validateSchema, componentMap, renderers/{QueryRenderer,FormRenderer,TableRenderer}, style/index.scss, index.ts, __tests__/stub-adapter}；package.json（dependencies components/biz-components + devDeps vite/vue-tsc/sass 等）、vite.config.ts（externals antdv/element-plus + cssFileName）、vitest.config.ts、tsconfig.spec.json、单测 4 文件 38 用例。
-- `packages/cli/`：src/{index,scaffold,templates}.ts、bin/create-mengxi-ark.js、tsconfig.build.json、templates/light（9 文件）+ templates/platform（13 文件，均含 .trae/rules 分档规则）、单测 scaffold.spec.ts（8 用例）；package.json（bin + @clack/prompts）。
+- `packages/dsl-render/`：src/{types/{common,query,form,table,index}, validate/validateSchema, componentMap, renderers/{QueryRenderer,FormRenderer,TableRenderer}, style/index.scss, index.ts,
+  **tests**/stub-adapter}；package.json（dependencies components/biz-components + devDeps vite/vue-tsc/sass 等）、vite.config.ts（externals antdv/element-plus +
+  cssFileName）、vitest.config.ts、tsconfig.spec.json、单测 4 文件 38 用例。
+- `packages/cli/`：src/{index,scaffold,templates}.ts、bin/create-mengxi-ark.js、tsconfig.build.json、templates/light（9 文件）+
+  templates/platform（13 文件，均含 .trae/rules 分档规则）、单测 scaffold.spec.ts（8 用例）；package.json（bin + @clack/prompts）。
 - `apps/demo-light/`：demos/DslDemo.vue（新增）+ App.vue（dsl tab）+ package.json（dsl-render 依赖）。
 - `apps/demo-platform/`：views/DslDemoPage.vue（新增）+ modules/bizModule.ts（DSL 菜单路由）+ package.json。
 - `apps/docs/`：dsl/index.md（新增）+ config.mts（nav + 侧栏「DSL 配置渲染」板块）。
@@ -169,4 +189,4 @@ dsl-render 三渲染器 + Schema 类型 + validateSchema + 映射表覆盖 + 单
 
 1. cli「接口生成页面 / 组件模板生成」——按 Q4 结论列后续版本（见 packages/cli/README 待补 ROADMAP）。
 2. npm 发布前临时工程验证依赖 file: 协议模拟；正式验证需在 changesets publish 后以 registry 版本重跑一次脚手架端到端流程。
-3. dsl-render dist 内含 __tests__ 声明文件（vite-plugin-dts 未排除测试目录），不影响导出面，后续可在 defineLibConfig 增加 dts exclude 优化包体积。
+3. dsl-render dist 内含 **tests** 声明文件（vite-plugin-dts 未排除测试目录），不影响导出面，后续可在 defineLibConfig 增加 dts exclude 优化包体积。

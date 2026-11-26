@@ -4,23 +4,35 @@
 // ==============================================================
 
 // ---------- 亮色 ----------
-$mx-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02),
-  0 2px 4px 0 rgba(0, 0, 0, 0.02);
-$mx-shadow-base: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08),
-  0 9px 28px 8px rgba(0, 0, 0, 0.05);
-$mx-shadow-lg: 0 6px 16px -8px rgba(0, 0, 0, 0.32), 0 9px 28px 0 rgba(0, 0, 0, 0.24),
-  0 12px 48px 16px rgba(0, 0, 0, 0.16);
+$mx-shadow-sm:
+	0 1px 2px 0 rgba(0, 0, 0, 0.03),
+	0 1px 6px -1px rgba(0, 0, 0, 0.02),
+	0 2px 4px 0 rgba(0, 0, 0, 0.02);
+$mx-shadow-base:
+	0 3px 6px -4px rgba(0, 0, 0, 0.12),
+	0 6px 16px 0 rgba(0, 0, 0, 0.08),
+	0 9px 28px 8px rgba(0, 0, 0, 0.05);
+$mx-shadow-lg:
+	0 6px 16px -8px rgba(0, 0, 0, 0.32),
+	0 9px 28px 0 rgba(0, 0, 0, 0.24),
+	0 12px 48px 16px rgba(0, 0, 0, 0.16);
 
 // ---------- 暗色（透明度加深） ----------
-$mx-shadow-sm-dark: 0 1px 2px 0 rgba(0, 0, 0, 0.24), 0 1px 6px -1px rgba(0, 0, 0, 0.16),
-  0 2px 4px 0 rgba(0, 0, 0, 0.16);
-$mx-shadow-base-dark: 0 3px 6px -4px rgba(0, 0, 0, 0.48), 0 6px 16px 0 rgba(0, 0, 0, 0.32),
-  0 9px 28px 8px rgba(0, 0, 0, 0.2);
-$mx-shadow-lg-dark: 0 6px 16px -8px rgba(0, 0, 0, 0.64), 0 9px 28px 0 rgba(0, 0, 0, 0.48),
-  0 12px 48px 16px rgba(0, 0, 0, 0.32);
+$mx-shadow-sm-dark:
+	0 1px 2px 0 rgba(0, 0, 0, 0.24),
+	0 1px 6px -1px rgba(0, 0, 0, 0.16),
+	0 2px 4px 0 rgba(0, 0, 0, 0.16);
+$mx-shadow-base-dark:
+	0 3px 6px -4px rgba(0, 0, 0, 0.48),
+	0 6px 16px 0 rgba(0, 0, 0, 0.32),
+	0 9px 28px 8px rgba(0, 0, 0, 0.2);
+$mx-shadow-lg-dark:
+	0 6px 16px -8px rgba(0, 0, 0, 0.64),
+	0 9px 28px 0 rgba(0, 0, 0, 0.48),
+	0 12px 48px 16px rgba(0, 0, 0, 0.32);
 
 :root {
-  --mx-shadow-sm: #{$mx-shadow-sm};
-  --mx-shadow-base: #{$mx-shadow-base};
-  --mx-shadow-lg: #{$mx-shadow-lg};
+	--mx-shadow-sm: #{$mx-shadow-sm};
+	--mx-shadow-base: #{$mx-shadow-base};
+	--mx-shadow-lg: #{$mx-shadow-lg};
 }

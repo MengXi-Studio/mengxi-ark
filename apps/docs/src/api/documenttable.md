@@ -14,28 +14,28 @@
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue';
-import { DocumentTable } from '@mengxi-ark/biz-components';
-import type { DocColumn } from '@mengxi-ark/biz-components';
+import { ref } from 'vue'
+import { DocumentTable } from '@mengxi-ark/biz-components'
+import type { DocColumn } from '@mengxi-ark/biz-components'
 
 const columns: DocColumn[] = [
-  { dataIndex: 'name', title: '物料名称', editable: true },
-  { dataIndex: 'qty', title: '数量', editable: true },
-];
+	{ dataIndex: 'name', title: '物料名称', editable: true },
+	{ dataIndex: 'qty', title: '数量', editable: true }
+]
 
 const rows = ref<Array<Record<string, unknown>>>([
-  { id: 1, name: '服务器', qty: 2 },
-  { id: 2, name: '显示器', qty: 10 },
-]);
+	{ id: 1, name: '服务器', qty: 2 },
+	{ id: 2, name: '显示器', qty: 10 }
+])
 
 function handleSave(allRows: Array<Record<string, unknown>>): void {
-  // 全量单据数据交给业务提交
-  console.log(allRows);
+	// 全量单据数据交给业务提交
+	console.log(allRows)
 }
 </script>
 
 <template>
-  <DocumentTable v-model="rows" :columns="columns" row-key="id" @save="handleSave" />
+	<DocumentTable v-model="rows" :columns="columns" row-key="id" @save="handleSave" />
 </template>
 ```
 
@@ -43,47 +43,45 @@ function handleSave(allRows: Array<Record<string, unknown>>): void {
 
 ```vue
 <script setup lang="ts">
-import { DocumentTable } from '@mengxi-ark/biz-components';
-import type { DocColumn } from '@mengxi-ark/biz-components';
+import { DocumentTable } from '@mengxi-ark/biz-components'
+import type { DocColumn } from '@mengxi-ark/biz-components'
 
 const columns: DocColumn[] = [
-  {
-    dataIndex: 'name',
-    title: '物料名称',
-    editable: true,
-    rules: [{ required: true, message: '物料名称不能为空' }],
-  },
-  {
-    dataIndex: 'qty',
-    title: '数量',
-    editable: true,
-    rules: [
-      { required: true, message: '数量不能为空' },
-      {
-        validator: (value) => (Number(value) > 0 ? null : '数量必须大于 0'),
-      },
-    ],
-  },
-  {
-    dataIndex: 'unit',
-    title: '单位',
-    editable: true,
-    editorType: 'select',
-    editorOptions: [
-      { label: '台', value: 'TAI' },
-      { label: '件', value: 'JIAN' },
-    ],
-    rules: [{ required: true, message: '单位不能为空' }],
-  },
-];
+	{
+		dataIndex: 'name',
+		title: '物料名称',
+		editable: true,
+		rules: [{ required: true, message: '物料名称不能为空' }]
+	},
+	{
+		dataIndex: 'qty',
+		title: '数量',
+		editable: true,
+		rules: [
+			{ required: true, message: '数量不能为空' },
+			{
+				validator: value => (Number(value) > 0 ? null : '数量必须大于 0')
+			}
+		]
+	},
+	{
+		dataIndex: 'unit',
+		title: '单位',
+		editable: true,
+		editorType: 'select',
+		editorOptions: [
+			{ label: '台', value: 'TAI' },
+			{ label: '件', value: 'JIAN' }
+		],
+		rules: [{ required: true, message: '单位不能为空' }]
+	}
+]
 
-const rows = ref<Array<Record<string, unknown>>>([
-  { id: 1, name: '服务器', qty: 2, unit: 'TAI' },
-]);
+const rows = ref<Array<Record<string, unknown>>>([{ id: 1, name: '服务器', qty: 2, unit: 'TAI' }])
 </script>
 
 <template>
-  <DocumentTable v-model="rows" :columns="columns" @save="onSave" />
+	<DocumentTable v-model="rows" :columns="columns" @save="onSave" />
 </template>
 ```
 
@@ -91,56 +89,47 @@ const rows = ref<Array<Record<string, unknown>>>([
 
 ## 示例三：行展开子表（expandedRowKeys + expandedRow 槽）
 
-行展开为通用作用域槽契约：受控 `expandedRowKeys`（v-model）+ `expandedRow({ record, index })` 槽，**不做一键子表模板**——展开内容（内嵌子 DocumentTable / EnhanceTable / 任意内容）由业务在槽内组合。`expandedRowKeys` 未传（undefined）时整体不启用展开。
+行展开为通用作用域槽契约：受控 `expandedRowKeys`（v-model）+ `expandedRow({ record, index })` 槽，**不做一键子表模板**——展开内容（内嵌子 DocumentTable / EnhanceTable / 任意内容）由业务在槽内组合。`expandedRowKeys`
+未传（undefined）时整体不启用展开。
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue';
-import { DocumentTable } from '@mengxi-ark/biz-components';
-import type { DocColumn } from '@mengxi-ark/biz-components';
+import { ref } from 'vue'
+import { DocumentTable } from '@mengxi-ark/biz-components'
+import type { DocColumn } from '@mengxi-ark/biz-components'
 
 const columns: DocColumn[] = [
-  { dataIndex: 'name', title: '物料名称', editable: true },
-  { dataIndex: 'qty', title: '数量', editable: true },
-];
+	{ dataIndex: 'name', title: '物料名称', editable: true },
+	{ dataIndex: 'qty', title: '数量', editable: true }
+]
 const childColumns: DocColumn[] = [
-  { dataIndex: 'name', title: '子物料' },
-  { dataIndex: 'qty', title: '数量' },
-];
+	{ dataIndex: 'name', title: '子物料' },
+	{ dataIndex: 'qty', title: '数量' }
+]
 
 const rows = ref<Array<Record<string, unknown>>>([
-  {
-    id: 1,
-    name: '服务器',
-    qty: 2,
-    children: [
-      { id: '1-1', name: '电源模块', qty: 2 },
-      { id: '1-2', name: '导轨套件', qty: 4 },
-    ],
-  },
-]);
+	{
+		id: 1,
+		name: '服务器',
+		qty: 2,
+		children: [
+			{ id: '1-1', name: '电源模块', qty: 2 },
+			{ id: '1-2', name: '导轨套件', qty: 4 }
+		]
+	}
+])
 
 // 受控展开：默认展开第一行（传 undefined 可关闭展开能力）
-const expandedRowKeys = ref<Array<string | number>>([1]);
+const expandedRowKeys = ref<Array<string | number>>([1])
 </script>
 
 <template>
-  <DocumentTable
-    v-model="rows"
-    v-model:expanded-row-keys="expandedRowKeys"
-    :columns="columns"
-    row-key="id"
-  >
-    <template #expandedRow="{ record }">
-      <!-- 槽内自由组合：此处内嵌只读子单据表 -->
-      <DocumentTable
-        :model-value="(record.children ?? [])"
-        :columns="childColumns"
-        row-key="id"
-        :editable="false"
-      />
-    </template>
-  </DocumentTable>
+	<DocumentTable v-model="rows" v-model:expanded-row-keys="expandedRowKeys" :columns="columns" row-key="id">
+		<template #expandedRow="{ record }">
+			<!-- 槽内自由组合：此处内嵌只读子单据表 -->
+			<DocumentTable :model-value="record.children ?? []" :columns="childColumns" row-key="id" :editable="false" />
+		</template>
+	</DocumentTable>
 </template>
 ```
 
@@ -158,28 +147,28 @@ const expandedRowKeys = ref<Array<string | number>>([1]);
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue';
-import { DocumentTable } from '@mengxi-ark/biz-components';
-import type { DocColumn } from '@mengxi-ark/biz-components';
+import { ref } from 'vue'
+import { DocumentTable } from '@mengxi-ark/biz-components'
+import type { DocColumn } from '@mengxi-ark/biz-components'
 
 const columns: DocColumn[] = [
-  { dataIndex: 'name', title: '物料名称', editable: true, rules: [{ required: true }] },
-  // 数量列需 doc:edit:count 权限才可编辑
-  { dataIndex: 'qty', title: '数量', editable: true, permissionCode: 'doc:edit:count', rules: [{ required: true }] },
-  // 行级粒度：仅「未锁定」行可编辑备注
-  { dataIndex: 'remark', title: '备注', editable: (row) => !row.locked },
-];
+	{ dataIndex: 'name', title: '物料名称', editable: true, rules: [{ required: true }] },
+	// 数量列需 doc:edit:count 权限才可编辑
+	{ dataIndex: 'qty', title: '数量', editable: true, permissionCode: 'doc:edit:count', rules: [{ required: true }] },
+	// 行级粒度：仅「未锁定」行可编辑备注
+	{ dataIndex: 'remark', title: '备注', editable: row => !row.locked }
+]
 
 // 独立模式：permissions props 兜底；基座联动模式下上下文 permissions 命中优先，无需此 prop
-const permissions = ref(['doc:edit:count']);
+const permissions = ref(['doc:edit:count'])
 const rows = ref<Array<Record<string, unknown>>>([
-  { id: 1, name: '服务器', qty: 2, remark: '', locked: false },
-  { id: 2, name: '网线', qty: 10, remark: '', locked: true },
-]);
+	{ id: 1, name: '服务器', qty: 2, remark: '', locked: false },
+	{ id: 2, name: '网线', qty: 10, remark: '', locked: true }
+])
 </script>
 
 <template>
-  <DocumentTable v-model="rows" :columns="columns" :permissions="permissions" row-key="id" />
+	<DocumentTable v-model="rows" :columns="columns" :permissions="permissions" row-key="id" />
 </template>
 ```
 
@@ -187,48 +176,48 @@ const rows = ref<Array<Record<string, unknown>>>([
 
 ### DocumentTableProps
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| modelValue | `Record<string, unknown>[]` | `[]` | 行数据（v-model） |
-| columns | `DocColumn[]` | 必填 | 列配置（扩展 editable / editorType / rules） |
-| rowKey | `string` | `'id'` | 行 key 字段名（新增行无该字段时自动生成临时 key） |
-| editable | `boolean` | `true` | 是否启用行编辑能力 |
-| addable | `boolean` | `true` | 是否展示「新增行」按钮 |
-| deletable | `boolean` | `true` | 是否展示「删除行」按钮 |
-| savable | `boolean` | `true` | 是否展示「保存」按钮（emit save，不自带提交请求） |
-| size | `'sm' \| 'md' \| 'lg'` | `'md'` | 尺寸语义 |
-| addText | `string` | `'新增行'` | 新增行按钮文案 |
-| saveText | `string` | `'保存'` | 保存按钮文案 |
-| expandedRowKeys | `(string \| number)[] \| undefined` | — | 受控行展开 keys（v-model:expanded-row-keys；undefined 不启用展开） |
-| permissions | `string[]` | — | 权限码列表（props 兜底，与上下文 permissions 同名对应；缺失时 warn 一次并视为有权限） |
+| 属性            | 类型                                | 默认值     | 说明                                                                                  |
+| --------------- | ----------------------------------- | ---------- | ------------------------------------------------------------------------------------- |
+| modelValue      | `Record<string, unknown>[]`         | `[]`       | 行数据（v-model）                                                                     |
+| columns         | `DocColumn[]`                       | 必填       | 列配置（扩展 editable / editorType / rules）                                          |
+| rowKey          | `string`                            | `'id'`     | 行 key 字段名（新增行无该字段时自动生成临时 key）                                     |
+| editable        | `boolean`                           | `true`     | 是否启用行编辑能力                                                                    |
+| addable         | `boolean`                           | `true`     | 是否展示「新增行」按钮                                                                |
+| deletable       | `boolean`                           | `true`     | 是否展示「删除行」按钮                                                                |
+| savable         | `boolean`                           | `true`     | 是否展示「保存」按钮（emit save，不自带提交请求）                                     |
+| size            | `'sm' \| 'md' \| 'lg'`              | `'md'`     | 尺寸语义                                                                              |
+| addText         | `string`                            | `'新增行'` | 新增行按钮文案                                                                        |
+| saveText        | `string`                            | `'保存'`   | 保存按钮文案                                                                          |
+| expandedRowKeys | `(string \| number)[] \| undefined` | —          | 受控行展开 keys（v-model:expanded-row-keys；undefined 不启用展开）                    |
+| permissions     | `string[]`                          | —          | 权限码列表（props 兜底，与上下文 permissions 同名对应；缺失时 warn 一次并视为有权限） |
 
 ### DocColumn（在统一列结构上扩展）
 
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| dataIndex / title | `string` | 同统一列契约（必填） |
-| editable | `boolean \| (row) => boolean` | 该列是否可编辑，默认 false；函数形态按行数据判定行级粒度 |
-| editorType | `'input' \| 'select'` | 编辑器类型，默认 'input' |
-| permissionCode | `string \| string[]` | 列级权限码（some 语义命中任一即可编辑；无权限渲染只读文本，不隐藏列） |
-| editorOptions | `MxSelectOption[]` | select 编辑器的选项 |
-| rules | `DocCellRule[]` | 校验规则（`required` / `message` / `validator`，多条按顺序执行） |
+| 属性              | 类型                          | 说明                                                                  |
+| ----------------- | ----------------------------- | --------------------------------------------------------------------- |
+| dataIndex / title | `string`                      | 同统一列契约（必填）                                                  |
+| editable          | `boolean \| (row) => boolean` | 该列是否可编辑，默认 false；函数形态按行数据判定行级粒度              |
+| editorType        | `'input' \| 'select'`         | 编辑器类型，默认 'input'                                              |
+| permissionCode    | `string \| string[]`          | 列级权限码（some 语义命中任一即可编辑；无权限渲染只读文本，不隐藏列） |
+| editorOptions     | `MxSelectOption[]`            | select 编辑器的选项                                                   |
+| rules             | `DocCellRule[]`               | 校验规则（`required` / `message` / `validator`，多条按顺序执行）      |
 
 ### Events
 
-| 事件 | 载荷 | 说明 |
-| --- | --- | --- |
-| update:modelValue | `(rows)` | 行数据变更（新增 / 删除 / 编辑值） |
-| save | `(rows)` | 校验通过后抛全量单据数据 |
-| rowAdd | `(row)` | 新增行（临时 key 形如 `__mx_row_<ts>_<seq>`） |
-| rowRemove | `(row)` | 删除行 |
-| update:expandedRowKeys | `(keys)` | 展开行变化（受控回抛） |
+| 事件                   | 载荷     | 说明                                          |
+| ---------------------- | -------- | --------------------------------------------- |
+| update:modelValue      | `(rows)` | 行数据变更（新增 / 删除 / 编辑值）            |
+| save                   | `(rows)` | 校验通过后抛全量单据数据                      |
+| rowAdd                 | `(row)`  | 新增行（临时 key 形如 `__mx_row_<ts>_<seq>`） |
+| rowRemove              | `(row)`  | 删除行                                        |
+| update:expandedRowKeys | `(keys)` | 展开行变化（受控回抛）                        |
 
 ### Slots
 
-| 插槽 | 说明 |
-| --- | --- |
-| toolbar | 自定义工具栏（追加在默认按钮之后） |
-| bodyCell | 单元格自定义渲染（非编辑态生效） |
+| 插槽        | 说明                                                           |
+| ----------- | -------------------------------------------------------------- |
+| toolbar     | 自定义工具栏（追加在默认按钮之后）                             |
+| bodyCell    | 单元格自定义渲染（非编辑态生效）                               |
 | expandedRow | 行展开内容（作用域 `{ record, index }`；子表由业务在槽内组合） |
 
 ## 相关教程

@@ -12,10 +12,10 @@ $mx-z-modal: 2000; // 模态框
 $mx-z-message: 3000; // 消息 / 通知
 
 :root {
-  --mx-z-base: #{$mx-z-base};
-  --mx-z-sticky: #{$mx-z-sticky};
-  --mx-z-dropdown: #{$mx-z-dropdown};
-  --mx-z-drawer: #{$mx-z-drawer};
-  --mx-z-modal: #{$mx-z-modal};
-  --mx-z-message: #{$mx-z-message};
+	--mx-z-base: #{$mx-z-base};
+	--mx-z-sticky: #{$mx-z-sticky};
+	--mx-z-dropdown: #{$mx-z-dropdown};
+	--mx-z-drawer: #{$mx-z-drawer};
+	--mx-z-modal: #{$mx-z-modal};
+	--mx-z-message: #{$mx-z-message};
 }

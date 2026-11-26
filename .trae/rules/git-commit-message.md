@@ -17,28 +17,28 @@ scene: git_message
 
 ## 2. type 枚举（禁止自造）
 
-| type | 用途 |
-| --- | --- |
-| `feat` | 新增能力（组件 / hook / token / service / Schema） |
-| `fix` | bug 修复 |
-| `docs` | 文档变更（VitePress、注释、任务文档回填） |
-| `style` | 不影响语义的格式调整（空格、分号、prettier） |
-| `refactor` | 重构（不新增能力、不修 bug） |
-| `perf` | 性能优化（Tree-Shaking、按需导入、包体积） |
-| `test` | 单测补充 / 修正 |
-| `build` | 构建体系、依赖版本、turbo/vite/tsconfig 调整 |
-| `ci` | GitHub Actions、依赖链路检查等门禁脚本 |
-| `chore` | 杂项（changesets 配置、仓库模板文件） |
-| `revert` | 回滚，格式：`revert: <被回滚提交的 type(scope): 描述>` |
+| type       | 用途                                                   |
+| ---------- | ------------------------------------------------------ |
+| `feat`     | 新增能力（组件 / hook / token / service / Schema）     |
+| `fix`      | bug 修复                                               |
+| `docs`     | 文档变更（VitePress、注释、任务文档回填）              |
+| `style`    | 不影响语义的格式调整（空格、分号、prettier）           |
+| `refactor` | 重构（不新增能力、不修 bug）                           |
+| `perf`     | 性能优化（Tree-Shaking、按需导入、包体积）             |
+| `test`     | 单测补充 / 修正                                        |
+| `build`    | 构建体系、依赖版本、turbo/vite/tsconfig 调整           |
+| `ci`       | GitHub Actions、依赖链路检查等门禁脚本                 |
+| `chore`    | 杂项（changesets 配置、仓库模板文件）                  |
+| `revert`   | 回滚，格式：`revert: <被回滚提交的 type(scope): 描述>` |
 
 ## 3. scope = 包名（与 PR 标题的 `[包名]` 对应，禁止凭记忆编造）
 
-| scope | 范围 |
-| --- | --- |
-| `utils` `theme` `hooks` `components` `biz-components` `runtime` `dsl-render` `cli` | 对应 `packages/<同名>` |
-| `demo-light` `demo-platform` `docs` | 对应 `apps/<同名>` |
-| `internal` | `internal/eslint-config` / `tsconfig` / `build-scripts` |
-| `repo` | 跨包或仓库级（根 package.json、turbo.json、pnpm-workspace.yaml、README 等） |
+| scope                                                                              | 范围                                                                        |
+| ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `utils` `theme` `hooks` `components` `biz-components` `runtime` `dsl-render` `cli` | 对应 `packages/<同名>`                                                      |
+| `demo-light` `demo-platform` `docs`                                                | 对应 `apps/<同名>`                                                          |
+| `internal`                                                                         | `internal/eslint-config` / `tsconfig` / `build-scripts`                     |
+| `repo`                                                                             | 跨包或仓库级（根 package.json、turbo.json、pnpm-workspace.yaml、README 等） |
 
 跨包小改动选主导包做 scope；真正同等的跨包变更用 `repo`。
 

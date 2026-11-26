@@ -1,38 +1,38 @@
 // StatusTag 状态标签：色调一律映射 theme 功能色 token（§6.4 / §7.2）
 .mx-status-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--mx-spacing-xs);
-  font-size: var(--mx-font-size-sm);
-  color: var(--mx-color-text-primary);
+	display: inline-flex;
+	align-items: center;
+	gap: var(--mx-spacing-xs);
+	font-size: var(--mx-font-size-sm);
+	color: var(--mx-color-text-primary);
 }
 
 .mx-status-tag__dot {
-  width: var(--mx-spacing-sm);
-  height: var(--mx-spacing-sm);
-  border-radius: var(--mx-radius-round);
+	width: var(--mx-spacing-sm);
+	height: var(--mx-spacing-sm);
+	border-radius: var(--mx-radius-round);
 
-  &--success {
-    background-color: var(--mx-color-success);
-  }
+	&--success {
+		background-color: var(--mx-color-success);
+	}
 
-  &--processing {
-    background-color: var(--mx-color-primary);
-  }
+	&--processing {
+		background-color: var(--mx-color-primary);
+	}
 
-  &--warning {
-    background-color: var(--mx-color-warning);
-  }
+	&--warning {
+		background-color: var(--mx-color-warning);
+	}
 
-  &--error {
-    background-color: var(--mx-color-danger);
-  }
+	&--error {
+		background-color: var(--mx-color-danger);
+	}
 
-  &--default {
-    background-color: var(--mx-color-text-disabled);
-  }
+	&--default {
+		background-color: var(--mx-color-text-disabled);
+	}
 }
 
 .mx-status-tag__label {
-  color: var(--mx-color-text-primary);
+	color: var(--mx-color-text-primary);
 }

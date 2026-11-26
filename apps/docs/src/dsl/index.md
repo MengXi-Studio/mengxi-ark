@@ -20,117 +20,111 @@ pnpm add @mengxi-ark/dsl-render
 所有 Schema 均带 `kind` 判别字段，且提供 `validateSchema()` 结构校验（开发期建议在接入处先校验）：
 
 ```ts
-import { validateSchema } from '@mengxi-ark/dsl-render';
+import { validateSchema } from '@mengxi-ark/dsl-render'
 
-const result = validateSchema(schema);
-if (!result.valid) console.error(result.errors); // ['fields[2].type 必须为非空字符串', ...]
+const result = validateSchema(schema)
+if (!result.valid) console.error(result.errors) // ['fields[2].type 必须为非空字符串', ...]
 ```
 
 ### QuerySchema —— 查询区
 
 ```ts
-import type { QuerySchema } from '@mengxi-ark/dsl-render';
+import type { QuerySchema } from '@mengxi-ark/dsl-render'
 
 const querySchema: QuerySchema = {
-  kind: 'query',
-  fields: [
-    { type: 'input', field: 'keyword', label: '关键字', placeholder: '姓名 / 编码' },
-    {
-      type: 'select',
-      field: 'dateType',
-      label: '时间类型',
-      options: [
-        { label: '不限', value: '' },
-        { label: '自定义', value: 'custom' },
-      ],
-    },
-    // 函数式联动显隐（TS 增强能力；结构保持 JSON 形态）
-    { type: 'dateRange', field: 'createdAt', visible: (v) => v.dateType === 'custom' },
-  ],
-};
+	kind: 'query',
+	fields: [
+		{ type: 'input', field: 'keyword', label: '关键字', placeholder: '姓名 / 编码' },
+		{
+			type: 'select',
+			field: 'dateType',
+			label: '时间类型',
+			options: [
+				{ label: '不限', value: '' },
+				{ label: '自定义', value: 'custom' }
+			]
+		},
+		// 函数式联动显隐（TS 增强能力；结构保持 JSON 形态）
+		{ type: 'dateRange', field: 'createdAt', visible: v => v.dateType === 'custom' }
+	]
+}
 ```
 
 ### FormSchema —— 表单
 
 ```ts
-import type { FormSchema } from '@mengxi-ark/dsl-render';
+import type { FormSchema } from '@mengxi-ark/dsl-render'
 
 const formSchema: FormSchema = {
-  kind: 'form',
-  title: '用户编辑',
-  fields: [
-    { type: 'input', field: 'name', label: '姓名', rules: [{ required: true }] },
-    { type: 'select', field: 'status', label: '状态', options: [{ label: '启用', value: '1' }], defaultValue: '1' },
-    // Lov 字段：独立模式传 lovApi；基座联动模式传 lovCode（探测上下文值集）
-    { type: 'lov', field: 'owner', label: '负责人', props: { lovApi, fieldNames: { label: 'name', value: 'code' } } },
-  ],
-};
+	kind: 'form',
+	title: '用户编辑',
+	fields: [
+		{ type: 'input', field: 'name', label: '姓名', rules: [{ required: true }] },
+		{ type: 'select', field: 'status', label: '状态', options: [{ label: '启用', value: '1' }], defaultValue: '1' },
+		// Lov 字段：独立模式传 lovApi；基座联动模式传 lovCode（探测上下文值集）
+		{ type: 'lov', field: 'owner', label: '负责人', props: { lovApi, fieldNames: { label: 'name', value: 'code' } } }
+	]
+}
 ```
 
 ### TableSchema —— 表格
 
 ```ts
-import type { TableSchema } from '@mengxi-ark/dsl-render';
+import type { TableSchema } from '@mengxi-ark/dsl-render'
 
 // 只读表格（组合 EnhanceTable，数据外部驱动，配合 hooks useTable）
 const tableSchema: TableSchema = {
-  kind: 'table',
-  columns: [
-    { dataIndex: 'name', title: '姓名' },
-    { dataIndex: 'status', title: '状态' },
-  ],
-};
+	kind: 'table',
+	columns: [
+		{ dataIndex: 'name', title: '姓名' },
+		{ dataIndex: 'status', title: '状态' }
+	]
+}
 
 // 可编辑单据（组合 DocumentTable；save 抛全量数据，提交请求由业务处理）
 const docSchema: TableSchema = {
-  kind: 'table',
-  mode: 'document',
-  columns: [
-    { dataIndex: 'product', title: '品名', editable: true, rules: [{ required: true }] },
-    { dataIndex: 'count', title: '数量', editable: true, editorType: 'select', editorOptions, permissionCode: 'biz:order:edit' },
-  ],
-};
+	kind: 'table',
+	mode: 'document',
+	columns: [
+		{ dataIndex: 'product', title: '品名', editable: true, rules: [{ required: true }] },
+		{ dataIndex: 'count', title: '数量', editable: true, editorType: 'select', editorOptions, permissionCode: 'biz:order:edit' }
+	]
+}
 ```
 
 ## 三个渲染器
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useTable } from '@mengxi-ark/hooks';
-import { FormRenderer, QueryRenderer, TableRenderer } from '@mengxi-ark/dsl-render';
+import { ref } from 'vue'
+import { useTable } from '@mengxi-ark/hooks'
+import { FormRenderer, QueryRenderer, TableRenderer } from '@mengxi-ark/dsl-render'
 
-const table = useTable(fetchUsers); // 业务注入数据源
+const table = useTable(fetchUsers) // 业务注入数据源
 
 function handleSearch(values: Record<string, unknown>) {
-  void table.search(values);
+	void table.search(values)
 }
 function handleSubmit(values: Record<string, unknown>) {
-  // 渲染器只渲染：submit / save 事件抛给上层，不自带请求
-  void saveUser(values);
+	// 渲染器只渲染：submit / save 事件抛给上层，不自带请求
+	void saveUser(values)
 }
 </script>
 
 <template>
-  <QueryRenderer :schema="querySchema" :loading="table.loading.value" @search="handleSearch" @reset="() => table.reset()" />
-  <TableRenderer
-    :schema="tableSchema"
-    :data-source="table.dataSource.value"
-    :loading="table.loading.value"
-    :pagination="table.pagination"
-    @page-change="(c, s) => table.pagination.onChange(c, s)"
-  />
-  <FormRenderer v-model="formValues" :schema="formSchema" @submit="handleSubmit" />
-  <TableRenderer v-model="docRows" :schema="docSchema" @save="(rows) => saveDoc(rows)" />
+	<QueryRenderer :schema="querySchema" :loading="table.loading.value" @search="handleSearch" @reset="() => table.reset()" />
+	<TableRenderer :schema="tableSchema" :data-source="table.dataSource.value" :loading="table.loading.value" :pagination="table.pagination" @page-change="(c, s) => table.pagination.onChange(c, s)" />
+	<FormRenderer v-model="formValues" :schema="formSchema" @submit="handleSubmit" />
+	<TableRenderer v-model="docRows" :schema="docSchema" @save="rows => saveDoc(rows)" />
 </template>
 ```
 
 渲染器契约：
 
-| 渲染器 | 关键 props | 关键 emits |
-| --- | --- | --- |
-| `QueryRenderer` | `schema` / `componentMap?` | `search(values)` / `reset()` |
-| `FormRenderer` | `schema` / `modelValue` (v-model) / `componentMap?` | `update:modelValue` / `submit(values)` / `validateFailed(errors)` |
+| 渲染器          | 关键 props                                                             | 关键 emits                                                                       |
+| --------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `QueryRenderer` | `schema` / `componentMap?`                                             | `search(values)` / `reset()`                                                     |
+| `FormRenderer`  | `schema` / `modelValue` (v-model) / `componentMap?`                    | `update:modelValue` / `submit(values)` / `validateFailed(errors)`                |
 | `TableRenderer` | `schema` / `dataSource` / `pagination` / `modelValue`（document 模式） | `pageChange` / `sortChange` / `rowClick` / `save(rows)` / `rowAdd` / `rowRemove` |
 
 `FormRenderer` 额外暴露 `validate()`（模板 ref 调用），适配嵌入 Dialog 自定义按钮的场景；
@@ -144,22 +138,18 @@ function handleSubmit(values: Record<string, unknown>) {
 
 ```vue
 <script setup lang="ts">
-import { defineComponent } from 'vue';
-import { TableRenderer } from '@mengxi-ark/dsl-render';
+import { defineComponent } from 'vue'
+import { TableRenderer } from '@mengxi-ark/dsl-render'
 
 // 自定义表格实现（整体替换默认 EnhanceTable）
 const myTable = defineComponent({
-  props: { columns: Array, dataSource: Array },
-  template: '<div class="my-table" />',
-});
+	props: { columns: Array, dataSource: Array },
+	template: '<div class="my-table" />'
+})
 </script>
 
 <template>
-  <TableRenderer
-    :schema="tableSchema"
-    :data-source="rows"
-    :component-map="{ enhanceTable: { component: myTable } }"
-  />
+	<TableRenderer :schema="tableSchema" :data-source="rows" :component-map="{ enhanceTable: { component: myTable } }" />
 </template>
 ```
 

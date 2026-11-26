@@ -9,7 +9,8 @@ This page is aggregated from each package's CHANGELOG.md at build time, newest v
 ### @mengxi-ark/utils
 
 - v1.0.0-beta 公测首发（M0–M4 全量落地，npm dist-tag `beta`）。
-- 四类纯函数工具层：数据格式化（formatDate / formatMoney / formatNumber / formatDict）、数据结构（数组 unique / groupBy / chunk，对象 deepClone / merge / omit / pick，树 forEachTree / mapTree / findTree / filterTree）、浏览器工具（download / exportCsv / getUrlParam）、校验编码（isPhone / isEmail / isIdCard / isEmpty）。
+- 四类纯函数工具层：数据格式化（formatDate / formatMoney / formatNumber / formatDict）、数据结构（数组 unique / groupBy / chunk，对象 deepClone / merge / omit / pick，树 forEachTree / mapTree / findTree /
+  filterTree）、浏览器工具（download / exportCsv / getUrlParam）、校验编码（isPhone / isEmail / isIdCard / isEmpty）。
 - 仅原生 TypeScript，无 Vue 依赖、无副作用，兼容 Web / Node 脚本导入，Tree-Shaking 友好。
 
 ### @mengxi-ark/theme
@@ -22,7 +23,8 @@ This page is aggregated from each package's CHANGELOG.md at build time, newest v
 ### @mengxi-ark/hooks
 
 - v1.0.0-beta 公测首发（M0–M4 全量落地，npm dist-tag `beta`）。
-- 六个通用 hook：useRequest（竞态保护 / 取消 / 重试退避 / 可选缓存）、useAuth（权限判断 + v-permission 指令）、useSession（token 持久化 / 自动刷新 / 过期回调）、useI18n（实例 provide 下发）、useTable（查询 / 分页 / 排序 / 筛选合并）、useForm（回显 / 重置 / 校验封装）。
+- 六个通用 hook：useRequest（竞态保护 / 取消 / 重试退避 / 可选缓存）、useAuth（权限判断 +
+  v-permission 指令）、useSession（token 持久化 / 自动刷新 / 过期回调）、useI18n（实例 provide 下发）、useTable（查询 / 分页 / 排序 / 筛选合并）、useForm（回显 / 重置 / 校验封装）。
 - 所有 hook 卸载自动清理，组件外调用不报错；权限源支持 adapter 注入 / inject 探测 / 安全默认三级降级。
 
 ### @mengxi-ark/components
@@ -44,7 +46,8 @@ This page is aggregated from each package's CHANGELOG.md at build time, newest v
 - v1.0.0-beta 公测首发（M0–M4 全量落地，npm dist-tag `beta`）。
 - Schema 三件套：QuerySchema / FormSchema / TableSchema 强 TS 类型（kind 判别 + 函数式 visible / rules 联动校验），validateSchema 结构校验（带路径错误清单）。
 - 组件映射注册表：默认 13 项（适配器原子 + Lov / SearchForm / EnhanceTable / DocumentTable / MxDialog 等），业务可同 key 覆盖。
-- 三渲染器（QueryRenderer / FormRenderer / TableRenderer）：只渲染不请求，search / submit / save 事件抛上层，FormRenderer 暴露 validate，TableRenderer 透传 toolbar / bodyCell / expandedRow 槽；双模式由 biz-components 自身 inject 探测继承。
+- 三渲染器（QueryRenderer / FormRenderer / TableRenderer）：只渲染不请求，search / submit / save 事件抛上层，FormRenderer 暴露 validate，TableRenderer 透传 toolbar / bodyCell /
+  expandedRow 槽；双模式由 biz-components 自身 inject 探测继承。
 
 ### @mengxi-ark/runtime
 
@@ -59,4 +62,3 @@ This page is aggregated from each package's CHANGELOG.md at build time, newest v
 - create-mengxi-ark 脚手架（@clack/prompts 交互：模板选择 / 目录名 / 非空目录确认）。
 - 双模板：templates/light 轻量模板（utils / theme / hooks / components / biz-components 直装直用，无 runtime）与 templates/platform 中台基座模板（createArkRuntime + systemModule 示例 + 工作台 Layout）。
 - 模板随包发布并内置分档 `.trae/rules/` 用法速查（ark-light.md / ark-platform.md）；占位符注入框架包版本，与 cli 版本绑定对齐。
-

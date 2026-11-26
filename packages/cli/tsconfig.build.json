@@ -1,14 +1,14 @@
 {
-  "extends": "../../internal/tsconfig/base.json",
-  "compilerOptions": {
-    "noEmit": false,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "lib": ["ES2022"],
-    "outDir": "dist",
-    "rootDir": "src",
-    "declaration": true
-  },
-  "include": ["src"],
-  "exclude": ["src/**/__tests__/**", "node_modules/**"]
+	"extends": "../../internal/tsconfig/base.json",
+	"compilerOptions": {
+		"noEmit": false,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"lib": ["ES2022"],
+		"outDir": "dist",
+		"rootDir": "src",
+		"declaration": true
+	},
+	"include": ["src"],
+	"exclude": ["src/**/__tests__/**", "node_modules/**"]
 }

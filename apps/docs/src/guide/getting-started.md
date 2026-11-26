@@ -13,7 +13,7 @@ pnpm add @mengxi-ark/utils @mengxi-ark/theme @mengxi-ark/hooks
 在应用入口引入一次即可，全部样式为 `--mx-*` CSS Variables：
 
 ```ts
-import '@mengxi-ark/theme';
+import '@mengxi-ark/theme'
 ```
 
 > `@mengxi-ark/theme` 的 exports 将 `.` 指向 `./dist/index.css`，直接引入包名即可，不要写子路径。
@@ -23,60 +23,52 @@ import '@mengxi-ark/theme';
 `src/main.ts`：
 
 ```ts
-import { createApp } from 'vue';
-import { MX_I18N_KEY, createI18n, vPermission } from '@mengxi-ark/hooks';
-import '@mengxi-ark/theme/dist/index.css';
-import App from './App.vue';
+import { createApp } from 'vue'
+import { MX_I18N_KEY, createI18n, vPermission } from '@mengxi-ark/hooks'
+import '@mengxi-ark/theme/dist/index.css'
+import App from './App.vue'
 
 // i18n 实例经 provide 下发，组件内 useI18n() 会自动复用
 const i18n = createI18n({
-  locale: 'zh-CN',
-  fallbackLocale: 'zh-CN',
-  messages: {
-    'zh-CN': { demo: { greeting: '你好，{name}！' } },
-    'en-US': { demo: { greeting: 'Hello, {name}!' } },
-  },
-});
+	locale: 'zh-CN',
+	fallbackLocale: 'zh-CN',
+	messages: {
+		'zh-CN': { demo: { greeting: '你好，{name}！' } },
+		'en-US': { demo: { greeting: 'Hello, {name}!' } }
+	}
+})
 
-const app = createApp(App);
+const app = createApp(App)
 
-app.provide(MX_I18N_KEY, i18n);
-app.directive('permission', vPermission);
-app.mount('#app');
+app.provide(MX_I18N_KEY, i18n)
+app.directive('permission', vPermission)
+app.mount('#app')
 ```
 
 组件内使用 utils 与 hooks：
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue';
-import { formatMoney } from '@mengxi-ark/utils';
-import { useRequest } from '@mengxi-ark/hooks';
+import { ref } from 'vue'
+import { formatMoney } from '@mengxi-ark/utils'
+import { useRequest } from '@mengxi-ark/hooks'
 
-const price = ref('1234567.891');
+const price = ref('1234567.891')
 
 function fetchUser(): Promise<{ name: string }> {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve({ name: '曦舟' }), 500);
-  });
+	return new Promise(resolve => {
+		setTimeout(() => resolve({ name: '曦舟' }), 500)
+	})
 }
 
-const { data, loading, error, retry } = useRequest(fetchUser);
+const { data, loading, error, retry } = useRequest(fetchUser)
 </script>
 
 <template>
-  <p>
-    金额：{{ formatMoney(price) }}
-  </p>
-  <p v-if="loading">
-    加载中…
-  </p>
-  <p v-else-if="error">
-    加载失败，可调用 retry() 重试
-  </p>
-  <p v-else-if="data">
-    用户：{{ data.name }}
-  </p>
+	<p>金额：{{ formatMoney(price) }}</p>
+	<p v-if="loading">加载中…</p>
+	<p v-else-if="error">加载失败，可调用 retry() 重试</p>
+	<p v-else-if="data">用户：{{ data.name }}</p>
 </template>
 ```
 
@@ -85,7 +77,7 @@ const { data, loading, error, retry } = useRequest(fetchUser);
 宿主根节点挂 `data-theme="dark"` 即可整体切换暗色，无需重新加载样式：
 
 ```ts
-document.documentElement.dataset.theme = 'dark'; // 传 '' 恢复亮色
+document.documentElement.dataset.theme = 'dark' // 传 '' 恢复亮色
 ```
 
 也可以挂 `.mx-theme-dark` 类，两种方式等价。
@@ -96,8 +88,8 @@ document.documentElement.dataset.theme = 'dark'; // 传 '' 恢复亮色
 
 ```css
 :root {
-  --mx-color-primary: #0958d9;
-  --mx-radius-base: 4px;
+	--mx-color-primary: #0958d9;
+	--mx-radius-base: 4px;
 }
 ```
 

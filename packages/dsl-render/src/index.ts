@@ -10,20 +10,20 @@
  * - 渲染器只渲染：search / submit / save 事件抛给上层业务，不自带请求逻辑。
  */
 // —— Schema 类型 ——
-export type { ArkSchema, FieldRule, FieldSchemaBase, FormFieldSchema, FormSchema, QueryFieldSchema, QuerySchema, SchemaKind, TableColumnSchema, TableSchema, ValidationResult } from './types';
-export { DEFAULT_RULE_MESSAGE, isPlainObject } from './types';
+export type { ArkSchema, FieldRule, FieldSchemaBase, FormFieldSchema, FormSchema, QueryFieldSchema, QuerySchema, SchemaKind, TableColumnSchema, TableSchema, ValidationResult } from './types'
+export { DEFAULT_RULE_MESSAGE, isPlainObject } from './types'
 
 // —— 结构校验 ——
-export { validateSchema } from './validate/validateSchema';
+export { validateSchema } from './validate/validateSchema'
 
 // —— 组件映射注册表 ——
-export { buildDefaultComponentMap, createComponentMap } from './componentMap';
-export type { SchemaComponentMap, SchemaMapEntry } from './componentMap';
+export { buildDefaultComponentMap, createComponentMap } from './componentMap'
+export type { SchemaComponentMap, SchemaMapEntry } from './componentMap'
 
 // —— 渲染器 ——
-export { QueryRenderer } from './renderers/QueryRenderer';
-export { FormRenderer } from './renderers/FormRenderer';
-export { TableRenderer } from './renderers/TableRenderer';
+export { QueryRenderer } from './renderers/QueryRenderer'
+export { FormRenderer } from './renderers/FormRenderer'
+export { TableRenderer } from './renderers/TableRenderer'
 
 /** 包版本常量（M0 包壳遗留，保持兼容） */
-export const MENGXI_ARK_VERSION = '0.0.0';
+export const MENGXI_ARK_VERSION = '0.0.0'

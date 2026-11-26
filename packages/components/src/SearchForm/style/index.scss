@@ -1,39 +1,39 @@
 // SearchForm 高级查询区：布局样式仅引用 --mx-* token
 .mx-search-form {
-  padding: var(--mx-spacing-md);
-  background-color: var(--mx-color-bg-container);
-  border: 1px solid var(--mx-color-border-split);
-  border-radius: var(--mx-radius-lg);
+	padding: var(--mx-spacing-md);
+	background-color: var(--mx-color-bg-container);
+	border: 1px solid var(--mx-color-border-split);
+	border-radius: var(--mx-radius-lg);
 }
 
 .mx-search-form__fields {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--mx-spacing-md) var(--mx-spacing-lg);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: var(--mx-spacing-md) var(--mx-spacing-lg);
 }
 
 .mx-search-form__item {
-  display: flex;
-  align-items: center;
-  min-width: 220px;
-  gap: var(--mx-spacing-xs);
+	display: flex;
+	align-items: center;
+	min-width: 220px;
+	gap: var(--mx-spacing-xs);
 }
 
 .mx-search-form__item--actions {
-  min-width: auto;
-  margin-left: auto;
-  gap: var(--mx-spacing-sm);
+	min-width: auto;
+	margin-left: auto;
+	gap: var(--mx-spacing-sm);
 }
 
 .mx-search-form__label {
-  flex-shrink: 0;
-  color: var(--mx-color-text-secondary);
-  font-size: var(--mx-font-size-sm);
-  white-space: nowrap;
+	flex-shrink: 0;
+	color: var(--mx-color-text-secondary);
+	font-size: var(--mx-font-size-sm);
+	white-space: nowrap;
 }
 
 .mx-search-form__control {
-  flex: 1;
-  min-width: 0;
+	flex: 1;
+	min-width: 0;
 }

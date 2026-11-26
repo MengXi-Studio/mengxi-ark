@@ -14,11 +14,7 @@
  * formatDict('male', { male: '男', female: '女' }); // '男'
  * formatDict(9, { 1: '启用' }, '未知'); // '未知'
  */
-export function formatDict(
-  value: string | number,
-  dictMap: Record<string | number, string>,
-  fallback = '-',
-): string {
-  const key = String(value);
-  return Object.hasOwn(dictMap, key) ? dictMap[key] : fallback;
+export function formatDict(value: string | number, dictMap: Record<string | number, string>, fallback = '-'): string {
+	const key = String(value)
+	return Object.hasOwn(dictMap, key) ? dictMap[key] : fallback
 }

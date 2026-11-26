@@ -1,28 +1,28 @@
 // EmptyState 统一空状态：仅引用 --mx-* token（§6.4 禁止硬编码色值/间距/圆角）
 .mx-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--mx-spacing-md);
-  padding: var(--mx-spacing-xl) var(--mx-spacing-md);
-  color: var(--mx-color-text-secondary);
-  font-size: var(--mx-font-size-sm);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--mx-spacing-md);
+	padding: var(--mx-spacing-xl) var(--mx-spacing-md);
+	color: var(--mx-color-text-secondary);
+	font-size: var(--mx-font-size-sm);
 }
 
 .mx-empty__body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--mx-spacing-sm);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--mx-spacing-sm);
 }
 
 .mx-empty__description {
-  margin: 0;
-  color: var(--mx-color-text-secondary);
+	margin: 0;
+	color: var(--mx-color-text-secondary);
 }
 
 .mx-empty__action {
-  display: flex;
-  align-items: center;
-  gap: var(--mx-spacing-sm);
+	display: flex;
+	align-items: center;
+	gap: var(--mx-spacing-sm);
 }

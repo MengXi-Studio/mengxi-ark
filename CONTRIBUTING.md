@@ -22,13 +22,13 @@ pnpm peer:check     # peerDependency 对齐校验
 
 ## 分支模型
 
-| 分支 | 用途 |
-| --- | --- |
-| `master` | 稳定分支，可随时打 tag 发布 |
-| `feature/*` | 新功能 |
-| `fix/*` | 修复 |
-| `docs/*` | 文档 |
-| `release/*` | 发版准备 |
+| 分支        | 用途                        |
+| ----------- | --------------------------- |
+| `master`    | 稳定分支，可随时打 tag 发布 |
+| `feature/*` | 新功能                      |
+| `fix/*`     | 修复                        |
+| `docs/*`    | 文档                        |
+| `release/*` | 发版准备                    |
 
 ## 提交规范（Conventional Commits）
 

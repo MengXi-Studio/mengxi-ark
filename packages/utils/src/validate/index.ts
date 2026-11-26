@@ -1,17 +1,17 @@
 /** 中国大陆手机号：1 开头、第二位 3-9、共 11 位数字 */
-const PHONE_REGEXP = /^1[3-9]\d{9}$/;
+const PHONE_REGEXP = /^1[3-9]\d{9}$/
 
 /** 宽松邮箱格式：不允许空格，必须含一个 @ 且域名带点 */
-const EMAIL_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 /** 18 位身份证格式：前 17 位数字 + 末位数字或 X/x */
-const ID_CARD_REGEXP = /^\d{17}[\dXx]$/;
+const ID_CARD_REGEXP = /^\d{17}[\dXx]$/
 
 /** GB 11643-1999 校验位算法权重 */
-const ID_CARD_WEIGHTS = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+const ID_CARD_WEIGHTS = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
 
 /** 校验码表：余数 0~10 对应 1 0 X 9 8 7 6 5 4 3 2 */
-const ID_CARD_CHECK_CODES = '10X98765432';
+const ID_CARD_CHECK_CODES = '10X98765432'
 
 /**
  * 校验中国大陆手机号。
@@ -25,7 +25,7 @@ const ID_CARD_CHECK_CODES = '10X98765432';
  * isPhone('1381234567'); // false（长度不足）
  */
 export function isPhone(value: string): boolean {
-  return PHONE_REGEXP.test(value);
+	return PHONE_REGEXP.test(value)
 }
 
 /**
@@ -39,7 +39,7 @@ export function isPhone(value: string): boolean {
  * isEmail('user@example'); // false（域名缺少点后缀）
  */
 export function isEmail(value: string): boolean {
-  return EMAIL_REGEXP.test(value);
+	return EMAIL_REGEXP.test(value)
 }
 
 /**
@@ -55,12 +55,12 @@ export function isEmail(value: string): boolean {
  * isIdCard('110105194912310021'); // false（校验位错误）
  */
 export function isIdCard(value: string): boolean {
-  if (!ID_CARD_REGEXP.test(value)) return false;
-  let sum = 0;
-  for (let i = 0; i < 17; i += 1) {
-    sum += Number(value[i]) * ID_CARD_WEIGHTS[i];
-  }
-  return ID_CARD_CHECK_CODES[sum % 11] === value[17].toUpperCase();
+	if (!ID_CARD_REGEXP.test(value)) return false
+	let sum = 0
+	for (let i = 0; i < 17; i += 1) {
+		sum += Number(value[i]) * ID_CARD_WEIGHTS[i]
+	}
+	return ID_CARD_CHECK_CODES[sum % 11] === value[17].toUpperCase()
 }
 
 /**
@@ -78,9 +78,9 @@ export function isIdCard(value: string): boolean {
  * isEmpty({ a: 1 }); // false
  */
 export function isEmpty(value: unknown): boolean {
-  if (value == null) return true;
-  if (typeof value === 'string') return value.length === 0;
-  if (Array.isArray(value)) return value.length === 0;
-  if (typeof value === 'object') return Object.keys(value).length === 0;
-  return false;
+	if (value == null) return true
+	if (typeof value === 'string') return value.length === 0
+	if (Array.isArray(value)) return value.length === 0
+	if (typeof value === 'object') return Object.keys(value).length === 0
+	return false
 }

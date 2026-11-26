@@ -1,2 +1,2 @@
-export { default } from './MxDialog.vue';
-export type { MxDialogEmits, MxDialogProps, MxDialogSlots } from './types';
+export { default } from './MxDialog.vue'
+export type { MxDialogEmits, MxDialogProps, MxDialogSlots } from './types'

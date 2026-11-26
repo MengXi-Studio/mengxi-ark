@@ -2,10 +2,10 @@
  * formatNumber 可选配置。
  */
 export interface FormatNumberOptions {
-  /** 小数位数；未指定时保留原值小数；取值截断到 0~20 */
-  precision?: number;
-  /** 千分位分隔符，默认 ','；传空字符串表示不分隔 */
-  thousandSeparator?: string;
+	/** 小数位数；未指定时保留原值小数；取值截断到 0~20 */
+	precision?: number
+	/** 千分位分隔符，默认 ','；传空字符串表示不分隔 */
+	thousandSeparator?: string
 }
 
 /**
@@ -24,16 +24,15 @@ export interface FormatNumberOptions {
  * formatNumber(-9876543.21, { thousandSeparator: '_' }); // '-9_876_543.21'
  */
 export function formatNumber(value: number | string, options: FormatNumberOptions = {}): string {
-  const { precision, thousandSeparator = ',' } = options;
-  if (typeof value === 'string' && value.trim() === '') return '';
-  const num = Number(value);
-  if (!Number.isFinite(num)) return '';
-  const fixed = precision === undefined ? String(num) : num.toFixed(Math.min(Math.max(precision, 0), 20));
-  const negative = fixed.startsWith('-');
-  const digits = negative ? fixed.slice(1) : fixed;
-  const [intPart, decimalPart] = digits.split('.');
-  const grouped =
-    thousandSeparator === '' ? intPart : intPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
-  const result = decimalPart === undefined ? grouped : `${grouped}.${decimalPart}`;
-  return negative ? `-${result}` : result;
+	const { precision, thousandSeparator = ',' } = options
+	if (typeof value === 'string' && value.trim() === '') return ''
+	const num = Number(value)
+	if (!Number.isFinite(num)) return ''
+	const fixed = precision === undefined ? String(num) : num.toFixed(Math.min(Math.max(precision, 0), 20))
+	const negative = fixed.startsWith('-')
+	const digits = negative ? fixed.slice(1) : fixed
+	const [intPart, decimalPart] = digits.split('.')
+	const grouped = thousandSeparator === '' ? intPart : intPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator)
+	const result = decimalPart === undefined ? grouped : `${grouped}.${decimalPart}`
+	return negative ? `-${result}` : result
 }

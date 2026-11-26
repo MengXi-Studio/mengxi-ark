@@ -1,4 +1,4 @@
 {
-  "extends": "../../internal/tsconfig/base.json",
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "vite.config.ts"]
+	"extends": "../../internal/tsconfig/base.json",
+	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "vite.config.ts"]
 }

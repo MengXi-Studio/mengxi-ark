@@ -1,4 +1,4 @@
-# __PROJECT_NAME__
+# **PROJECT_NAME**
 
 基于 [曦舟 MengXi Ark](https://github.com/MengXi-Studio/mengxi-ark) 的中台基座工程（runtime 工作台）。
 
@@ -11,13 +11,13 @@ pnpm dev
 
 ## 基座能力
 
-| 能力 | 说明 |
-| --- | --- |
-| Tab 工作台 | 内置 ArkWorkbenchLayout（可经 `options.layout` 替换） |
-| 菜单 | 模块 `menus` 声明式汇入 |
-| 模块注册 | `createArkRuntime({ modules })` / `runtime.registerModule()` 延迟注册 |
-| 全局上下文 | `context` 经 `MX_RUNTIME_CONTEXT_KEY` 下发，biz-components 自动探测复用 |
-| 生命周期 | `onAppInit` / `onBeforeRouteChange` / `onSessionExpired` 钩子扩展，不 fork 源码 |
+| 能力       | 说明                                                                            |
+| ---------- | ------------------------------------------------------------------------------- |
+| Tab 工作台 | 内置 ArkWorkbenchLayout（可经 `options.layout` 替换）                           |
+| 菜单       | 模块 `menus` 声明式汇入                                                         |
+| 模块注册   | `createArkRuntime({ modules })` / `runtime.registerModule()` 延迟注册           |
+| 全局上下文 | `context` 经 `MX_RUNTIME_CONTEXT_KEY` 下发，biz-components 自动探测复用         |
+| 生命周期   | `onAppInit` / `onBeforeRouteChange` / `onSessionExpired` 钩子扩展，不 fork 源码 |
 
 ## 模块开发
 

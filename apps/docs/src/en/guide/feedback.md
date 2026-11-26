@@ -6,11 +6,11 @@ MengXi Ark adopts a dual-track feedback mechanism — "Issues for problems, Disc
 
 Please submit via the templates for quick triage and response:
 
-| Template | When to Use |
-| --- | --- |
-| [Bug Report](https://github.com/MengXi-Studio/mengxi-ark/issues/new?template=bug_report.md) | Component / hook / base behavior doesn't match the docs or throws errors |
-| [Feature Request](https://github.com/MengXi-Studio/mengxi-ark/issues/new?template=feature_request.md) | Suggestions for new components, hooks, or capabilities |
-| [Docs Feedback](https://github.com/MengXi-Studio/mengxi-ark/issues/new?template=docs_feedback.md) | Documentation errors, non-runnable examples |
+| Template                                                                                              | When to Use                                                              |
+| ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| [Bug Report](https://github.com/MengXi-Studio/mengxi-ark/issues/new?template=bug_report.md)           | Component / hook / base behavior doesn't match the docs or throws errors |
+| [Feature Request](https://github.com/MengXi-Studio/mengxi-ark/issues/new?template=feature_request.md) | Suggestions for new components, hooks, or capabilities                   |
+| [Docs Feedback](https://github.com/MengXi-Studio/mengxi-ark/issues/new?template=docs_feedback.md)     | Documentation errors, non-runnable examples                              |
 
 When filing a bug, please include: framework package versions (`pnpm list @mengxi-ark/utils`), Vue / UI library versions, and a minimal reproduction or screenshots.
 
@@ -28,7 +28,8 @@ Scan the QR code to follow the MengXi Ark official account for release announcem
 
 ## Contributing Fixes
 
-PRs are welcome: fork → `fix/*` or `feature/*` branch → link an Issue → once CI is green, a maintainer reviews and merges. See [CONTRIBUTING](https://github.com/MengXi-Studio/mengxi-ark/blob/master/CONTRIBUTING.md) for the process.
+PRs are welcome: fork → `fix/*` or `feature/*` branch → link an Issue → once CI is green, a maintainer reviews and merges. See [CONTRIBUTING](https://github.com/MengXi-Studio/mengxi-ark/blob/master/CONTRIBUTING.md) for
+the process.
 
 ## Upgrade Notes
 

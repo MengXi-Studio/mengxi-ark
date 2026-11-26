@@ -41,24 +41,24 @@
 
 以 Lov 值集选择器为例：
 
-| 模式 | 触发条件 | 数据来源 |
-| --- | --- | --- |
-| 独立模式（默认降级） | 传 `lovApi` / `lovOptions` 等 props | 组件内部自行请求，不需要任何基座 |
-| 基座联动模式 | `inject` 探测到基座上下文 | 自动复用基座的值集缓存 / 列表接口 / 权限 |
+| 模式                 | 触发条件                            | 数据来源                                 |
+| -------------------- | ----------------------------------- | ---------------------------------------- |
+| 独立模式（默认降级） | 传 `lovApi` / `lovOptions` 等 props | 组件内部自行请求，不需要任何基座         |
+| 基座联动模式         | `inject` 探测到基座上下文           | 自动复用基座的值集缓存 / 列表接口 / 权限 |
 
 解析优先级恒为「上下文 → props → 独立空态」：上下文丢失字段自动回退同名 props，全部缺失渲染空态并警告一次，**不抛致命异常**。基座是纯增量依赖，未安装时一切组件照常工作。
 
 ## 包清单
 
-| 包名 | 定位 | 说明 |
-| --- | --- | --- |
-| `@mengxi-ark/utils` | 纯函数工具层 | 数据格式化 / 数据结构 / 浏览器工具 / 校验编码，无 Vue 依赖，兼容 Web / Node |
-| `@mengxi-ark/theme` | Design Token 纯样式层 | 全量 `--mx-*` CSS Variables，业务覆盖同名变量即可换肤，开箱支持暗色 |
-| `@mengxi-ark/hooks` | 通用组合式函数 | useRequest / useAuth / useSession / useI18n / useTable / useForm |
-| `@mengxi-ark/components` | 通用增强组件 | SearchForm / EnhanceTable / Dialog 等，props 驱动优先、插槽兜底 |
-| `@mengxi-ark/biz-components` | 双模式业务语义组件 | Lov 值集选择器 / DocumentTable 单据表格等，独立与基座联动自动切换 |
-| `@mengxi-ark/dsl-render` | DSL 配置渲染引擎（可选） | Schema 强类型 + 三渲染器，只渲染不请求，手写 SFC 一等公民 |
-| `@mengxi-ark/cli` | 脚手架 | `pnpm create mengxi-ark`，轻量 / 中台双模板 |
+| 包名                         | 定位                     | 说明                                                                        |
+| ---------------------------- | ------------------------ | --------------------------------------------------------------------------- |
+| `@mengxi-ark/utils`          | 纯函数工具层             | 数据格式化 / 数据结构 / 浏览器工具 / 校验编码，无 Vue 依赖，兼容 Web / Node |
+| `@mengxi-ark/theme`          | Design Token 纯样式层    | 全量 `--mx-*` CSS Variables，业务覆盖同名变量即可换肤，开箱支持暗色         |
+| `@mengxi-ark/hooks`          | 通用组合式函数           | useRequest / useAuth / useSession / useI18n / useTable / useForm            |
+| `@mengxi-ark/components`     | 通用增强组件             | SearchForm / EnhanceTable / Dialog 等，props 驱动优先、插槽兜底             |
+| `@mengxi-ark/biz-components` | 双模式业务语义组件       | Lov 值集选择器 / DocumentTable 单据表格等，独立与基座联动自动切换           |
+| `@mengxi-ark/dsl-render`     | DSL 配置渲染引擎（可选） | Schema 强类型 + 三渲染器，只渲染不请求，手写 SFC 一等公民                   |
+| `@mengxi-ark/cli`            | 脚手架                   | `pnpm create mengxi-ark`，轻量 / 中台双模板                                 |
 
 另有可选的**中台基座包**（Tab 工作台 / 菜单 / 会话 / 全局上下文），属于进阶能力，详见[中台进阶](/platform/)板块——轻量使用阶段无需关心。
 
@@ -72,12 +72,12 @@
 
 按「入门 → 核心 → 进阶 → 精通」四阶段渐进学习，每个阶段结束你都能独立完成一类工作：
 
-| 阶段 | 页面 | 学完你能 |
-| --- | --- | --- |
-| **入门** | [介绍](/guide/introduction) · [快速上手（轻量模式）](/guide/getting-started) | 在任意 Vue 3 项目装上三个基础包并跑通 utils / theme / hooks |
-| **核心** | [核心概念](/guide/core-concepts) · [组件实战](/guide/components-guide) | 理解分层与双模式契约；用五步渐进方式跑通 SearchForm / EnhanceTable / Lov / DocumentTable |
-| **进阶** | [中台进阶](/platform/) · [DSL 配置渲染](/dsl/) | 装配 Tab 工作台与业务模块；用 Schema 加速标准 CRUD 页面 |
-| **精通** | [迁移指南](/guide/migration) · [API 手册](/api/utils) | 平滑迁移存量 antdv / Element Plus 项目；逐项核对导出 API |
+| 阶段     | 页面                                                                         | 学完你能                                                                                 |
+| -------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **入门** | [介绍](/guide/introduction) · [快速上手（轻量模式）](/guide/getting-started) | 在任意 Vue 3 项目装上三个基础包并跑通 utils / theme / hooks                              |
+| **核心** | [核心概念](/guide/core-concepts) · [组件实战](/guide/components-guide)       | 理解分层与双模式契约；用五步渐进方式跑通 SearchForm / EnhanceTable / Lov / DocumentTable |
+| **进阶** | [中台进阶](/platform/) · [DSL 配置渲染](/dsl/)                               | 装配 Tab 工作台与业务模块；用 Schema 加速标准 CRUD 页面                                  |
+| **精通** | [迁移指南](/guide/migration) · [API 手册](/api/utils)                        | 平滑迁移存量 antdv / Element Plus 项目；逐项核对导出 API                                 |
 
 ## 下一步
 

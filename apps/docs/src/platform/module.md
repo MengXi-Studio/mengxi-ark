@@ -7,31 +7,37 @@
 ## ModuleDefinition
 
 ```ts
-import type { ModuleDefinition } from '@mengxi-ark/runtime';
+import type { ModuleDefinition } from '@mengxi-ark/runtime'
 
 export const systemModule: ModuleDefinition = {
-  id: 'system',                    // 唯一标识，重复注册抛错
-  routes: [                        // 经 router.addRoute 注册
-    {
-      path: '/system/users',
-      name: 'system-users',
-      component: () => import('../views/UserManagePage.vue'),
-      meta: { title: '用户管理' },
-    },
-  ],
-  menus: [                         // 汇入 menuService 菜单树（同 key 覆盖）
-    {
-      key: 'system',
-      title: '系统管理',
-      children: [{ key: 'system-users', title: '用户管理', path: '/system/users' }],
-    },
-  ],
-  permissions: ['system:user:view'],  // 合并去重汇入全局上下文 permissions
-  lifecycle: {
-    onAppInit: () => { /* 模块初始化 */ },
-    onBeforeRouteChange: (to, from) => { /* 模块级守卫 */ },
-  },
-};
+	id: 'system', // 唯一标识，重复注册抛错
+	routes: [
+		// 经 router.addRoute 注册
+		{
+			path: '/system/users',
+			name: 'system-users',
+			component: () => import('../views/UserManagePage.vue'),
+			meta: { title: '用户管理' }
+		}
+	],
+	menus: [
+		// 汇入 menuService 菜单树（同 key 覆盖）
+		{
+			key: 'system',
+			title: '系统管理',
+			children: [{ key: 'system-users', title: '用户管理', path: '/system/users' }]
+		}
+	],
+	permissions: ['system:user:view'], // 合并去重汇入全局上下文 permissions
+	lifecycle: {
+		onAppInit: () => {
+			/* 模块初始化 */
+		},
+		onBeforeRouteChange: (to, from) => {
+			/* 模块级守卫 */
+		}
+	}
+}
 ```
 
 ## 注册时机
@@ -40,12 +46,12 @@ export const systemModule: ModuleDefinition = {
 - **延迟注册**：拿到实例句柄后任意时机调用 `runtime.registerModule(module)`——路由立即 `addRoute`、菜单 / 权限立即并入、模块级 `onAppInit` 立即执行。
 
 ```ts
-const runtime = createArkRuntime({ router, context });
-app.use(runtime);
+const runtime = createArkRuntime({ router, context })
+app.use(runtime)
 
 // 异步拉取远程模块声明后注册
-const remote = await fetchModuleDefinition();
-runtime.registerModule(remote);
+const remote = await fetchModuleDefinition()
+runtime.registerModule(remote)
 ```
 
 ## 权限合并
@@ -59,15 +65,15 @@ runtime.registerModule(remote);
 
 ```vue
 <script setup lang="ts">
-import { inject } from 'vue';
-import { ARK_RUNTIME_KEY } from '@mengxi-ark/runtime';
-import type { ArkRuntime } from '@mengxi-ark/runtime';
+import { inject } from 'vue'
+import { ARK_RUNTIME_KEY } from '@mengxi-ark/runtime'
+import type { ArkRuntime } from '@mengxi-ark/runtime'
 
-const runtime = inject(ARK_RUNTIME_KEY) as ArkRuntime | undefined;
+const runtime = inject(ARK_RUNTIME_KEY) as ArkRuntime | undefined
 
 // 打开业务弹窗（openMode 'dialog'，业务组件直传）
 function openPickDialog(): void {
-  runtime?.tabService.open({ title: '选择负责人', component: PickOwnerDialog, width: 480 });
+	runtime?.tabService.open({ title: '选择负责人', component: PickOwnerDialog, width: 480 })
 }
 </script>
 ```

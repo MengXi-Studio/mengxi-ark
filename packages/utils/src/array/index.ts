@@ -15,18 +15,18 @@
  * // [{ id: 1, v: 'a' }, { id: 2, v: 'b' }]
  */
 export function unique<T>(arr: T[], keyField?: string): T[] {
-  if (keyField === undefined) {
-    return Array.from(new Set(arr));
-  }
-  const seen = new Set<unknown>();
-  const result: T[] = [];
-  for (const item of arr) {
-    const key = (item as Record<string, unknown> | null | undefined)?.[keyField];
-    if (seen.has(key)) continue;
-    seen.add(key);
-    result.push(item);
-  }
-  return result;
+	if (keyField === undefined) {
+		return Array.from(new Set(arr))
+	}
+	const seen = new Set<unknown>()
+	const result: T[] = []
+	for (const item of arr) {
+		const key = (item as Record<string, unknown> | null | undefined)?.[keyField]
+		if (seen.has(key)) continue
+		seen.add(key)
+		result.push(item)
+	}
+	return result
 }
 
 /**
@@ -42,16 +42,13 @@ export function unique<T>(arr: T[], keyField?: string): T[] {
  * groupBy([1, 2, 3, 4], (n) => (n % 2 === 0 ? 'even' : 'odd'));
  * // { odd: [1, 3], even: [2, 4] }
  */
-export function groupBy<T>(
-  arr: T[],
-  keyFn: (item: T, index: number) => string | number,
-): Record<string, T[]> {
-  const result: Record<string, T[]> = {};
-  arr.forEach((item, index) => {
-    const key = String(keyFn(item, index));
-    (result[key] ??= []).push(item);
-  });
-  return result;
+export function groupBy<T>(arr: T[], keyFn: (item: T, index: number) => string | number): Record<string, T[]> {
+	const result: Record<string, T[]> = {}
+	arr.forEach((item, index) => {
+		const key = String(keyFn(item, index))
+		;(result[key] ??= []).push(item)
+	})
+	return result
 }
 
 /**
@@ -69,11 +66,11 @@ export function groupBy<T>(
  * chunk([1], 0); // []
  */
 export function chunk<T>(arr: T[], size: number): T[][] {
-  const safeSize = Math.floor(size);
-  if (!Number.isFinite(safeSize) || safeSize <= 0) return [];
-  const result: T[][] = [];
-  for (let i = 0; i < arr.length; i += safeSize) {
-    result.push(arr.slice(i, i + safeSize));
-  }
-  return result;
+	const safeSize = Math.floor(size)
+	if (!Number.isFinite(safeSize) || safeSize <= 0) return []
+	const result: T[][] = []
+	for (let i = 0; i < arr.length; i += safeSize) {
+		result.push(arr.slice(i, i + safeSize))
+	}
+	return result
 }

@@ -1,27 +1,27 @@
 {
-  "name": "__PROJECT_NAME__",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@mengxi-ark/biz-components": "__ARK_VERSION__",
-    "@mengxi-ark/components": "__ARK_VERSION__",
-    "@mengxi-ark/hooks": "__ARK_VERSION__",
-    "@mengxi-ark/runtime": "__ARK_VERSION__",
-    "@mengxi-ark/theme": "__ARK_VERSION__",
-    "@mengxi-ark/utils": "__ARK_VERSION__",
-    "ant-design-vue": "^4.0.0",
-    "vue": "^3.5.0",
-    "vue-router": "^5.5.1"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.11",
-    "typescript": "^5.9.3",
-    "vite": "^8.3.8"
-  }
+	"name": "__PROJECT_NAME__",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@mengxi-ark/biz-components": "__ARK_VERSION__",
+		"@mengxi-ark/components": "__ARK_VERSION__",
+		"@mengxi-ark/hooks": "__ARK_VERSION__",
+		"@mengxi-ark/runtime": "__ARK_VERSION__",
+		"@mengxi-ark/theme": "__ARK_VERSION__",
+		"@mengxi-ark/utils": "__ARK_VERSION__",
+		"ant-design-vue": "^4.0.0",
+		"vue": "^3.5.0",
+		"vue-router": "^5.5.1"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-vue": "^6.0.11",
+		"typescript": "^5.9.3",
+		"vite": "^8.3.8"
+	}
 }

@@ -7,20 +7,20 @@
 
 ## 1. 技术栈（禁止擅自替换）
 
-| 项 | 选型 |
-| --- | --- |
-| 运行框架 | Vue 3（Composition API） |
-| 构建 | Vite + esbuild |
-| 语言 | TypeScript 5.x，`strict: true`，全量 TS，契约优先 |
-| 状态管理 | Pinia 4（ESM-only，peer `^4.1.0`） |
-| 路由 | Vue Router 5（peer `^5.5.1`） |
-| 包管理 / Monorepo | pnpm + Turborepo |
-| 样式 | SCSS + CSS Variables（Design Token） |
-| 测试 | Vitest（单元）、Playwright（E2E） |
-| 规范 | ESLint + Prettier + simple-git-hooks |
-| 文档 | VitePress |
-| 版本 | changesets 管理，SemVer |
-| 产物 | ES Module 为主（支持 CJS）+ 完整 `.d.ts`，保证 Tree-Shaking |
+| 项                | 选型                                                        |
+| ----------------- | ----------------------------------------------------------- |
+| 运行框架          | Vue 3（Composition API）                                    |
+| 构建              | Vite + esbuild                                              |
+| 语言              | TypeScript 5.x，`strict: true`，全量 TS，契约优先           |
+| 状态管理          | Pinia 4（ESM-only，peer `^4.1.0`）                          |
+| 路由              | Vue Router 5（peer `^5.5.1`）                               |
+| 包管理 / Monorepo | pnpm + Turborepo                                            |
+| 样式              | SCSS + CSS Variables（Design Token）                        |
+| 测试              | Vitest（单元）、Playwright（E2E）                           |
+| 规范              | ESLint + Prettier + simple-git-hooks                        |
+| 文档              | VitePress                                                   |
+| 版本              | changesets 管理，SemVer                                     |
+| 产物              | ES Module 为主（支持 CJS）+ 完整 `.d.ts`，保证 Tree-Shaking |
 
 ## 2. Monorepo 分层与依赖流向（强制，单向禁止反向/循环）
 
@@ -44,55 +44,57 @@
 
 **硬性边界（CI 门禁会阻断，代码生成时必须自查）：**
 
-* 下层包**绝对不能** import 上层包（如 utils 引 hooks、components 引 biz-components、biz-components import runtime）。
-* biz-components 仅通过 `inject` 探测 runtime 上下文，**禁止硬编码 import runtime**。
-* runtime / dsl-render 是可选包，安装与否不影响 components / biz-components 使用；未安装时自动降级，不抛致命异常。
-* `packages/utils` 是纯函数层：仅原生 TS，**无 Vue 依赖、无 UI、无副作用、无全局状态**，需兼容 Web / Node 脚本导入；能力按四类归档——数据格式化（日期/金额/字典/数字）、数据结构（树遍历/数组/对象合并/深拷贝）、浏览器工具（下载/导出/blob/url参数）、校验与编码（规则/编码/加解密辅助），单一文件单一分类。
-* `packages/theme` 是纯样式层：不含 Vue 组件、不含 JS 逻辑。
-* UI 差异收敛在 UI 适配层（首期 Ant Design Vue、Element Plus，后续可扩 Naive UI）；hooks / components / biz-components 不直接耦合单一 UI 库 API。
+- 下层包**绝对不能** import 上层包（如 utils 引 hooks、components 引 biz-components、biz-components import runtime）。
+- biz-components 仅通过 `inject` 探测 runtime 上下文，**禁止硬编码 import runtime**。
+- runtime / dsl-render 是可选包，安装与否不影响 components / biz-components 使用；未安装时自动降级，不抛致命异常。
+- `packages/utils` 是纯函数层：仅原生 TS，**无 Vue 依赖、无 UI、无副作用、无全局状态**，需兼容 Web /
+  Node 脚本导入；能力按四类归档——数据格式化（日期/金额/字典/数字）、数据结构（树遍历/数组/对象合并/深拷贝）、浏览器工具（下载/导出/blob/url参数）、校验与编码（规则/编码/加解密辅助），单一文件单一分类。
+- `packages/theme` 是纯样式层：不含 Vue 组件、不含 JS 逻辑。
+- UI 差异收敛在 UI 适配层（首期 Ant Design Vue、Element Plus，后续可扩 Naive UI）；hooks / components / biz-components 不直接耦合单一 UI 库 API。
 
 ## 3. 目录契约与装配点（唯一，禁止在别处落码）
 
-| 需求 | 唯一落点 |
-| --- | --- |
-| 纯工具函数 | `packages/utils/src/<分类>/`（单一文件单一分类，禁止大杂烩 utils.ts） |
-| Design Token / 主题 | `packages/theme/`（全部引用 token，禁止硬编码色值） |
-| 通用 hooks | `packages/hooks/src/useXxx/` |
-| 通用增强组件 | `packages/components/src/<PascalName>/` |
-| 业务语义组件（双模式） | `packages/biz-components/src/<PascalName>/` |
-| UI 适配器 | 各包内 `adapter/`，禁止散落在组件文件里 |
-| 中台基座能力 | `packages/runtime/`（内部按 tabService / menuService / moduleRegistryService / sessionService / contextService 拆分 service） |
-| DSL 渲染 | `packages/dsl-render/`（Schema 强 TS 类型 + 校验工具） |
-| 轻量示例 | `apps/demo-light/`（无 runtime） |
-| 中台示例 | `apps/demo-platform/`（runtime + 模块注册） |
-| 文档站 | `apps/docs/`（VitePress） |
-| 共享 lint / tsconfig / 构建脚本 | `internal/eslint-config/`、`internal/tsconfig/`、`internal/build-scripts/` |
+| 需求                            | 唯一落点                                                                                                                      |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| 纯工具函数                      | `packages/utils/src/<分类>/`（单一文件单一分类，禁止大杂烩 utils.ts）                                                         |
+| Design Token / 主题             | `packages/theme/`（全部引用 token，禁止硬编码色值）                                                                           |
+| 通用 hooks                      | `packages/hooks/src/useXxx/`                                                                                                  |
+| 通用增强组件                    | `packages/components/src/<PascalName>/`                                                                                       |
+| 业务语义组件（双模式）          | `packages/biz-components/src/<PascalName>/`                                                                                   |
+| UI 适配器                       | 各包内 `adapter/`，禁止散落在组件文件里                                                                                       |
+| 中台基座能力                    | `packages/runtime/`（内部按 tabService / menuService / moduleRegistryService / sessionService / contextService 拆分 service） |
+| DSL 渲染                        | `packages/dsl-render/`（Schema 强 TS 类型 + 校验工具）                                                                        |
+| 轻量示例                        | `apps/demo-light/`（无 runtime）                                                                                              |
+| 中台示例                        | `apps/demo-platform/`（runtime + 模块注册）                                                                                   |
+| 文档站                          | `apps/docs/`（VitePress）                                                                                                     |
+| 共享 lint / tsconfig / 构建脚本 | `internal/eslint-config/`、`internal/tsconfig/`、`internal/build-scripts/`                                                    |
 
 ## 4. 命名清单（导入路径与命名以此为准，禁止凭记忆写）
 
-| 名称 | 值 | 说明 |
-| --- | --- | --- |
-| npm scope | `@mengxi-ark/*` | 所有对外发布包统一前缀，归属梦曦工作室 npm 组织 |
-| 仓库 | `MengXi-Studio/mengxi-ark` | MIT 协议 |
-| 包名 | `@mengxi-ark/utils` `theme` `hooks` `components` `biz-components` `runtime` `dsl-render` `cli` | 短横线命名 |
-| 组件命名 | PascalCase | 目录与导出一致，如 `packages/components/src/SearchForm/` |
-| hooks 命名 | `useXxx` 驼峰 | 如 `useRequest`、`useAuth` |
-| 指令命名 | `v-xxx` | 如 `v-permission` |
-| 业务项目安装 | `@mengxi-ark/cli` 脚手架名为 `create-mengxi-ark` | `pnpm create mengxi-ark` |
+| 名称         | 值                                                                                             | 说明                                                     |
+| ------------ | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| npm scope    | `@mengxi-ark/*`                                                                                | 所有对外发布包统一前缀，归属梦曦工作室 npm 组织          |
+| 仓库         | `MengXi-Studio/mengxi-ark`                                                                     | MIT 协议                                                 |
+| 包名         | `@mengxi-ark/utils` `theme` `hooks` `components` `biz-components` `runtime` `dsl-render` `cli` | 短横线命名                                               |
+| 组件命名     | PascalCase                                                                                     | 目录与导出一致，如 `packages/components/src/SearchForm/` |
+| hooks 命名   | `useXxx` 驼峰                                                                                  | 如 `useRequest`、`useAuth`                               |
+| 指令命名     | `v-xxx`                                                                                        | 如 `v-permission`                                        |
+| 业务项目安装 | `@mengxi-ark/cli` 脚手架名为 `create-mengxi-ark`                                               | `pnpm create mengxi-ark`                                 |
 
 ## 5. 各包约束要点（生成代码前对照）
 
-* **hooks**：仅依赖 Vue / Pinia / VueRouter；不 import runtime，全局 store 支持手动传入降级；所有 hooks 支持配置覆盖、默认行为可关闭；**不劫持路由原生 API**，路由守卫交给业务或 runtime 注册。
-* **components**：完全独立可导入，不需要基座注册；props 驱动优先，插槽兜底。
-* **biz-components（双模式，核心契约）**：
+- **hooks**：仅依赖 Vue / Pinia / VueRouter；不 import runtime，全局 store 支持手动传入降级；所有 hooks 支持配置覆盖、默认行为可关闭；**不劫持路由原生 API**，路由守卫交给业务或 runtime 注册。
+- **components**：完全独立可导入，不需要基座注册；props 驱动优先，插槽兜底。
+- **biz-components（双模式，核心契约）**：
   1. **独立模式（默认降级）**：传入 `api / params / permission` 等props，组件内部用 `useRequest` 自行请求，不需要任何基座。
   2. **基座联动模式**：`inject` 探测上层 runtime 上下文（全局值集缓存、用户信息、数据权限）；探测成功自动复用，**不 import runtime**。
   3. 基座提供的上下文字段**全部支持 props 兜底**；上下文丢失自动切独立模式。
   4. 组件只封装交互范式，不绑定后端固定字段。
-* **runtime**：不修改 Vue / Router 底层原型，仅上层封装调度；提供生命周期钩子 `onAppInit` `onBeforeRouteChange` `onSessionExpired`，业务扩展走钩子，不 fork 源码。
-* **dsl-render**：手写 SFC 是一等公民，配置渲染只是加速方案；渲染器只负责渲染，保存事件抛出给上层业务。
-* **cli**：模板尽量薄，业务能力全部通过 npm 包引入，不写死在模板内；每个模板必须内置面向**使用者**的精简 AI 规则（`.trae/rules/` 用法速查：安装、主题覆盖、双模式 props、按需导入），轻量模板不得包含 runtime / 中台相关内容——使用者装完模板即获得规则，规则随模板分档「可拿走」。
-* **变更频率隔离**：utils / theme 谨慎发版（低频稳定）；hooks / components / biz-components 持续新增（Minor）；runtime / dsl-render 严格控制破坏性变更（Major 必须附迁移文档）。
+- **runtime**：不修改 Vue / Router 底层原型，仅上层封装调度；提供生命周期钩子 `onAppInit` `onBeforeRouteChange` `onSessionExpired`，业务扩展走钩子，不 fork 源码。
+- **dsl-render**：手写 SFC 是一等公民，配置渲染只是加速方案；渲染器只负责渲染，保存事件抛出给上层业务。
+- **cli**：模板尽量薄，业务能力全部通过 npm 包引入，不写死在模板内；每个模板必须内置面向**使用者**的精简 AI 规则（`.trae/rules/` 用法速查：安装、主题覆盖、双模式 props、按需导入），轻量模板不得包含 runtime
+  / 中台相关内容——使用者装完模板即获得规则，规则随模板分档「可拿走」。
+- **变更频率隔离**：utils / theme 谨慎发版（低频稳定）；hooks / components / biz-components 持续新增（Minor）；runtime / dsl-render 严格控制破坏性变更（Major 必须附迁移文档）。
 
 ## 6. 组件库规范（components / biz-components）
 
@@ -120,16 +122,16 @@ packages/components/src/SearchForm/
 
 ### 6.3 UI 适配层（组件文件禁止直接耦合 UI 库）
 
-* `packages/components/src/adapter/` 与 `packages/biz-components/src/adapter/` 内定义适配器接口与各 UI 库实现（首期 `antdv.ts`、`element-plus.ts`）。
-* 组件内一律通过 `inject(UI_ADAPTER_KEY)` 获取适配器（未注入时取默认适配器 Ant Design Vue）；**禁止**在组件文件中 import `ant-design-vue` / `element-plus`（adapter 目录除外）。
-* 新增组件涉及新 UI 库组件时，先扩适配器接口，再在两套实现中同步落地；只改一套实现视为未完成。
-* biz-components 上下文探测：inject key 统一 `MX_RUNTIME_CONTEXT_KEY`；探测结果字段与兜底 props 同名对应（如 `lovListApi` ↔ 上下文 `lovApi`），缺失字段回退 props / 独立模式。
+- `packages/components/src/adapter/` 与 `packages/biz-components/src/adapter/` 内定义适配器接口与各 UI 库实现（首期 `antdv.ts`、`element-plus.ts`）。
+- 组件内一律通过 `inject(UI_ADAPTER_KEY)` 获取适配器（未注入时取默认适配器 Ant Design Vue）；**禁止**在组件文件中 import `ant-design-vue` / `element-plus`（adapter 目录除外）。
+- 新增组件涉及新 UI 库组件时，先扩适配器接口，再在两套实现中同步落地；只改一套实现视为未完成。
+- biz-components 上下文探测：inject key 统一 `MX_RUNTIME_CONTEXT_KEY`；探测结果字段与兜底 props 同名对应（如 `lovListApi` ↔ 上下文 `lovApi`），缺失字段回退 props / 独立模式。
 
 ### 6.4 样式契约
 
-* 组件样式只允许引用 `@mengxi-ark/theme` 的 CSS Variables（`var(--mx-*)`）；**禁止**硬编码色值、阴影、圆角、间距字面量（含 `#fff`、`rgba(0,0,0,.45)` 这类「看起来无害」的写法）。
-* 派生色（hover / active / 禁用态）在 theme 中定义为 token，组件内不做颜色计算。
-* 样式随包构建产出独立 css，支持按需导入（unplugin 样式入口）；禁止在组件 SFC 里写全局选择器污染宿主页面。
+- 组件样式只允许引用 `@mengxi-ark/theme` 的 CSS Variables（`var(--mx-*)`）；**禁止**硬编码色值、阴影、圆角、间距字面量（含 `#fff`、`rgba(0,0,0,.45)` 这类「看起来无害」的写法）。
+- 派生色（hover / active / 禁用态）在 theme 中定义为 token，组件内不做颜色计算。
+- 样式随包构建产出独立 css，支持按需导入（unplugin 样式入口）；禁止在组件 SFC 里写全局选择器污染宿主页面。
 
 ## 7. 主题 Token 规范（theme）
 
@@ -159,35 +161,35 @@ packages/theme/src/
 
 ### 7.3 z-index 层级表（全库统一，组件禁止自造层级）
 
-| 层级 | token | 基准值 |
-| --- | --- | --- |
-| 基础内容 | `--mx-z-base` | 0 |
-| 吸顶/吸底 | `--mx-z-sticky` | 100 |
-| 下拉/浮层 | `--mx-z-dropdown` | 1000 |
-| 抽屉 | `--mx-z-drawer` | 1200 |
-| 模态框 | `--mx-z-modal` | 2000 |
-| 消息/通知 | `--mx-z-message` | 3000 |
+| 层级      | token             | 基准值 |
+| --------- | ----------------- | ------ |
+| 基础内容  | `--mx-z-base`     | 0      |
+| 吸顶/吸底 | `--mx-z-sticky`   | 100    |
+| 下拉/浮层 | `--mx-z-dropdown` | 1000   |
+| 抽屉      | `--mx-z-drawer`   | 1200   |
+| 模态框    | `--mx-z-modal`    | 2000   |
+| 消息/通知 | `--mx-z-message`  | 3000   |
 
 > 组件叠加场景（如弹窗内再弹下拉）按「上层 = 基准 + 10」微调，禁止拍脑袋写 9999。
 
 ### 7.4 主题覆盖与 UI 库桥接
 
-* 业务项目覆盖方式：在自有样式表中重定义同名 `--mx-*` 变量（CSS Variables 运行时覆盖生效），**无需 fork theme**；禁止提供 JS 运行时改 token 的 API。
-* 暗色切换约定：宿主根节点挂 `data-theme="dark"`（或 `.mx-theme-dark`），`dark.scss` 以该选择器为作用域覆盖语义层变量。
-* UI 库变量桥接：`adapters/antdv.scss` / `element-plus.scss` 把 `--ant-*` / `--el-*` 相关变量映射到 `--mx-*` token，保证 theme/components 在两种 UI 库下视觉一致；未映射的 UI 库变量不得在组件中直接消费。
+- 业务项目覆盖方式：在自有样式表中重定义同名 `--mx-*` 变量（CSS Variables 运行时覆盖生效），**无需 fork theme**；禁止提供 JS 运行时改 token 的 API。
+- 暗色切换约定：宿主根节点挂 `data-theme="dark"`（或 `.mx-theme-dark`），`dark.scss` 以该选择器为作用域覆盖语义层变量。
+- UI 库变量桥接：`adapters/antdv.scss` / `element-plus.scss` 把 `--ant-*` / `--el-*` 相关变量映射到 `--mx-*` token，保证 theme/components 在两种 UI 库下视觉一致；未映射的 UI 库变量不得在组件中直接消费。
 
 ## 8. Hooks 规范（hooks）
 
 ### 8.1 首期分组（与实施方案 3.3 一一对应，禁止跨组堆功能）
 
-| hook | 职责边界 |
-| --- | --- |
+| hook         | 职责边界                              |
+| ------------ | ------------------------------------- |
 | `useRequest` | 请求、loading、错误、取消、重试、缓存 |
-| `useAuth` | 权限判断 + `v-permission` 指令 |
-| `useSession` | token、自动刷新、持久化、登出 |
-| `useI18n` | 国际化读取、切换 |
-| `useTable` | 查询、分页、排序、筛选状态 |
-| `useForm` | 表单回显、重置、校验封装 |
+| `useAuth`    | 权限判断 + `v-permission` 指令        |
+| `useSession` | token、自动刷新、持久化、登出         |
+| `useI18n`    | 国际化读取、切换                      |
+| `useTable`   | 查询、分页、排序、筛选状态            |
+| `useForm`    | 表单回显、重置、校验封装              |
 
 ### 8.2 通用签名与返回值约定
 
@@ -199,17 +201,17 @@ packages/theme/src/
 
 ### 8.3 各 hook 关键行为约定
 
-* **useRequest**：内置竞态保护（旧响应丢弃）；手动 `run` / `cancel` / `refresh`；`retry` 支持次数 + 间隔退避配置；缓存需显式 `cacheKey`，默认不缓存。
-* **useAuth**：`hasPermission(code | code[], mode?: 'some' | 'every')`；权限源可注入（Pinia store 或 adapter）；`v-permission` 无权限时移除元素（`removeChild`），提供 `disabled` 模式替代移除。
-* **useSession**：token 存取介质可配置（localStorage / cookie）；自动刷新失败回调 `onSessionExpired` 交给业务或 runtime 决定登出，**hook 自己不跳转路由**。
-* **useTable**：查询参数合并（分页/排序/筛选 + 额外 filters）、`reset` 回默认查询；返回 `dataSource / loading / pagination / search` 等响应式集合。
-* **useForm**：回显 `setFieldsValue`、重置、提交校验封装；表单实例由外部传入（适配器产出），hook 不直接耦合 UI 库 Form API。
+- **useRequest**：内置竞态保护（旧响应丢弃）；手动 `run` / `cancel` / `refresh`；`retry` 支持次数 + 间隔退避配置；缓存需显式 `cacheKey`，默认不缓存。
+- **useAuth**：`hasPermission(code | code[], mode?: 'some' | 'every')`；权限源可注入（Pinia store 或 adapter）；`v-permission` 无权限时移除元素（`removeChild`），提供 `disabled` 模式替代移除。
+- **useSession**：token 存取介质可配置（localStorage / cookie）；自动刷新失败回调 `onSessionExpired` 交给业务或 runtime 决定登出，**hook 自己不跳转路由**。
+- **useTable**：查询参数合并（分页/排序/筛选 + 额外 filters）、`reset` 回默认查询；返回 `dataSource / loading / pagination / search` 等响应式集合。
+- **useForm**：回显 `setFieldsValue`、重置、提交校验封装；表单实例由外部传入（适配器产出），hook 不直接耦合 UI 库 Form API。
 
 ### 8.4 红线（重申，违反即 CI 门禁阻断）
 
-* 仅依赖 Vue / Pinia / VueRouter；禁止 import runtime、biz-components、components。（hooks 当前实现未引入 Pinia/VueRouter，peer 仅声明 `vue ^3.5.0`；后续实际引入时按 `pinia ^4.1.0` / `vue-router ^5.5.1` 声明 peer）
-* 禁止劫持路由原生 API（`router.push` / `beforeEach` 等），路由守卫交给业务或 runtime 注册。
-* 禁止在 hook 内写业务字典、业务接口地址；请求实例（axios / fetch 封装）由业务注入。
+- 仅依赖 Vue / Pinia / VueRouter；禁止 import runtime、biz-components、components。（hooks 当前实现未引入 Pinia/VueRouter，peer 仅声明 `vue ^3.5.0`；后续实际引入时按 `pinia ^4.1.0` / `vue-router ^5.5.1` 声明 peer）
+- 禁止劫持路由原生 API（`router.push` / `beforeEach` 等），路由守卫交给业务或 runtime 注册。
+- 禁止在 hook 内写业务字典、业务接口地址；请求实例（axios / fetch 封装）由业务注入。
 
 ## 9. Runtime 基座规范（runtime）
 
@@ -279,12 +281,12 @@ packages/runtime/src/
 
 **本地验证清单：**
 
-* **类型检查**：`pnpm turbo run typecheck`（或各包 `tsc --noEmit`）。
-* **构建**：`pnpm turbo run build` 全链路通过，确认 `.d.ts` 与 ESM 产物生成。
-* **单测**：`pnpm turbo run test`（Vitest），新增导出必须有单测。
-* **依赖门禁**：`internal/build-scripts/` 的依赖链路检查脚本通过（反向 import 直接阻断）。
-* **运行验证**：
-  * 涉及组件 / hooks / biz-components → 在 `apps/demo-light` 实际运行验证独立模式；
-  * 涉及 runtime / 基座联动 → 在 `apps/demo-platform` 验证模块注册、Tab 工作台、inject 探测与降级切换。
-* **文档**：`apps/docs` 构建通过（VitePress 死链检查）；每个组件文档提供**两套示例**：独立模式 + 基座联动模式。
-* **版本发布**：仅通过 changesets 流程（`pnpm changeset` → version → publish），禁止手改 package.json version。
+- **类型检查**：`pnpm turbo run typecheck`（或各包 `tsc --noEmit`）。
+- **构建**：`pnpm turbo run build` 全链路通过，确认 `.d.ts` 与 ESM 产物生成。
+- **单测**：`pnpm turbo run test`（Vitest），新增导出必须有单测。
+- **依赖门禁**：`internal/build-scripts/` 的依赖链路检查脚本通过（反向 import 直接阻断）。
+- **运行验证**：
+  - 涉及组件 / hooks / biz-components → 在 `apps/demo-light` 实际运行验证独立模式；
+  - 涉及 runtime / 基座联动 → 在 `apps/demo-platform` 验证模块注册、Tab 工作台、inject 探测与降级切换。
+- **文档**：`apps/docs` 构建通过（VitePress 死链检查）；每个组件文档提供**两套示例**：独立模式 + 基座联动模式。
+- **版本发布**：仅通过 changesets 流程（`pnpm changeset` → version → publish），禁止手改 package.json version。

@@ -58,6 +58,7 @@ src/guide/
 ## 疑问清单
 
 ### Q1 新增教程页的范围（影响：工作量与内容深度）
+
 方案 a（推荐）：新增 3 页——core-concepts（核心概念）、components-guide（组件实战）、migration（迁移指南，规范要求）；
 方案 b：只新增 migration；
 方案 c：全部保持现有页面，仅重组侧栏命名。
@@ -66,6 +67,7 @@ src/guide/
 回答：a——新增 3 页。
 
 ### Q2 既有页面的内容增强（影响：改动面）
+
 方案 a（推荐）：introduction 增补「学习路径」导引小节；getting-started 末尾补「下一步」链到核心概念页；其余 api 参考页不动；
 方案 b：所有页面（含 api）都重写增强。
 选哪个？
@@ -73,6 +75,7 @@ src/guide/
 回答：b——所有页面（含 api 参考页）都重写增强（示例须与各包 types.ts 导出核对一致）。
 
 ### Q3 组件实战页的示例口径（影响：内容质量）
+
 方案 a（推荐）：按「渐进示例」写——从 props 驱动最简用法起步，逐步叠加插槽自定义 / 双模式切换 / 基座联动，示例代码与 demo-light 对齐可复制运行；
 方案 b：按组件逐个平铺 API 用法（与 api/ 参考页重复）。
 选哪个？
@@ -83,8 +86,11 @@ src/guide/
 
 ### 方案落地形态（与伪代码设计的差异）
 
-- 与草案一致：新增 guide/core-concepts（核心概念）/ components-guide（组件实战五步渐进）/ migration（迁移指南）3 页；侧栏 guideSidebar 改为「入门 / 核心 / 进阶 / 精通 / 其他」五组（进阶组收纳 platform 3 页 + Schema 与三渲染器，zh/en config 同步）。
-- Q2 用户选「全部重写」：api/ 7 页各补「适用场景」小节 + 页尾「相关教程」链，props/events/slots 表格与各包 types.ts 核对（修正 2 处不一致：enhancetable 缺 expandedRowKeys / update:expandedRowKeys / expandedRow 三条目；documenttable permissionCode 行多余默认值列）；platform/ 3 页补前置知识 + 下一步串联；dsl 页补前置知识 + 手写 SFC 强调；introduction 增学习路径四阶段表；getting-started 下一步链 core-concepts；首页增「渐进式学习路径」feature 卡。
+- 与草案一致：新增 guide/core-concepts（核心概念）/ components-guide（组件实战五步渐进）/ migration（迁移指南）3 页；侧栏 guideSidebar 改为「入门 / 核心 / 进阶 / 精通 / 其他」五组（进阶组收纳 platform 3 页 +
+  Schema 与三渲染器，zh/en config 同步）。
+- Q2 用户选「全部重写」：api/ 7 页各补「适用场景」小节 + 页尾「相关教程」链，props/events/slots 表格与各包 types.ts 核对（修正 2 处不一致：enhancetable 缺 expandedRowKeys / update:expandedRowKeys /
+  expandedRow 三条目；documenttable permissionCode 行多余默认值列）；platform/
+  3 页补前置知识 + 下一步串联；dsl 页补前置知识 + 手写 SFC 强调；introduction 增学习路径四阶段表；getting-started 下一步链 core-concepts；首页增「渐进式学习路径」feature 卡。
 - 顺带修正 1 处 SSR 编译错误（正文行内代码含 `{{ }}` 被 Vue 编译，已改写）。
 
 ### 变更文件清单
@@ -97,7 +103,8 @@ src/guide/
 ### 验证方式与结果
 
 1. `pnpm --filter docs build` 两轮：首轮 en/index.md frontmatter details 值含冒号未加引号致 YAML 解析失败（zh 同问题一并加引号），修复后构建通过（16.21s，死链检查通过，含 3 个新页 HTML 产物）。
-2. preview + 浏览器抽验 4 项全 PASS：首页「渐进式学习路径」feature 卡渲染且控制台零报错；introduction 页侧栏五组齐全（精通组含迁移指南、进阶组含 platform 三页 + Schema）；core-concepts / migration 页正常渲染且页尾有下一步 / 相关教程链。
+2. preview + 浏览器抽验 4 项全 PASS：首页「渐进式学习路径」feature 卡渲染且控制台零报错；introduction 页侧栏五组齐全（精通组含迁移指南、进阶组含 platform 三页 + Schema）；core-concepts /
+   migration 页正常渲染且页尾有下一步 / 相关教程链。
 3. 红线自检：introduction / getting-started（中英）无 runtime 字样（case-insensitive grep）。
 
 ### 遗留 TODO

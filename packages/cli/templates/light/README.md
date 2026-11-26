@@ -1,4 +1,4 @@
-# __PROJECT_NAME__
+# **PROJECT_NAME**
 
 基于 [曦舟 MengXi Ark](https://github.com/MengXi-Studio/mengxi-ark) 的轻量模式工程（无 runtime 基座）。
 
@@ -11,13 +11,13 @@ pnpm dev
 
 ## 能力速览
 
-| 包 | 说明 |
-| --- | --- |
-| `@mengxi-ark/utils` | 纯工具函数（日期 / 金额 / 树 / 校验 / 浏览器） |
-| `@mengxi-ark/theme` | Design Token（`--mx-*` CSS Variables） |
-| `@mengxi-ark/hooks` | useRequest / useTable / useForm 等 |
-| `@mengxi-ark/components` | SearchForm / EnhanceTable 等通用组件 |
-| `@mengxi-ark/biz-components` | Lov / DocumentTable 双模式业务组件 |
+| 包                           | 说明                                           |
+| ---------------------------- | ---------------------------------------------- |
+| `@mengxi-ark/utils`          | 纯工具函数（日期 / 金额 / 树 / 校验 / 浏览器） |
+| `@mengxi-ark/theme`          | Design Token（`--mx-*` CSS Variables）         |
+| `@mengxi-ark/hooks`          | useRequest / useTable / useForm 等             |
+| `@mengxi-ark/components`     | SearchForm / EnhanceTable 等通用组件           |
+| `@mengxi-ark/biz-components` | Lov / DocumentTable 双模式业务组件             |
 
 ## 主题覆盖
 
@@ -25,7 +25,7 @@ pnpm dev
 
 ```css
 :root {
-  --mx-color-primary: #1677ff;
+	--mx-color-primary: #1677ff;
 }
 ```
 

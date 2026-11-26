@@ -6,11 +6,11 @@
 
 请按模板提交，便于快速定位与响应：
 
-| 模板 | 适用场景 |
-| --- | --- |
-| [Bug 报告](https://github.com/MengXi-Studio/mengxi-ark/issues/new?template=bug_report.md) | 组件 / hooks / 基座行为不符合文档或报错 |
-| [功能请求](https://github.com/MengXi-Studio/mengxi-ark/issues/new?template=feature_request.md) | 新组件、新 hook、新能力建议 |
-| [文档反馈](https://github.com/MengXi-Studio/mengxi-ark/issues/new?template=docs_feedback.md) | 文档错漏、示例不可运行 |
+| 模板                                                                                           | 适用场景                                |
+| ---------------------------------------------------------------------------------------------- | --------------------------------------- |
+| [Bug 报告](https://github.com/MengXi-Studio/mengxi-ark/issues/new?template=bug_report.md)      | 组件 / hooks / 基座行为不符合文档或报错 |
+| [功能请求](https://github.com/MengXi-Studio/mengxi-ark/issues/new?template=feature_request.md) | 新组件、新 hook、新能力建议             |
+| [文档反馈](https://github.com/MengXi-Studio/mengxi-ark/issues/new?template=docs_feedback.md)   | 文档错漏、示例不可运行                  |
 
 提交 Bug 时请附：框架包版本（`pnpm list @mengxi-ark/utils`）、Vue / UI 库版本、最小复现代码或截图。
 

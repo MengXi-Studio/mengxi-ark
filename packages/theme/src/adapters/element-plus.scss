@@ -5,55 +5,55 @@
 // ==============================================================
 
 :root {
-  // —— 品牌色（light 梯度用 mx primary 梯度近似映射） ——
-  --el-color-primary: var(--mx-color-primary);
-  --el-color-primary-dark-2: var(--mx-color-primary-active);
-  --el-color-primary-light-3: var(--mx-color-primary-4);
-  --el-color-primary-light-5: var(--mx-color-primary-3);
-  --el-color-primary-light-7: var(--mx-color-primary-2);
-  --el-color-primary-light-8: var(--mx-color-primary-1);
-  --el-color-primary-light-9: var(--mx-color-primary-1);
+	// —— 品牌色（light 梯度用 mx primary 梯度近似映射） ——
+	--el-color-primary: var(--mx-color-primary);
+	--el-color-primary-dark-2: var(--mx-color-primary-active);
+	--el-color-primary-light-3: var(--mx-color-primary-4);
+	--el-color-primary-light-5: var(--mx-color-primary-3);
+	--el-color-primary-light-7: var(--mx-color-primary-2);
+	--el-color-primary-light-8: var(--mx-color-primary-1);
+	--el-color-primary-light-9: var(--mx-color-primary-1);
 
-  // —— 功能色（EP 的 error 与 danger 同源） ——
-  --el-color-success: var(--mx-color-success);
-  --el-color-warning: var(--mx-color-warning);
-  --el-color-danger: var(--mx-color-danger);
-  --el-color-error: var(--mx-color-danger);
-  --el-color-info: var(--mx-color-info);
+	// —— 功能色（EP 的 error 与 danger 同源） ——
+	--el-color-success: var(--mx-color-success);
+	--el-color-warning: var(--mx-color-warning);
+	--el-color-danger: var(--mx-color-danger);
+	--el-color-error: var(--mx-color-danger);
+	--el-color-info: var(--mx-color-info);
 
-  // —— 文本色 ——
-  --el-text-color-primary: var(--mx-color-text-primary);
-  --el-text-color-regular: var(--mx-color-text-primary);
-  --el-text-color-secondary: var(--mx-color-text-secondary);
-  --el-text-color-placeholder: var(--mx-color-text-disabled);
-  --el-text-color-disabled: var(--mx-color-text-disabled);
+	// —— 文本色 ——
+	--el-text-color-primary: var(--mx-color-text-primary);
+	--el-text-color-regular: var(--mx-color-text-primary);
+	--el-text-color-secondary: var(--mx-color-text-secondary);
+	--el-text-color-placeholder: var(--mx-color-text-disabled);
+	--el-text-color-disabled: var(--mx-color-text-disabled);
 
-  // —— 背景 / 填充 ——
-  --el-bg-color: var(--mx-color-bg-container);
-  --el-bg-color-page: var(--mx-color-bg-layout);
-  --el-bg-color-overlay: var(--mx-color-bg-container);
-  --el-fill-color-blank: var(--mx-color-bg-container);
-  --el-fill-color-light: var(--mx-color-bg-hover);
-  --el-fill-color-lighter: var(--mx-color-bg-disabled);
+	// —— 背景 / 填充 ——
+	--el-bg-color: var(--mx-color-bg-container);
+	--el-bg-color-page: var(--mx-color-bg-layout);
+	--el-bg-color-overlay: var(--mx-color-bg-container);
+	--el-fill-color-blank: var(--mx-color-bg-container);
+	--el-fill-color-light: var(--mx-color-bg-hover);
+	--el-fill-color-lighter: var(--mx-color-bg-disabled);
 
-  // —— 边框 ——
-  --el-border-color: var(--mx-color-border-base);
-  --el-border-color-light: var(--mx-color-border-base);
-  --el-border-color-lighter: var(--mx-color-border-split);
-  --el-border-color-extra-light: var(--mx-color-border-split);
+	// —— 边框 ——
+	--el-border-color: var(--mx-color-border-base);
+	--el-border-color-light: var(--mx-color-border-base);
+	--el-border-color-lighter: var(--mx-color-border-split);
+	--el-border-color-extra-light: var(--mx-color-border-split);
 
-  // —— 字体 / 圆角 / 阴影 ——
-  --el-font-family: var(--mx-font-family-base);
-  --el-font-size-extra-small: var(--mx-font-size-xs);
-  --el-font-size-base: var(--mx-font-size-sm);
-  --el-font-size-medium: var(--mx-font-size-md);
-  --el-font-size-large: var(--mx-font-size-lg);
-  --el-font-size-extra-large: var(--mx-font-size-xl);
-  --el-border-radius-base: var(--mx-radius-base);
-  --el-border-radius-small: var(--mx-radius-sm);
-  --el-border-radius-round: var(--mx-radius-round);
-  --el-box-shadow: var(--mx-shadow-base);
-  --el-box-shadow-light: var(--mx-shadow-sm);
-  --el-box-shadow-lighter: var(--mx-shadow-sm);
-  --el-box-shadow-dark: var(--mx-shadow-lg);
+	// —— 字体 / 圆角 / 阴影 ——
+	--el-font-family: var(--mx-font-family-base);
+	--el-font-size-extra-small: var(--mx-font-size-xs);
+	--el-font-size-base: var(--mx-font-size-sm);
+	--el-font-size-medium: var(--mx-font-size-md);
+	--el-font-size-large: var(--mx-font-size-lg);
+	--el-font-size-extra-large: var(--mx-font-size-xl);
+	--el-border-radius-base: var(--mx-radius-base);
+	--el-border-radius-small: var(--mx-radius-sm);
+	--el-border-radius-round: var(--mx-radius-round);
+	--el-box-shadow: var(--mx-shadow-base);
+	--el-box-shadow-light: var(--mx-shadow-sm);
+	--el-box-shadow-lighter: var(--mx-shadow-sm);
+	--el-box-shadow-dark: var(--mx-shadow-lg);
 }

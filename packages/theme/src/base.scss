@@ -6,7 +6,7 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body,
@@ -23,16 +23,16 @@ dl,
 dd,
 figure,
 blockquote {
-  margin: 0;
+	margin: 0;
 }
 
 body {
-  font-family: var(--mx-font-family-base);
-  font-size: var(--mx-font-size-sm);
-  line-height: var(--mx-line-height-base);
-  color: var(--mx-color-text-primary);
-  background-color: var(--mx-color-bg-layout);
-  -webkit-font-smoothing: antialiased;
+	font-family: var(--mx-font-family-base);
+	font-size: var(--mx-font-size-sm);
+	line-height: var(--mx-line-height-base);
+	color: var(--mx-color-text-primary);
+	background-color: var(--mx-color-bg-layout);
+	-webkit-font-smoothing: antialiased;
 }
 
 h1,
@@ -41,49 +41,49 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: var(--mx-font-weight-bold);
+	font-weight: var(--mx-font-weight-bold);
 }
 
 code,
 kbd,
 pre,
 samp {
-  font-family: var(--mx-font-family-code);
+	font-family: var(--mx-font-family-code);
 }
 
 // —— 空状态基础范式 ——
 .mx-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--mx-spacing-sm);
-  padding: var(--mx-spacing-xl) var(--mx-spacing-lg);
-  color: var(--mx-color-text-secondary);
-  font-size: var(--mx-font-size-sm);
-  text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: var(--mx-spacing-sm);
+	padding: var(--mx-spacing-xl) var(--mx-spacing-lg);
+	color: var(--mx-color-text-secondary);
+	font-size: var(--mx-font-size-sm);
+	text-align: center;
 }
 
 // —— loading 基础范式（旋转圆环） ——
 .mx-loading {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--mx-color-primary);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--mx-color-primary);
 }
 
 .mx-loading-spinner {
-  display: inline-block;
-  width: var(--mx-spacing-xl);
-  height: var(--mx-spacing-xl);
-  border: 2px solid var(--mx-color-border-split);
-  border-top-color: var(--mx-color-primary);
-  border-radius: var(--mx-radius-round);
-  animation: mx-spin 0.8s linear infinite;
+	display: inline-block;
+	width: var(--mx-spacing-xl);
+	height: var(--mx-spacing-xl);
+	border: 2px solid var(--mx-color-border-split);
+	border-top-color: var(--mx-color-primary);
+	border-radius: var(--mx-radius-round);
+	animation: mx-spin 0.8s linear infinite;
 }
 
 @keyframes mx-spin {
-  to {
-    transform: rotate(360deg);
-  }
+	to {
+		transform: rotate(360deg);
+	}
 }

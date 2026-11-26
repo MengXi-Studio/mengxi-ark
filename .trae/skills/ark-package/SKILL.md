@@ -1,15 +1,21 @@
 ---
 name: ark-package
-description: 按 mengxi-ark 既定标准流程向框架包新增能力：纯工具函数、Design Token、hooks、通用增强组件、双模式业务组件、runtime 基座 service、DSL Schema 能力。覆盖源码、类型与 JSDoc、Vitest 单测、demo 验证、VitePress 双示例文档与 changesets 发版登记的完整闭环。当用户要求新增 hook（如 usePermission）、通用组件（如增强 Table）、业务组件（如 Lov 值集选择器）、主题 token、工具函数、runtime service（如 tabService）或 DSL Schema 能力时使用。不用于 demo 页面 / VitePress 文档站配置与侧栏维护、changesets 发版执行与 CI 工作流调整、monorepo / CLI 模板脚手架搭建（上述工作面流程不同，未来按需拆分为独立技能）或纯 bug 修复。
+description:
+  按 mengxi-ark 既定标准流程向框架包新增能力：纯工具函数、Design Token、hooks、通用增强组件、双模式业务组件、runtime 基座 service、DSL Schema 能力。覆盖源码、类型与 JSDoc、Vitest 单测、demo 验证、VitePress 双示例文档与
+  changesets 发版登记的完整闭环。当用户要求新增 hook（如 usePermission）、通用组件（如增强 Table）、业务组件（如 Lov 值集选择器）、主题 token、工具函数、runtime service（如 tabService）或 DSL Schema 能力时使用。不用于
+  demo 页面 / VitePress 文档站配置与侧栏维护、changesets 发版执行与 CI 工作流调整、monorepo / CLI 模板脚手架搭建（上述工作面流程不同，未来按需拆分为独立技能）或纯 bug 修复。
 ---
 
 # 框架包能力开发（ark-package）
 
-在本仓库向任何包新增能力，一律按下方流程落码，全程强制遵循 `.trae/rules/engineering-conventions.md`（分层依赖、目录契约、双模式契约）、`.trae/rules/workflow.md`（文档驱动四步工作流：建立任务文档 → 等待并读取回答 → 实现与验证 → 实施记录回填）与 `.trae/rules/core-protocol.md`（DoD）。禁止跳步，禁止「为了简洁」绕过依赖边界与双模式契约。
+在本仓库向任何包新增能力，一律按下方流程落码，全程强制遵循
+`.trae/rules/engineering-conventions.md`（分层依赖、目录契约、双模式契约）、`.trae/rules/workflow.md`（文档驱动四步工作流：建立任务文档 → 等待并读取回答 → 实现与验证 → 实施记录回填）与
+`.trae/rules/core-protocol.md`（DoD）。禁止跳步，禁止「为了简洁」绕过依赖边界与双模式契约。
 
 ## 0. 需求确认（动手前）
 
-- **先判落包**：按能力类型判定唯一落点（见 engineering-conventions 第 3 节）——纯函数 → utils；样式 token → theme；逻辑复用 → hooks；UI 增强 → components；B 端单据语义 → biz-components；Tab/菜单/模块注册等基座能力 → runtime（按 service 拆分，见第 9 节）；JSON Schema 配置渲染 → dsl-render（见第 10 节）。判定存疑时用 `AskUserQuestion` 确认，禁止随手塞进大杂烩文件。
+- **先判落包**：按能力类型判定唯一落点（见 engineering-conventions 第 3 节）——纯函数 → utils；样式 token → theme；逻辑复用 → hooks；UI 增强 → components；B 端单据语义 → biz-components；Tab/菜单/模块注册等基座能力 →
+  runtime（按 service 拆分，见第 9 节）；JSON Schema 配置渲染 → dsl-render（见第 10 节）。判定存疑时用 `AskUserQuestion` 确认，禁止随手塞进大杂烩文件。
 - **再判依赖**：确认目标包的下游（能 import 什么）与上游（禁止 import 什么）。任何设计需要下层包引用上层包时，必须停下提出异议。
 - **对标设计**：组件参考 Ant Design Vue / Element Plus 同名组件的 API 语义（props 命名、事件、插槽），hooks 参考 VueUse / ahooks 的语义；对齐优先于自创 API。
 - 动工前明确导出 API 清单：函数签名 / props / events / slots；业务组件须同时给出独立模式与基座联动模式两种用法签名。
@@ -27,7 +33,8 @@ description: 按 mengxi-ark 既定标准流程向框架包新增能力：纯工�
   3. 基座上下文的每个字段都必须有同名 props 兜底；
   4. 探测失败自动切独立模式，不抛致命异常；
   5. 只封装交互范式，不绑定后端固定字段（字段映射用 props / adapter 配置）。
-- **runtime**：按五 Service 拆分（tab / menu / moduleRegistry / session / context，见 engineering-conventions 9.1）；`registerModule` 只收声明式 ModuleDefinition；上下文经 `provide(MX_RUNTIME_CONTEXT_KEY)` 下发；路由守卫只包装注册，禁止改 Vue/Router 原型；UI 依赖只收敛在 `layout/`。
+- **runtime**：按五 Service 拆分（tab / menu / moduleRegistry / session / context，见 engineering-conventions 9.1）；`registerModule` 只收声明式 ModuleDefinition；上下文经 `provide(MX_RUNTIME_CONTEXT_KEY)`
+  下发；路由守卫只包装注册，禁止改 Vue/Router 原型；UI 依赖只收敛在 `layout/`。
 - **dsl-render**：Schema 强 TS 类型 + `validateSchema()`；组件映射表可被业务覆盖；只渲染，保存事件抛上层；同双模式降级契约。
 - 禁止：底层包写业务字典、业务接口地址、业务硬编码。
 

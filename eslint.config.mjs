@@ -1,3 +1,3 @@
-import arkConfig from '@mengxi-ark-internal/eslint-config';
+import arkConfig from '@mengxi-ark-internal/eslint-config'
 
-export default arkConfig;
+export default arkConfig
