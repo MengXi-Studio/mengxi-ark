@@ -5,7 +5,11 @@
 			"dependsOn": ["^build"],
 			"outputs": ["dist/**", ".vitepress/dist/**", ".vitepress/cache/**"]
 		},
-		"typecheck": {},
-		"test": {}
+		"typecheck": {
+			"dependsOn": ["^build"]
+		},
+		"test": {
+			"dependsOn": ["^build"]
+		}
 	}
 }
