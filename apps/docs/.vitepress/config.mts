@@ -8,6 +8,7 @@ export default defineConfig({
     nav: [
       { text: '快速上手', link: '/guide/getting-started' },
       { text: '中台进阶', link: '/platform/' },
+      { text: 'DSL 配置渲染', link: '/dsl/' },
       {
         text: 'API 文档',
         items: [
@@ -43,6 +44,12 @@ export default defineConfig({
           { text: 'createArkRuntime 与工作台', link: '/platform/' },
           { text: 'registerModule 模块开发', link: '/platform/module' },
           { text: '全局上下文与双模式降级', link: '/platform/context' },
+        ],
+      },
+      {
+        text: 'DSL 配置渲染（加速方案）',
+        items: [
+          { text: 'Schema 与三渲染器', link: '/dsl/' },
         ],
       },
     ],

@@ -10,6 +10,7 @@
   "dependencies": {
     "@mengxi-ark/biz-components": "workspace:*",
     "@mengxi-ark/components": "workspace:*",
+    "@mengxi-ark/dsl-render": "workspace:*",
     "@mengxi-ark/runtime": "workspace:*",
     "@mengxi-ark/theme": "workspace:*",
     "ant-design-vue": "^4.0.0",

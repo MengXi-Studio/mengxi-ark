@@ -5,6 +5,9 @@ node_modules/
 dist/
 coverage/
 .turbo/
+# vitepress 文档（apps/docs）
+**/.vitepress/cache/
+**/.vitepress/dist/
 
 # Logs
 logs

@@ -18,6 +18,12 @@ export const bizModule: ModuleDefinition = {
       component: () => import('../views/ContextFallbackDemo.vue'),
       meta: { title: '降级切换演示' },
     },
+    {
+      path: '/biz/dsl',
+      name: 'biz-dsl',
+      component: () => import('../views/DslDemoPage.vue'),
+      meta: { title: 'DSL 渲染演示' },
+    },
   ],
   menus: [
     {
@@ -26,6 +32,7 @@ export const bizModule: ModuleDefinition = {
       children: [
         { key: 'biz-orders', title: '单据管理', path: '/biz/orders' },
         { key: 'biz-context-fallback', title: '降级切换演示', path: '/biz/context-fallback' },
+        { key: 'biz-dsl', title: 'DSL 渲染演示', path: '/biz/dsl' },
       ],
     },
   ],

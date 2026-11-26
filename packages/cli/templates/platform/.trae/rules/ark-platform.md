@@ -1,0 +1,36 @@
+---
+description: 曦舟 MengXi Ark 中台基座用法速查（模块注册 / 全局上下文 / 双模式 / 生命周期钩子）
+alwaysApply: true
+---
+
+# MengXi Ark 中台基座规则（本工程含 runtime 基座）
+
+## 包边界
+
+- 基座能力：`@mengxi-ark/runtime`（createArkRuntime / registerModule / 五大 service）。
+- 业务组件双模式：`@mengxi-ark/biz-components`（Lov / DocumentTable）。
+- 样式只允许引用 `var(--mx-*)` token；入口需引入 `@mengxi-ark/runtime/style.css`。
+
+## 模块注册（唯一落点：src/modules/）
+
+- 模块用 `ModuleDefinition` 声明式字段：`id / routes / menus / permissions / lifecycle`。
+- 模块包**只 import runtime 类型**，禁止 import runtime 内部 service 实现。
+- 启动注册：`createArkRuntime({ modules })`；延迟注册：`runtime.registerModule(module)`。
+- 路由守卫只经 `onBeforeRouteChange` 钩子注册（返回 false 阻断跳转），禁止重写 `router.push` 等原生 API。
+
+## 全局上下文与双模式
+
+- 上下文经 `context` 选项下发（user / tenant / permissions / lovCache / lovListApi），
+  biz-components inject 探测命中即自动复用。
+- Lov 基座联动：只传 `lov-code`，不传 `lovApi` / `lovOptions`；
+  DocumentTable 权限：列级 `permissionCode`，上下文 `permissions` 命中即可编辑。
+- 上下文字段全部支持同名 props 兜底；未安装 / 未登录场景组件自动降级独立模式，不抛异常。
+
+## 生命周期扩展
+
+- 扩展走钩子：`onAppInit` / `onBeforeRouteChange` / `onSessionExpired`（可注册多个，按序执行）。
+- 会话过期登出决策在 `onSessionExpired` 中由业务实现，hook / 组件自身不跳转路由。
+
+## 破坏性变更
+
+- runtime 上下文字段增删按 Major 发布；升级依赖前先查阅迁移指南，不要凭记忆引用上下文字段。

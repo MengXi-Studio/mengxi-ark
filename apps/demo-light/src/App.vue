@@ -2,17 +2,19 @@
 /* global document */
 import { ref } from 'vue';
 import ComponentsDemo from './demos/ComponentsDemo.vue';
+import DslDemo from './demos/DslDemo.vue';
 import HooksDemo from './demos/HooksDemo.vue';
 import ThemeDemo from './demos/ThemeDemo.vue';
 import UtilsDemo from './demos/UtilsDemo.vue';
 
-type TabKey = 'utils' | 'theme' | 'hooks' | 'components';
+type TabKey = 'utils' | 'theme' | 'hooks' | 'components' | 'dsl';
 
 const tabs: Array<{ key: TabKey; label: string }> = [
   { key: 'utils', label: 'Utils 工具函数' },
   { key: 'theme', label: 'Theme 设计令牌' },
   { key: 'hooks', label: 'Hooks 组合式函数' },
   { key: 'components', label: '组件（components / biz-components）' },
+  { key: 'dsl', label: 'DSL 配置渲染（加速方案）' },
 ];
 
 const activeTab = ref<TabKey>('utils');
@@ -56,7 +58,8 @@ function toggleDark(): void {
       <UtilsDemo v-if="activeTab === 'utils'" />
       <ThemeDemo v-else-if="activeTab === 'theme'" />
       <HooksDemo v-else-if="activeTab === 'hooks'" />
-      <ComponentsDemo v-else />
+      <ComponentsDemo v-else-if="activeTab === 'components'" />
+      <DslDemo v-else />
     </main>
   </div>
 </template>

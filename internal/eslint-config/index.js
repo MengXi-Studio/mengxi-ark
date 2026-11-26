@@ -19,6 +19,20 @@ export default [
     },
   },
   {
+    // 浏览器运行环境全局（console / DOM 事件等，vue + ts 源码共用）
+    files: ['**/*.ts', '**/*.vue'],
+    languageOptions: {
+      globals: { ...globals.browser },
+    },
+  },
+  {
+    // cli 为 Node 包（fs / path / process 等）
+    files: ['packages/cli/**/*.ts', 'packages/cli/**/*.js'],
+    languageOptions: {
+      globals: { ...globals.node },
+    },
+  },
+  {
     files: ['**/*.mjs', '**/*.cjs'],
     languageOptions: {
       globals: globals.node,

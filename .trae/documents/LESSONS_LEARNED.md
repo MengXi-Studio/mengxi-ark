@@ -55,3 +55,22 @@
 ### Vue `app.use` 自身拦截重复插件，插件级防重入要直接调 install 才测得到
 
 - 对同一 plugin `app.use(p)` 两次，Vue 打印「Plugin has already been applied to target app」且**不会**进入插件 `install`——插件内部的防重入告警（如 runtime install 的「重复调用已忽略」）通过 `app.use` 复现不了，单测需第二次直接调 `runtime.install(app)` 验证。
+
+## 2026-11-26 · M4 DSL 渲染与 cli 脚手架
+
+### Vue 动态组件上「显式绑定 undefined」会经 attrs 透传覆盖目标组件内部绑定
+
+- **现象**：QueryRenderer 内 Lov（lovCode 命中基座 lovCache）下拉显示 No data；同一 Lov 直接挂载 / h() 包装均正常，单测 provide 上下文注入也全部成功。
+- **根因**：QueryRenderer 模板在 `v-bind="{...}"` 之外又显式写了 `:options="item.field.options"`——Lov 字段该项为 undefined。Lov 未声明 `options` prop → 落入 attrs → Vue 对根节点动态组件做 attrs 透传 `mergeProps(root.props, attrs)`，**透传的 undefined 覆盖了 Lov 内部 `:options="staticOptions"` 数组绑定**，Select 收到空数组。
+- **修复**：字段绑定统一收敛到 script 内构建的 binds 对象，undefined 值一律不下发（`if (field.options !== undefined) binds.options = ...`）；模板只保留必有值的 `:model-value` 与事件。推广：动态 `<component :is>` 上禁止显式绑定可为 undefined 的 prop，一律走 v-bind 对象并在 script 里按需赋值。
+- **排查路径**：临时探针逐层打点（inject 成功 → resolveLovSource 成功 → staticOptions 正确 → Select 收到 []），才定位到「解析正确但渲染被覆盖」的透传层。
+
+### pnpm `file:` 依赖的可用形态与嵌套临时工程隔离
+
+- 跨盘绝对路径 `file:E:/...` 在 Windows pnpm 下被当作相对路径拼接（ENOENT），不可用；同盘相对路径 `file:../../packages/<name>` 可用。
+- file: 打包副本内部仍带 `workspace:^` 依赖，脱离 monorepo 安装必挂；用临时工程 package.json 的 `pnpm.overrides` 把全部 `@mengxi-ark/*` 改写为同一 file: 路径即可闭环。
+- 在 monorepo 仓库内建临时工程会被上层 pnpm-workspace.yaml 吞掉（workspace:^ 解析回 workspace 包）；临时工程根放一个自己的 `pnpm-workspace.yaml`（`packages: [.]`）即可隔离。临时工程验证完必须清理（残留 vite dev server 进程会锁住目录，需先结束监听进程再删）。
+
+### eslint-config 全局环境按文件类型收敛
+
+- no-undef 对 TS 文件默认关闭，但 .vue 文件走 js.configs.recommended 仍会报 console / MouseEvent 等未定义；在 `internal/eslint-config/index.js` 给 `**/*.ts` / `**/*.vue` 统一加 `globals.browser`、`packages/cli/**` 加 `globals.node` 一次性修复（cli 为 Node 包，需覆盖而非共享 browser）。

@@ -10,6 +10,7 @@
   "dependencies": {
     "@mengxi-ark/biz-components": "workspace:*",
     "@mengxi-ark/components": "workspace:*",
+    "@mengxi-ark/dsl-render": "workspace:*",
     "@mengxi-ark/hooks": "workspace:*",
     "@mengxi-ark/theme": "workspace:*",
     "@mengxi-ark/utils": "workspace:*",
