@@ -17,6 +17,13 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # 缓存 Turborepo 本地缓存（根目录 .turbo/cache，实测全量命中时 build 从 74s 降至 <1s）
+      - uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
       - run: pnpm deps:check
       - run: pnpm peer:check
       - run: pnpm lint
