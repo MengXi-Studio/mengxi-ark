@@ -2,6 +2,12 @@
 
 纯样式层 Design Token 包：不含 Vue 组件、不含 JS 逻辑，全部以 `--mx-*` CSS Variables 输出，业务项目只需引入一个入口文件。
 
+## 适用场景
+
+**何时用**：需要全站统一的色板 / 间距 / 圆角 / 阴影 / 层级规范；需要开箱即用的暗色模式；需要不 fork 源码的品牌换肤（覆盖同名变量）；组件与页面样式需要与 UI 库视觉一致（配合 adapters 桥接）。
+
+**何时不用**：只需要单点样式微调、不想引入全量变量体系（直接写项目自有 CSS 即可）；需要 JS 运行时动态改主题（theme 不提供 JS API，换肤一律走 CSS Variables 覆盖）。
+
 ```bash
 pnpm add @mengxi-ark/theme
 ```
@@ -76,3 +82,8 @@ document.documentElement.dataset.theme = 'dark'; // 传 '' 恢复亮色
 ```
 
 组件与页面样式均按此方式引用 token，禁止硬编码色值 / 字号 / 间距字面量。
+
+## 相关教程
+
+- [核心概念](/guide/core-concepts)：两级 token（基础层 → 语义层）、暗色切换与 UI 库变量桥接的体系说明；
+- [迁移指南](/guide/migration)：`--mx-*` 与 `--ant-*` / `--el-*` 的映射关系与存量样式替换落点。

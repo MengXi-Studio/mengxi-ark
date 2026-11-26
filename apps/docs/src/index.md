@@ -32,13 +32,19 @@ features:
   - icon: 🪝
     title: "@mengxi-ark/hooks 组合式函数"
     details: useRequest / useAuth / useSession / useI18n / useTable / useForm，卸载自动清理，安装即用
+  - icon: 🧱
+    title: "@mengxi-ark/components 通用增强组件"
+    details: SearchForm / EnhanceTable / MxDialog 等完全独立可导入，不需要基座注册；props 驱动优先、插槽兜底，按需引入零成本
   - icon: 🧩
     title: 双模式业务组件
-    details: components / biz-components props 驱动优先、插槽兜底；Lov / DocumentTable 独立模式自请求，装了基座自动联动，上下文丢失自动降级
+    details: Lov / DocumentTable 独立模式自请求，装了基座自动联动，上下文丢失自动降级；组件只封装交互范式，不绑定后端固定字段
   - icon: 🏗️
     title: "@mengxi-ark/runtime 中台基座"
     details: Tab 工作台 / 菜单 / 模块注册 / 会话 / 全局上下文五 service，内置可替换工作台 Layout，纯增量依赖可选安装
   - icon: ⚡
     title: "@mengxi-ark/dsl-render 配置渲染加速"
     details: Schema 强 TS 类型 + 三渲染器，只渲染不请求；手写 SFC 一等公民，配置渲染只是加速方案
+  - icon: 🛠️
+    title: "create-mengxi-ark 脚手架"
+    details: pnpm create mengxi-ark 一键创建项目，轻量 / 中台双模板开箱即用；模板薄、能力全走 npm 包引入，内置 AI 用法规则随模板分发
 ---

@@ -1,5 +1,7 @@
 # registerModule 模块开发
 
+> **前置知识**：请先阅读 [createArkRuntime 与工作台](/platform/)——本页的模块注册时机会挂接在其 install 装配流程上；权限合并机制依赖[全局上下文](/platform/context)的下发链路。
+
 模块包只依赖 `@mengxi-ark/runtime` 的 `ModuleDefinition` **类型**（声明式字段），不 import runtime 内部实现；路由、菜单、权限由基座在注册时统一装配。
 
 ## ModuleDefinition
@@ -71,3 +73,5 @@ function openPickDialog(): void {
 ```
 
 完整可运行示例见 `apps/demo-platform`（systemModule / bizModule 两模块 + 降级切换演示页）。
+
+**下一步**：模块注册完成后，进入 [全局上下文与双模式降级](/platform/context)理解上下文如何下发给业务组件、以及上下文丢失时的降级行为。

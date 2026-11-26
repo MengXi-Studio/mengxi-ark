@@ -2,6 +2,12 @@
 
 `@mengxi-ark/biz-components` 单据主表表格：基于 EnhanceTable 能力 + 行编辑状态 + 字段校验。**save 事件抛全量单据数据，组件不自带提交请求**（提交由业务在 `@save` 中自行处理）。
 
+## 适用场景
+
+**何时用**：单据 / 明细类页面的主表编辑（新增行、删除行、行内编辑、保存）；需要单元格级权限控制（permissionCode）与行级 editable 函数化；需要「无权限单元格跳过必填校验」防保存死锁；行展开内嵌子单据表。
+
+**何时不用**：纯只读展示列表（交给 [EnhanceTable](/api/enhancetable)，编辑能力用不上）；整页表单类编辑（FormRenderer / 手写 SFC 更合适）；需要组件内部自动提交请求（DocumentTable 只抛 save 全量数据，提交由业务处理）。
+
 行编辑能力：双击行或点「编辑」进入编辑态，`editable` 列渲染编辑器（input / select），校验未通过时阻断 save 并行内标错。
 
 ## 示例一：基础行编辑
@@ -203,7 +209,7 @@ const rows = ref<Array<Record<string, unknown>>>([
 | dataIndex / title | `string` | 同统一列契约（必填） |
 | editable | `boolean \| (row) => boolean` | 该列是否可编辑，默认 false；函数形态按行数据判定行级粒度 |
 | editorType | `'input' \| 'select'` | 编辑器类型，默认 'input' |
-| permissionCode | `string \| string[]` | — | 列级权限码（some 语义命中任一即可编辑；无权限渲染只读文本） |
+| permissionCode | `string \| string[]` | 列级权限码（some 语义命中任一即可编辑；无权限渲染只读文本，不隐藏列） |
 | editorOptions | `MxSelectOption[]` | select 编辑器的选项 |
 | rules | `DocCellRule[]` | 校验规则（`required` / `message` / `validator`，多条按顺序执行） |
 
@@ -224,3 +230,7 @@ const rows = ref<Array<Record<string, unknown>>>([
 | toolbar | 自定义工具栏（追加在默认按钮之后） |
 | bodyCell | 单元格自定义渲染（非编辑态生效） |
 | expandedRow | 行展开内容（作用域 `{ record, index }`；子表由业务在槽内组合） |
+
+## 相关教程
+
+- [组件实战](/guide/components-guide)：第 4 步演示行编辑完整流程（save 抛全量、字段校验、permissionCode / editable 函数化）。

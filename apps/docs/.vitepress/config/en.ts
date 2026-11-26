@@ -8,27 +8,38 @@ import type { DefaultTheme } from 'vitepress';
 
 const REPO_EDIT_BASE = 'https://github.com/MengXi-Studio/mengxi-ark/edit/master/apps/docs/src';
 
-/** Guide sidebar: Getting Started + Platform + DSL, shared across /en/guide/ /en/platform/ /en/dsl/ prefixes */
+/** Guide sidebar: Getting Started → Core → Advanced → Master progressive groups (shared across /en/guide/ /en/platform/ /en/dsl/ prefixes) */
 const guideSidebar: DefaultTheme.SidebarItem[] = [
   {
     text: 'Getting Started',
     items: [
       { text: 'Introduction', link: '/en/guide/introduction' },
       { text: 'Quick Start (Lightweight)', link: '/en/guide/getting-started' },
-      { text: 'Feedback', link: '/en/guide/feedback' },
     ],
   },
   {
-    text: 'Platform (Runtime Base)',
+    text: 'Core',
+    items: [
+      { text: 'Core Concepts', link: '/en/guide/core-concepts' },
+      { text: 'Component Walkthrough', link: '/en/guide/components-guide' },
+    ],
+  },
+  {
+    text: 'Advanced',
     items: [
       { text: 'createArkRuntime & Workspace', link: '/en/platform/' },
       { text: 'registerModule Module Dev', link: '/en/platform/module' },
       { text: 'Global Context & Dual-mode Fallback', link: '/en/platform/context' },
+      { text: 'Schema & Three Renderers', link: '/en/dsl/' },
     ],
   },
   {
-    text: 'DSL Rendering (Accelerator)',
-    items: [{ text: 'Schema & Three Renderers', link: '/en/dsl/' }],
+    text: 'Master',
+    items: [{ text: 'Migration Guide', link: '/en/guide/migration' }],
+  },
+  {
+    text: 'Others',
+    items: [{ text: 'Feedback', link: '/en/guide/feedback' }],
   },
 ];
 

@@ -2,6 +2,12 @@
 
 A general enhanced table from `@mengxi-ark/components`: data is externally driven (paired with the `useTable` return values), rendered internally through the UI adapter's DataTable capability, with three fallback slots — toolbar / cell / empty state — and `EmptyState` rendered automatically for empty data.
 
+## Use Cases
+
+**When to use**: read-only display lists (data is externally driven — the component fetches nothing itself); tables that need the unified column / pagination / row-selection / sorting / row-expansion contracts; consistent empty state, size semantics and loading state across the library.
+
+**When not to use**: document tables with inline editing and field validation (use [DocumentTable](/en/api/documenttable)); scenarios where the component must fetch data itself (EnhanceTable data is always externally driven — manage request state with [useTable](/en/api/hooks)).
+
 ## Example 1: Basic Table
 
 ```vue
@@ -118,3 +124,8 @@ const rowSelection = {
 | toolbar | Toolbar (above the table, paired with the query area) |
 | bodyCell | Custom cell rendering (`{ column, record, index }`) |
 | empty | Custom empty state (default: EmptyState + emptyText) |
+
+## Related Tutorials
+
+- [Component Walkthrough](/en/guide/components-guide): Steps 1 / 2 demo the minimal usage plus toolbar and bodyCell slot customization;
+- [SearchForm API](/en/api/searchform): pair it with the query area for the standard list-page pattern.

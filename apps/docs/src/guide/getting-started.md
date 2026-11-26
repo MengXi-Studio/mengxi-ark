@@ -103,6 +103,5 @@ document.documentElement.dataset.theme = 'dark'; // 传 '' 恢复亮色
 
 ## 下一步
 
-- [@mengxi-ark/utils API](/api/utils)
-- [@mengxi-ark/theme API](/api/theme)
-- [@mengxi-ark/hooks API](/api/hooks)
+- [核心概念](/guide/core-concepts)：建立分层架构、双模式契约、主题体系与 hooks 约定的心智模型；
+- 基础包 API 参考：[@mengxi-ark/utils](/api/utils) · [@mengxi-ark/theme](/api/theme) · [@mengxi-ark/hooks](/api/hooks)。

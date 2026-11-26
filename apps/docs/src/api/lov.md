@@ -2,6 +2,16 @@
 
 `@mengxi-ark/biz-components` 双模式组件：封装「弹窗表格选择」交互范式，不绑定后端固定字段。行数据 `label` / `value` 由 `fieldNames` 映射，行 key 从 `fieldNames.value` 取。
 
+## 适用场景
+
+**何时用**：值集 / 主数据选择（用户、部门、组织、字典项等）——接口模式弹窗表格选，静态值集下拉直选；省市区等级联选择（cascadeSource）；需要防抖搜索 + 分页的标准选择器；同一组件要在「有基座 / 无基座」两种环境复用。
+
+**何时不用**：选项固定且数量极少（两三个按钮 / radio 更直接）；需要在弹窗内做复杂多步操作（Lov 弹窗只做选择，复杂交互手写 SFC + Dialog）；树形层级选择（适配器提供 TreeSelect 原子能力，业务组合使用）。
+
+```bash
+pnpm add @mengxi-ark/biz-components
+```
+
 ## 两种运行模式
 
 | 模式 | 触发条件 | 数据来源 |
@@ -242,3 +252,7 @@ const popupColumns: MxColumn[] = [
 | --- | --- |
 | default | 触发器展示区自定义 |
 | bodyCell | 弹窗表格单元格自定义渲染（作用域 `{ column, record, index }`，仅远程接口模式生效） |
+
+## 相关教程
+
+- [组件实战](/guide/components-guide)：第 3 步演示独立模式（api + params / cascadeSource 级联 / 弹窗自定义），第 5 步演示基座联动与降级差异。

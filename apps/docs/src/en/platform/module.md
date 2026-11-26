@@ -1,5 +1,7 @@
 # registerModule Module Development
 
+> **Prerequisites**: read [createArkRuntime & the Workbench](/en/platform/) first — this page's module registration timing hooks into its install assembly flow, and the permission merging mechanism relies on the delivery chain of the [Global Context](/en/platform/context).
+
 A module package depends only on the `ModuleDefinition` **type** of `@mengxi-ark/runtime` (declarative fields), never importing runtime's internal implementation; routes, menus and permissions are assembled uniformly by the base at registration time.
 
 ## ModuleDefinition
@@ -71,3 +73,5 @@ function openPickDialog(): void {
 ```
 
 See `apps/demo-platform` for a complete runnable example (systemModule / bizModule, two modules + a fallback-switching demo page).
+
+**Next**: once modules are registered, move on to [Global Context & Dual-Mode Fallback](/en/platform/context) to see how the context reaches business components and what happens when it is lost.

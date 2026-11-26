@@ -1,5 +1,7 @@
 # 中台进阶（Runtime 基座）
 
+> **前置知识**：本板块假设你已掌握[核心概念](/guide/core-concepts)（分层架构、双模式降级链）并完成[组件实战](/guide/components-guide)——基座的所有能力都建立在这套契约之上。若只想要轻量使用，可完全跳过本板块。
+
 `@mengxi-ark/runtime` 是可选的中台基座包：提供 Tab 工作台、全局上下文下发、模块注册中心、路由守卫与生命周期钩子。不安装 runtime 时，utils / theme / hooks / components / biz-components 完全独立可用；安装后业务组件自动探测基座上下文（基座联动模式）。
 
 ## 安装
@@ -109,3 +111,5 @@ runtime.tabService.close(key);      // 关闭（首页页签 closable false 不�
 | `contextService` | MX_RUNTIME_CONTEXT_KEY 下发 + 权限合并 |
 
 相关页面：[registerModule 模块开发](/platform/module) · [全局上下文与双模式降级](/platform/context)
+
+**下一步**：完成基座装配后，进入 [registerModule 模块开发](/platform/module)把业务拆成可注册的模块包。

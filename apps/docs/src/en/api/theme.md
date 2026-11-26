@@ -2,6 +2,12 @@
 
 Pure style-layer Design Token package: no Vue components, no JS logic — everything is output as `--mx-*` CSS Variables, and business projects only need to import a single entry file.
 
+## Use Cases
+
+**When to use**: site-wide unified color / spacing / radius / shadow / z-index conventions; dark mode out of the box; brand re-theming without forking the source (override the same-named variables); component and page styles that must stay visually consistent with the UI library (with the adapters bridging).
+
+**When not to use**: single-point style tweaks where you don't want the full variable system (just write your project's own CSS); dynamic theming driven from JS (theme ships no JS API — re-theming always goes through CSS Variables overrides).
+
 ```bash
 pnpm add @mengxi-ark/theme
 ```
@@ -76,3 +82,8 @@ Overrides only affect semantic-layer values, not the ramp definitions; if you ne
 ```
 
 Component and page styles all reference tokens this way; hardcoding color / font-size / spacing literals is forbidden.
+
+## Related Tutorials
+
+- [Core Concepts](/en/guide/core-concepts): the two-level token system (base layer → semantic layer), dark-mode switching and UI-library variable bridging;
+- [Migration Guide](/en/guide/migration): the mapping between `--mx-*` and `--ant-*` / `--el-*`, and where to replace legacy styles.

@@ -1,5 +1,7 @@
 # DSL Config Rendering (Accelerator)
 
+> **Prerequisites**: this section assumes you have mastered [Core Concepts](/en/guide/core-concepts) and the [Component Walkthrough](/en/guide/components-guide) — the three Schema types respectively compose the contracts of the query area / table / form.
+>
 > **Handwritten SFC is first-class**: MengXi Ark recommends handwritten Vue SFCs for pages; when page structures are highly repetitive (standard CRUD lists / config forms), you can use `@mengxi-ark/dsl-render` to describe the UI as JSON and let the renderers compose framework components to speed up delivery. Config rendering is an accelerator, not a replacement.
 
 ## Installation
@@ -171,3 +173,5 @@ const myTable = defineComponent({
 
 Runnable code lives in the demo projects:
 lightweight mode `apps/demo-light/src/demos/DslDemo.vue`; mid-platform mode `apps/demo-platform/src/views/DslDemoPage.vue`.
+
+**Next**: after evaluating where DSL acceleration pays off, read the [Migration Guide](/en/guide/migration) to plan the overall rollout path for existing projects.

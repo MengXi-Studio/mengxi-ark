@@ -2,6 +2,12 @@
 
 纯函数工具库：仅原生 TypeScript，无 Vue 依赖、无 UI、无副作用，兼容 Web 与 Node 脚本导入，Tree-Shaking 友好（按需导入单一函数即可）。
 
+## 适用场景
+
+**何时用**：金额 / 日期 / 字典值的展示格式化，树形数据（菜单 / 组织）的遍历过滤映射，深拷贝与对象合并，手机号 / 邮箱 / 身份证的本地轻量校验，CSV 导出与 URL 参数读取——这些与 Vue 无关的纯逻辑都应收敛到 utils，保证可在 Web / Node / 单测中复用。
+
+**何时不用**：需要响应式状态的请求 / 表格 / 权限逻辑（交给 [hooks](/api/hooks)）；带 UI 形态的能力（交给 components）；依赖浏览器 DOM 副作用的复杂场景（utils 的 browser 类仅做轻量封装，Node 环境安全降级）。
+
 ```bash
 pnpm add @mengxi-ark/utils
 ```
@@ -85,3 +91,8 @@ const menus = [
 filterTree(menus, (node) => node.name.includes('用户'));
 // [{ id: 1, name: '系统管理', children: [{ id: 11, name: '用户管理' }] }]
 ```
+
+## 相关教程
+
+- [核心概念](/guide/core-concepts)：utils 在分层架构中的定位（最底层纯函数层，不依赖任何上层包）；
+- [快速上手](/guide/getting-started)：三个基础包的最小可运行组合。

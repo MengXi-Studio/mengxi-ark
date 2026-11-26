@@ -2,6 +2,12 @@
 
 `@mengxi-ark/components` 配置驱动的查询表单区：`fields` 声明字段，内部维护表单值，`search` / `reset` 事件抛给上层（配合 `useTable` 的 `search` / `reset` 使用）。props 驱动优先，不需要任何基座注册。
 
+## 适用场景
+
+**何时用**：列表页顶部的标准查询区（input / select / dateRange 三类控件足够覆盖多数场景）；希望字段折叠展开、按钮 loading、重置回 initialValue 全部零样板；与 [useTable](/api/hooks) / EnhanceTable 组成「查询区 + 表格」标准范式。
+
+**何时不用**：查询控件类型超出 input / select / dateRange（如树选择、上传——经 `extra` 插槽自定义字段，或直接手写 SFC 表单）；需要复杂联动表单（那是 FormRenderer / 手写 SFC 的领域）。
+
 ```bash
 pnpm add @mengxi-ark/components
 ```
@@ -121,3 +127,7 @@ const { dataSource, loading, pagination, search } = useTable(fetchUserPage, {
 | 插槽 | 说明 |
 | --- | --- |
 | extra | 额外自定义字段区域（渲染在按钮之前） |
+
+## 相关教程
+
+- [组件实战](/guide/components-guide)：第 1 / 2 步演示 SearchForm 最简用法与插槽自定义，第 5 步演示基座联动环境下的行为。

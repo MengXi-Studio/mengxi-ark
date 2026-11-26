@@ -20,7 +20,7 @@
         ↓
 应用层（业务项目 / demo 工程）
         ↓
-【可选】@mengxi-ark/runtime　【可选】@mengxi-ark/dsl-render
+【可选】中台基座　【可选】@mengxi-ark/dsl-render
         ↓
 @mengxi-ark/biz-components（双模式业务组件）
         ↓
@@ -33,9 +33,9 @@
 @mengxi-ark/utils（纯函数工具层）
 ```
 
-**越靠下层越稳定**：utils / theme 谨慎发版（低频稳定），hooks / components / biz-components 持续新增（Minor），runtime / dsl-render 严格控制破坏性变更（Major 必附迁移文档）。
+**越靠下层越稳定**：utils / theme 谨慎发版（低频稳定），hooks / components / biz-components 持续新增（Minor），中台基座与 dsl-render 严格控制破坏性变更（Major 必附迁移文档）。
 
-下层包不知道上层包的存在——biz-components 与 runtime 之间只共享 `MX_RUNTIME_CONTEXT_KEY` 契约类型，通过 `inject` 探测联动，**零 import 耦合**：装了基座自动联动，没装自动降级独立模式。
+下层包不知道上层包的存在——biz-components 与可选基座之间只共享上下文契约类型，通过 `inject` 探测联动，**零 import 耦合**：装了基座自动联动，没装自动降级独立模式。
 
 ## 双模式业务组件
 
@@ -44,9 +44,9 @@
 | 模式 | 触发条件 | 数据来源 |
 | --- | --- | --- |
 | 独立模式（默认降级） | 传 `lovApi` / `lovOptions` 等 props | 组件内部自行请求，不需要任何基座 |
-| 基座联动模式 | `inject` 探测到 runtime 上下文 | 自动复用基座的值集缓存 / 列表接口 / 权限 |
+| 基座联动模式 | `inject` 探测到基座上下文 | 自动复用基座的值集缓存 / 列表接口 / 权限 |
 
-解析优先级恒为「上下文 → props → 独立空态」：上下文丢失字段自动回退同名 props，全部缺失渲染空态并警告一次，**不抛致命异常**。runtime 是纯增量依赖，未安装时一切组件照常工作。
+解析优先级恒为「上下文 → props → 独立空态」：上下文丢失字段自动回退同名 props，全部缺失渲染空态并警告一次，**不抛致命异常**。基座是纯增量依赖，未安装时一切组件照常工作。
 
 ## 包清单
 
@@ -57,15 +57,27 @@
 | `@mengxi-ark/hooks` | 通用组合式函数 | useRequest / useAuth / useSession / useI18n / useTable / useForm |
 | `@mengxi-ark/components` | 通用增强组件 | SearchForm / EnhanceTable / Dialog 等，props 驱动优先、插槽兜底 |
 | `@mengxi-ark/biz-components` | 双模式业务语义组件 | Lov 值集选择器 / DocumentTable 单据表格等，独立与基座联动自动切换 |
-| `@mengxi-ark/runtime` | 中台基座（可选） | Tab 工作台 / 菜单 / 模块注册 / 会话 / 全局上下文 |
 | `@mengxi-ark/dsl-render` | DSL 配置渲染引擎（可选） | Schema 强类型 + 三渲染器，只渲染不请求，手写 SFC 一等公民 |
 | `@mengxi-ark/cli` | 脚手架 | `pnpm create mengxi-ark`，轻量 / 中台双模板 |
+
+另有可选的**中台基座包**（Tab 工作台 / 菜单 / 会话 / 全局上下文），属于进阶能力，详见[中台进阶](/platform/)板块——轻量使用阶段无需关心。
 
 ## 对比参考
 
 - **vs vue-element-admin**：不是复制样板代码，框架能力以 npm 包交付，统一升级；
 - **vs Vben Admin**：增加单据业务组件、可选中台基座、DSL 配置渲染；
-- **vs HZERO C7N**：组件不强制绑定 runtime，可独立跨项目使用。
+- **vs HZERO C7N**：组件不强制绑定基座，可独立跨项目使用。
+
+## 学习路径
+
+按「入门 → 核心 → 进阶 → 精通」四阶段渐进学习，每个阶段结束你都能独立完成一类工作：
+
+| 阶段 | 页面 | 学完你能 |
+| --- | --- | --- |
+| **入门** | [介绍](/guide/introduction) · [快速上手（轻量模式）](/guide/getting-started) | 在任意 Vue 3 项目装上三个基础包并跑通 utils / theme / hooks |
+| **核心** | [核心概念](/guide/core-concepts) · [组件实战](/guide/components-guide) | 理解分层与双模式契约；用五步渐进方式跑通 SearchForm / EnhanceTable / Lov / DocumentTable |
+| **进阶** | [中台进阶](/platform/) · [DSL 配置渲染](/dsl/) | 装配 Tab 工作台与业务模块；用 Schema 加速标准 CRUD 页面 |
+| **精通** | [迁移指南](/guide/migration) · [API 手册](/api/utils) | 平滑迁移存量 antdv / Element Plus 项目；逐项核对导出 API |
 
 ## 下一步
 

@@ -2,6 +2,12 @@
 
 A document master-table component from `@mengxi-ark/biz-components`: built on EnhanceTable capabilities + row editing state + field validation. **The save event emits the full document data; the component carries no submit request** (submission is handled by the business in `@save`).
 
+## Use Cases
+
+**When to use**: master-table editing of document / detail pages (add row, remove row, inline editing, save); cell-level permission control (permissionCode) with functional row-level editable; "unauthorized cells skip required validation" to prevent save deadlocks; child document tables embedded in row expansion.
+
+**When not to use**: purely read-only display lists (use [EnhanceTable](/en/api/enhancetable) — the editing capability would go unused); whole-page form editing (FormRenderer / handwritten SFC fits better); automatic submit requests inside the component (DocumentTable only emits the full save data — submission is handled by the business).
+
 Row editing: double-click a row or click "edit" to enter edit mode; `editable` columns render editors (input / select); failed validation blocks save and marks the error inline.
 
 ## Example 1: Basic Row Editing
@@ -224,3 +230,7 @@ const rows = ref<Array<Record<string, unknown>>>([
 | toolbar | Custom toolbar (appended after the default buttons) |
 | bodyCell | Custom cell rendering (effective outside edit mode) |
 | expandedRow | Row expansion content (scoped `{ record, index }`; the child table is composed by the business inside the slot) |
+
+## Related Tutorials
+
+- [Component Walkthrough](/en/guide/components-guide): Step 4 demos the full row-editing flow (save emitting the full data set, field validation, functional permissionCode / editable).

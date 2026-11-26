@@ -92,7 +92,7 @@ You can also attach the `.mx-theme-dark` class; both approaches are equivalent.
 
 ## Overriding the Theme
 
-Redefine the same-named `--mx-*` variables in your own stylesheet (CSS Variables take effect at runtime) — no need to fork theme:
+Redefine the same-named `--mx-*` variables in your own stylesheet (the overrides take effect immediately in the browser) — no need to fork theme:
 
 ```css
 :root {
@@ -103,6 +103,5 @@ Redefine the same-named `--mx-*` variables in your own stylesheet (CSS Variables
 
 ## Next Steps
 
-- [@mengxi-ark/utils API](/en/api/utils)
-- [@mengxi-ark/theme API](/en/api/theme)
-- [@mengxi-ark/hooks API](/en/api/hooks)
+- [Core Concepts](/en/guide/core-concepts): build the mental model of the layered architecture, the dual-mode contract, the theme system and the hooks conventions;
+- Foundation package API reference: [@mengxi-ark/utils](/en/api/utils) · [@mengxi-ark/theme](/en/api/theme) · [@mengxi-ark/hooks](/en/api/hooks).

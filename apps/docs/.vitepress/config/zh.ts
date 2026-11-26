@@ -9,27 +9,38 @@ import type { DefaultTheme } from 'vitepress';
 /** 仓库内编辑链接基址（本仓库默认分支为 master，内容位于 apps/docs/src） */
 const REPO_EDIT_BASE = 'https://github.com/MengXi-Studio/mengxi-ark/edit/master/apps/docs/src';
 
-/** 指南侧栏：入门 + 中台进阶 + DSL，三个板块共用（挂到 /guide/ /platform/ /dsl/ 前缀） */
+/** 指南侧栏：入门 → 核心 → 进阶 → 精通 渐进分组（挂到 /guide/ /platform/ /dsl/ 前缀） */
 const guideSidebar: DefaultTheme.SidebarItem[] = [
   {
     text: '入门',
     items: [
       { text: '介绍', link: '/guide/introduction' },
       { text: '快速上手（轻量模式）', link: '/guide/getting-started' },
-      { text: '反馈渠道', link: '/guide/feedback' },
     ],
   },
   {
-    text: '中台进阶（Runtime 基座）',
+    text: '核心',
+    items: [
+      { text: '核心概念', link: '/guide/core-concepts' },
+      { text: '组件实战', link: '/guide/components-guide' },
+    ],
+  },
+  {
+    text: '进阶',
     items: [
       { text: 'createArkRuntime 与工作台', link: '/platform/' },
       { text: 'registerModule 模块开发', link: '/platform/module' },
       { text: '全局上下文与双模式降级', link: '/platform/context' },
+      { text: 'Schema 与三渲染器', link: '/dsl/' },
     ],
   },
   {
-    text: 'DSL 配置渲染（加速方案）',
-    items: [{ text: 'Schema 与三渲染器', link: '/dsl/' }],
+    text: '精通',
+    items: [{ text: '迁移指南', link: '/guide/migration' }],
+  },
+  {
+    text: '其他',
+    items: [{ text: '反馈渠道', link: '/guide/feedback' }],
   },
 ];
 

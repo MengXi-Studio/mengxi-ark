@@ -1,5 +1,7 @@
 # 全局上下文与双模式降级
 
+> **前置知识**：本页是[核心概念](/guide/core-concepts)中「双模式业务组件契约」在基座侧的完整展开；请先完成 [createArkRuntime 与工作台](/platform/)与 [registerModule 模块开发](/platform/module)。
+
 runtime 经 `provide(MX_RUNTIME_CONTEXT_KEY, reactive(context))` 下发全局上下文；biz-components 组件 `inject` 探测同一键（`MX_RUNTIME_CONTEXT_KEY`，与 runtime **零 import 耦合**，仅共享契约类型）。这条契约同时兼容两种运行形态：
 
 ## 上下文字段与 props 兜底对应
@@ -34,3 +36,5 @@ runtime 经 `provide(MX_RUNTIME_CONTEXT_KEY, reactive(context))` 下发全局上
 - 探测键 `MX_RUNTIME_CONTEXT_KEY` 与字段集（`MxRuntimeContext`）由 biz-components 定义、runtime 扩展（`RuntimeContext` 增加 `appName` 等基座字段）；
 - 上下文字段增删按破坏性变更走 **Major** 并附迁移说明；
 - 未安装 runtime 时一切组件按独立模式工作，runtime 是纯增量依赖。
+
+**下一步**：基座联动就绪后，可按需引入 [DSL 配置渲染](/dsl/)加速标准 CRUD 页面（同样支持双模式探测）；或查阅 [迁移指南](/guide/migration)规划存量项目落地。

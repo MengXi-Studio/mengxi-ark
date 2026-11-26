@@ -1,5 +1,7 @@
 # DSL 配置渲染（加速方案）
 
+> **前置知识**：本板块假设你已掌握[核心概念](/guide/core-concepts)与[组件实战](/guide/components-guide)——三类 Schema 分别组合查询区 / 表格 / 表单的组件契约。
+>
 > **手写 SFC 一等公民**：曦舟推荐手写 Vue SFC 完成页面；当页面结构高度重复（标准 CRUD 列表 / 配置表单）时，
 > 可用 `@mengxi-ark/dsl-render` 以 JSON 形态描述界面、由渲染器组合框架组件加速产出。配置渲染只是加速方案，不是替代方案。
 
@@ -172,3 +174,5 @@ const myTable = defineComponent({
 
 可运行代码见 demo 工程：
 轻量模式 `apps/demo-light/src/demos/DslDemo.vue`；中台模式 `apps/demo-platform/src/views/DslDemoPage.vue`。
+
+**下一步**：评估完 DSL 加速边界后，查阅[迁移指南](/guide/migration)规划存量项目整体落地路径。

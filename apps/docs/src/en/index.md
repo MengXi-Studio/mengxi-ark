@@ -32,13 +32,19 @@ features:
   - icon: 🪝
     title: "@mengxi-ark/hooks Composables"
     details: useRequest / useAuth / useSession / useI18n / useTable / useForm — automatic cleanup on unmount, ready to use right after installation
+  - icon: 🧱
+    title: "@mengxi-ark/components Enhanced Components"
+    details: SearchForm / EnhanceTable / MxDialog and more — fully standalone, importable without any base registration; props-driven first with slot fallbacks, zero-cost on-demand adoption
   - icon: 🧩
     title: Dual-Mode Business Components
-    details: components / biz-components are props-driven first with slot fallbacks; Lov / DocumentTable fetch data on their own in standalone mode, link to the base automatically once installed, and degrade gracefully when context is lost
+    details: Lov / DocumentTable fetch data on their own in standalone mode, link to the base automatically once installed, and degrade gracefully when context is lost; components encapsulate interaction patterns only, never hard-coded backend fields
   - icon: 🏗️
     title: "@mengxi-ark/runtime Mid-Platform Base"
     details: Five services — tab workbench / menu / module registry / session / global context — with a built-in replaceable workbench Layout, a purely additive optional dependency
   - icon: ⚡
     title: "@mengxi-ark/dsl-render Config-Driven Rendering"
     details: Strong TS Schema types + three renderers that render only and never fetch; handwritten SFC stays first-class, config-driven rendering is just an accelerator
+  - icon: 🛠️
+    title: "create-mengxi-ark Scaffolding"
+    details: pnpm create mengxi-ark to bootstrap a project in one command, with lightweight / mid-platform templates out of the box; thin templates, all capabilities via npm packages, AI usage rules bundled with each template
 ---

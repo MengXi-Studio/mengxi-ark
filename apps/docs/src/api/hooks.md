@@ -2,6 +2,12 @@
 
 通用组合式函数包：仅依赖 Vue 生态（peerDependencies：vue / pinia / vue-router），独立模式运行，安装即用。所有 hook 的 `options` 恒为对象且字段全部可选；卸载时自动清理（组件外调用跳过清理，不报错）。
 
+## 适用场景
+
+**何时用**：需要请求状态管理（loading / 竞态 / 取消 / 重试 / 缓存）用 useRequest；分页 / 排序 / 筛选的表格查询状态用 useTable；按钮与页面块的权限判断用 useAuth + v-permission；轻量 token 存取与刷新调度用 useSession；文案国际化用 useI18n；表单回显 / 重置 / 校验封装用 useForm。
+
+**何时不用**：需要 UI 形态的查询区 / 表格（交给 [components](/api/searchform)，hooks 只管状态）；需要在 hook 内写死业务接口地址或字典（请求实例与数据源一律由业务注入）；路由跳转逻辑（hook 不劫持路由原生 API，守卫交给业务或基座注册）。
+
 ```bash
 pnpm add @mengxi-ark/hooks
 ```
@@ -226,3 +232,8 @@ const keywordInput = ref('');
 ```
 
 说明：source 返回 `{ list, total }`；`search` 回到第 1 页并合并条件查询；`pagination.onChange` 为 antdv onChange 语义，翻页自动重新查询；`reset` 恢复默认条件、清空排序筛选并回到第 1 页。
+
+## 相关教程
+
+- [核心概念](/guide/core-concepts)：hooks 通用约定（`(source, options?)` 签名、卸载自动清理、默认行为可关闭、权限源三级降级）；
+- [迁移指南](/guide/migration)：用 useRequest / useTable 替代手写 axios 与分页状态样板。

@@ -1,5 +1,7 @@
 # Global Context & Dual-Mode Fallback
 
+> **Prerequisites**: this page is the base-side expansion of the "dual-mode business component contract" from [Core Concepts](/en/guide/core-concepts); finish [createArkRuntime & the Workbench](/en/platform/) and [registerModule Module Development](/en/platform/module) first.
+
 runtime delivers the global context via `provide(MX_RUNTIME_CONTEXT_KEY, reactive(context))`; biz-components probe the same key via `inject` (`MX_RUNTIME_CONTEXT_KEY`, with **zero import coupling** to runtime — only contract types are shared). This contract supports both runtime forms at once:
 
 ## Context Fields & Props Fallback Mapping
@@ -34,3 +36,5 @@ The "fallback switching demo" page in `apps/demo-platform` regresses this contra
 - The probe key `MX_RUNTIME_CONTEXT_KEY` and its field set (`MxRuntimeContext`) are defined by biz-components and extended by runtime (`RuntimeContext` adds base fields such as `appName`);
 - Adding or removing context fields is treated as a **Major** breaking change and must ship with a migration guide;
 - Without runtime installed, all components work in standalone mode — runtime is a purely additive dependency.
+
+**Next**: once base linking works, bring in [DSL Config Rendering](/en/dsl/) as needed to speed up standard CRUD pages (dual-mode probing supported as well); or read the [Migration Guide](/en/guide/migration) to plan the rollout for existing projects.

@@ -2,6 +2,12 @@
 
 Pure utility function library: native TypeScript only — no Vue dependency, no UI, no side effects, compatible with Web and Node script imports, Tree-Shaking friendly (import a single function on demand).
 
+## Use Cases
+
+**When to use**: presentation formatting of money / dates / dictionary values; traversal, filtering and mapping of tree data (menus / org structures); deep clone and object merging; lightweight local validation of phone numbers / emails / ID cards; CSV export and URL parameter reading — all pure logic unrelated to Vue should converge into utils so it can be reused on Web / Node / in unit tests.
+
+**When not to use**: request / table / permission logic that needs reactive state (leave it to [hooks](/en/api/hooks)); capabilities with a UI form (leave them to components); complex scenarios depending on browser DOM side effects (utils' browser utilities are only light wrappers and degrade safely in Node).
+
 ```bash
 pnpm add @mengxi-ark/utils
 ```
@@ -85,3 +91,8 @@ const menus = [
 filterTree(menus, (node) => node.name.includes('用户'));
 // [{ id: 1, name: '系统管理', children: [{ id: 11, name: '用户管理' }] }]
 ```
+
+## Related Tutorials
+
+- [Core Concepts](/en/guide/core-concepts): where utils sits in the layered architecture (the bottommost pure-function layer, depending on no upper package);
+- [Get Started](/en/guide/getting-started): the minimal runnable combination of the three foundation packages.

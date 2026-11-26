@@ -1,5 +1,7 @@
 # Mid-Platform (Runtime Base)
 
+> **Prerequisites**: this section assumes you have mastered [Core Concepts](/en/guide/core-concepts) (the layered architecture and the dual-mode fallback chain) and completed the [Component Walkthrough](/en/guide/components-guide) — every base capability builds on that contract. If you only want lightweight usage, skip this section entirely.
+
 `@mengxi-ark/runtime` is the optional mid-platform base package: it provides a tab workbench, global context delivery, a module registry, route guards and lifecycle hooks. Without runtime, utils / theme / hooks / components / biz-components work fully standalone; once installed, business components automatically probe the base context (base-linked mode).
 
 ## Installation
@@ -109,3 +111,5 @@ The built-in Layout renders tabs / activeKey / dialogs as the tab bar and MxDial
 | `contextService` | MX_RUNTIME_CONTEXT_KEY delivery + permission merging |
 
 Related pages: [registerModule Module Development](/en/platform/module) · [Global Context & Dual-Mode Fallback](/en/platform/context)
+
+**Next**: after assembling the base, move on to [registerModule Module Development](/en/platform/module) to split your business into registrable module packages.

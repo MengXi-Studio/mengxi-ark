@@ -2,6 +2,12 @@
 
 General composables package: depends only on the Vue ecosystem (peerDependencies: vue / pinia / vue-router), runs in standalone mode, ready to use right after installation. Every hook's `options` is always an object with all-optional fields; cleanup happens automatically on unmount (calls outside components skip cleanup without throwing).
 
+## Use Cases
+
+**When to use**: request state management (loading / race protection / cancel / retry / caching) → useRequest; paged / sorted / filtered table query state → useTable; permission checks for buttons and page blocks → useAuth + v-permission; lightweight token storage and refresh scheduling → useSession; message internationalization → useI18n; form value echo / reset / validation wrapping → useForm.
+
+**When not to use**: query areas / tables with a UI form (leave them to [components](/en/api/searchform) — hooks manage state only); hardcoding business API endpoints or dictionaries inside hooks (request instances and data sources are always injected by the business); route-navigation logic (hooks never hijack native router APIs — guards are registered by the business or the base).
+
 ```bash
 pnpm add @mengxi-ark/hooks
 ```
@@ -226,3 +232,8 @@ const keywordInput = ref('');
 ```
 
 Notes: the source returns `{ list, total }`; `search` returns to page 1 and queries with merged conditions; `pagination.onChange` follows the antdv onChange semantics and re-queries automatically on page change; `reset` restores the default conditions, clears sorting and filters, and returns to page 1.
+
+## Related Tutorials
+
+- [Core Concepts](/en/guide/core-concepts): the common hooks conventions (the `(source, options?)` signature, automatic cleanup on unmount, switchable default behaviors, the three-level permission-source fallback);
+- [Migration Guide](/en/guide/migration): replacing hand-written axios and pagination-state boilerplate with useRequest / useTable.

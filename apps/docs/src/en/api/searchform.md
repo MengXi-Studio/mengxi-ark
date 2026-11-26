@@ -2,6 +2,12 @@
 
 A config-driven query form area from `@mengxi-ark/components`: `fields` declares the fields, form values are managed internally, and the `search` / `reset` events are thrown to the caller (paired with the `search` / `reset` of `useTable`). Props-driven first — no base registration required.
 
+## Use Cases
+
+**When to use**: the standard query area on top of list pages (input / select / dateRange cover most scenarios); zero boilerplate for field collapsing, button loading, and reset back to initialValue; composing the "query area + table" standard pattern with [useTable](/en/api/hooks) / EnhanceTable.
+
+**When not to use**: query control types beyond input / select / dateRange (tree select, upload — customize fields via the `extra` slot, or hand-write the SFC form); complex linked forms (that's the territory of FormRenderer / handwritten SFCs).
+
 ```bash
 pnpm add @mengxi-ark/components
 ```
@@ -121,3 +127,7 @@ const { dataSource, loading, pagination, search } = useTable(fetchUserPage, {
 | Slot | Description |
 | --- | --- |
 | extra | Extra custom field area (rendered before the buttons) |
+
+## Related Tutorials
+
+- [Component Walkthrough](/en/guide/components-guide): Steps 1 / 2 demo the minimal SearchForm usage and slot customization; Step 5 demos its behavior in a base-linked environment.

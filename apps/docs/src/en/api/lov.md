@@ -2,6 +2,12 @@
 
 A dual-mode component from `@mengxi-ark/biz-components`: encapsulates the "popup table selection" interaction pattern without binding to fixed backend fields. The row's `label` / `value` are mapped via `fieldNames`, and the row key is taken from `fieldNames.value`.
 
+## Use Cases
+
+**When to use**: value-set / master-data selection (users, departments, orgs, dictionary items, etc.) — popup table selection in API mode, inline dropdown for static value sets; cascading selection like province / city (cascadeSource); standard selectors with debounced search + pagination; reusing one component across "with base / without base" environments.
+
+**When not to use**: fixed options with very few entries (two or three buttons / radios are more direct); complex multi-step operations inside the popup (the Lov popup only selects — compose complex interactions with handwritten SFC + Dialog); tree-level selection (the adapter provides the TreeSelect primitive for business composition).
+
 ## Two Runtime Modes
 
 | Mode | Trigger | Data Source |
@@ -242,3 +248,7 @@ The trigger area already has a default slot that can replace the displayed conte
 | --- | --- |
 | default | Custom trigger display area |
 | bodyCell | Custom popup table cell rendering (scoped `{ column, record, index }`; only effective in remote API mode) |
+
+## Related Tutorials
+
+- [Component Walkthrough](/en/guide/components-guide): Step 3 demos standalone mode (api + params / cascadeSource cascading / popup customization); Step 5 demos base-linked mode and the fallback differences.
