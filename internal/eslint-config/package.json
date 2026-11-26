@@ -1,19 +1,20 @@
 {
-  "name": "@mengxi-ark-internal/eslint-config",
-  "version": "0.0.0",
-  "private": true,
-  "license": "MIT",
-  "type": "module",
-  "main": "./index.js",
-  "exports": {
-    ".": "./index.js"
-  },
-  "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "eslint": "^10.15.0",
-    "eslint-plugin-vue": "^10.12.1",
-    "globals": "^17.14.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.74.0"
-  }
+	"name": "@mengxi-ark-internal/eslint-config",
+	"version": "0.0.0",
+	"private": true,
+	"license": "MIT",
+	"type": "module",
+	"main": "./index.js",
+	"exports": {
+		".": "./index.js"
+	},
+	"devDependencies": {
+		"@eslint/js": "^10.0.1",
+		"eslint": "^10.15.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-vue": "^10.12.1",
+		"globals": "^17.14.0",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.74.0"
+	}
 }

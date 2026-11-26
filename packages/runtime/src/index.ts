@@ -8,61 +8,54 @@
  * - 不修改 Vue / Router 底层原型，路由守卫仅经 router.beforeEach 包装注册；
  * - 内置工作台 Layout 可经 options.layout 替换，UI 依赖（ant-design-vue）收敛于 layout/。
  */
-import type { App } from 'vue';
-import ArkWorkbenchLayout from './layout';
-import { ARK_LAYOUT_COMPONENT_NAME, ARK_RUNTIME_KEY } from './key';
-import { createContextService, provideContext } from './services/contextService';
-import { createMenuService, findMenuItem, flattenMenuItems } from './services/menuService';
-import { createModuleRegistry } from './services/moduleRegistryService';
-import { createSessionService, DEFAULT_TOKEN_REFRESH_INTERVAL_MS } from './services/sessionService';
-import { createTabService } from './services/tabService';
-import type {
-  AppInitHook,
-  ArkRuntime,
-  ArkRuntimeOptions,
-  BeforeRouteHook,
-  ModuleDefinition,
-  SessionExpiredHook,
-} from './types';
+import type { App } from 'vue'
+import ArkWorkbenchLayout from './layout'
+import { ARK_LAYOUT_COMPONENT_NAME, ARK_RUNTIME_KEY } from './key'
+import { createContextService } from './services/contextService'
+import { createMenuService } from './services/menuService'
+import { createModuleRegistry } from './services/moduleRegistryService'
+import { createSessionService } from './services/sessionService'
+import { createTabService } from './services/tabService'
+import type { AppInitHook, ArkRuntime, ArkRuntimeOptions, BeforeRouteHook, ModuleDefinition, SessionExpiredHook } from './types'
 
-export { ARK_LAYOUT_COMPONENT_NAME, ARK_RUNTIME_KEY };
+export { ARK_LAYOUT_COMPONENT_NAME, ARK_RUNTIME_KEY }
 
 // —— services（纯逻辑，可独立组合使用） ——
-export { createModuleRegistry } from './services/moduleRegistryService';
-export { createMenuService, findMenuItem, flattenMenuItems } from './services/menuService';
-export { createTabService } from './services/tabService';
-export { createSessionService, DEFAULT_TOKEN_REFRESH_INTERVAL_MS } from './services/sessionService';
-export { createContextService, provideContext } from './services/contextService';
+export { createModuleRegistry } from './services/moduleRegistryService'
+export { createMenuService, findMenuItem, flattenMenuItems } from './services/menuService'
+export { createTabService } from './services/tabService'
+export { createSessionService, DEFAULT_TOKEN_REFRESH_INTERVAL_MS } from './services/sessionService'
+export { createContextService, provideContext } from './services/contextService'
 
 // —— 内置 Layout ——
-export { ArkWorkbenchLayout } from './layout';
+export { ArkWorkbenchLayout } from './layout'
 
 export type {
-  AppInitHook,
-  ArkRuntime,
-  ArkRuntimeOptions,
-  BeforeRouteHook,
-  ContextService,
-  DialogItem,
-  DialogPayload,
-  MenuItem,
-  MenuService,
-  ModuleDefinition,
-  ModuleLifecycle,
-  ModuleRegistry,
-  RuntimeContext,
-  SessionExpiredHook,
-  SessionService,
-  TabItem,
-  TabOpenMode,
-  TabOpenOptions,
-  TabService,
-  TokenGetter,
-  TokenRefreshOptions,
-} from './types';
+	AppInitHook,
+	ArkRuntime,
+	ArkRuntimeOptions,
+	BeforeRouteHook,
+	ContextService,
+	DialogItem,
+	DialogPayload,
+	MenuItem,
+	MenuService,
+	ModuleDefinition,
+	ModuleLifecycle,
+	ModuleRegistry,
+	RuntimeContext,
+	SessionExpiredHook,
+	SessionService,
+	TabItem,
+	TabOpenMode,
+	TabOpenOptions,
+	TabService,
+	TokenGetter,
+	TokenRefreshOptions
+} from './types'
 
 /** 包版本常量（M0 包壳遗留，保持兼容） */
-export const MENGXI_ARK_VERSION = '0.0.0';
+export const MENGXI_ARK_VERSION = '0.0.0'
 
 /**
  * 创建中台基座运行时（Vue 插件 + 命令式 API 二合一）。
@@ -80,99 +73,99 @@ export const MENGXI_ARK_VERSION = '0.0.0';
  * app.use(runtime);
  */
 export function createArkRuntime(options: ArkRuntimeOptions): ArkRuntime {
-  const { router, context, modules = [], layout } = options;
-  const registry = createModuleRegistry();
-  const menuService = createMenuService();
-  const sessionService = createSessionService();
-  const contextService = createContextService(context);
+	const { router, context, modules = [], layout } = options
+	const registry = createModuleRegistry()
+	const menuService = createMenuService()
+	const sessionService = createSessionService()
+	const contextService = createContextService(context)
 
-  const appInitHooks: AppInitHook[] = [];
-  const beforeRouteHooks: BeforeRouteHook[] = [];
-  let guardInstalled = false;
-  let installed = false;
+	const appInitHooks: AppInitHook[] = []
+	const beforeRouteHooks: BeforeRouteHook[] = []
+	let guardInstalled = false
+	let installed = false
 
-  /** 路由守卫：包装 onBeforeRouteChange 队列，按注册顺序执行，任一返回 false 阻断（禁止重写原生 API） */
-  function ensureGuard(): void {
-    if (guardInstalled) return;
-    guardInstalled = true;
-    router.beforeEach(async (to, from) => {
-      for (const hook of beforeRouteHooks) {
-        const result = await hook(to, from);
-        if (result === false) return false;
-      }
-    });
-  }
+	/** 路由守卫：包装 onBeforeRouteChange 队列，按注册顺序执行，任一返回 false 阻断（禁止重写原生 API） */
+	function ensureGuard(): void {
+		if (guardInstalled) return
+		guardInstalled = true
+		router.beforeEach(async (to, from) => {
+			for (const hook of beforeRouteHooks) {
+				const result = await hook(to, from)
+				if (result === false) return false
+			}
+		})
+	}
 
-  function runAppInitHook(hook: AppInitHook): void {
-    if (!installed) {
-      appInitHooks.push(hook);
-      return;
-    }
-    // install 之后注册 / 延迟注册模块的 onAppInit：立即执行
-    void (async () => {
-      try {
-        await hook();
-      } catch (error) {
-        console.error('[@mengxi-ark/runtime] onAppInit 执行异常', error);
-      }
-    })();
-  }
+	function runAppInitHook(hook: AppInitHook): void {
+		if (!installed) {
+			appInitHooks.push(hook)
+			return
+		}
+		// install 之后注册 / 延迟注册模块的 onAppInit：立即执行
+		void (async () => {
+			try {
+				await hook()
+			} catch (error) {
+				console.error('[@mengxi-ark/runtime] onAppInit 执行异常', error)
+			}
+		})()
+	}
 
-  /** 注册模块：路由 addRoute、菜单汇入、权限合并去重、生命周期并入全局队列 */
-  function registerModule(module: ModuleDefinition): void {
-    registry.register(module);
-    for (const route of module.routes ?? []) router.addRoute(route);
-    if (module.menus?.length) menuService.addMenu(module.menus);
-    if (module.permissions?.length) contextService.mergePermissions(module.permissions);
-    if (module.lifecycle?.onAppInit) runAppInitHook(module.lifecycle.onAppInit);
-    if (module.lifecycle?.onBeforeRouteChange) beforeRouteHooks.push(module.lifecycle.onBeforeRouteChange);
-  }
+	/** 注册模块：路由 addRoute、菜单汇入、权限合并去重、生命周期并入全局队列 */
+	function registerModule(module: ModuleDefinition): void {
+		registry.register(module)
+		for (const route of module.routes ?? []) router.addRoute(route)
+		if (module.menus?.length) menuService.addMenu(module.menus)
+		if (module.permissions?.length) contextService.mergePermissions(module.permissions)
+		if (module.lifecycle?.onAppInit) runAppInitHook(module.lifecycle.onAppInit)
+		if (module.lifecycle?.onBeforeRouteChange) beforeRouteHooks.push(module.lifecycle.onBeforeRouteChange)
+	}
 
-  for (const module of modules) registerModule(module);
-  // 首页页签经 router.resolve 解析 fullPath，须在模块路由注册之后创建（避免路由未匹配告警）
-  const tabService = createTabService(router, { homeTab: options.homeTab });
-  if (options.onSessionExpired) sessionService.onExpired(options.onSessionExpired);
+	for (const module of modules) registerModule(module)
+	// 首页页签经 router.resolve 解析 fullPath，须在模块路由注册之后创建（避免路由未匹配告警）
+	const tabService = createTabService(router, { homeTab: options.homeTab })
+	if (options.onSessionExpired) sessionService.onExpired(options.onSessionExpired)
 
-  const runtime: ArkRuntime = {
-    tabService,
-    menuService,
-    sessionService,
-    context: contextService.context,
-    registerModule,
-    onAppInit: runAppInitHook,
-    onBeforeRouteChange(hook: BeforeRouteHook): void {
-      beforeRouteHooks.push(hook);
-      ensureGuard();
-    },
-    onSessionExpired(hook: SessionExpiredHook): void {
-      sessionService.onExpired(hook);
-    },
-    install(app: App): void {
-      if (installed) {
-        console.warn('[@mengxi-ark/runtime] install 重复调用已忽略');
-        return;
-      }
-      installed = true;
-      // ① 全局上下文下发（MX_RUNTIME_CONTEXT_KEY，供业务组件 inject 探测）
-      contextService.provide(app);
-      // ② runtime 句柄下发（Layout inject 获取 tabService / menuService）
-      app.provide(ARK_RUNTIME_KEY, runtime);
-      // ③ 挂载工作台 Layout（可替换：options.layout 覆盖内置实现）
-      app.component(ARK_LAYOUT_COMPONENT_NAME, layout ?? ArkWorkbenchLayout);
-      // ④ 路由守卫包装
-      ensureGuard();
-      // ⑤ onAppInit 队列按注册顺序执行
-      void (async () => {
-        for (const hook of appInitHooks.splice(0)) {
-          try {
-            await hook();
-          } catch (error) {
-            console.error('[@mengxi-ark/runtime] onAppInit 执行异常', error);
-          }
-        }
-      })();
-    },
-  };
+	const runtime: ArkRuntime = {
+		tabService,
+		menuService,
+		sessionService,
+		context: contextService.context,
+		registerModule,
+		onAppInit: runAppInitHook,
+		onBeforeRouteChange(hook: BeforeRouteHook): void {
+			beforeRouteHooks.push(hook)
+			ensureGuard()
+		},
+		onSessionExpired(hook: SessionExpiredHook): void {
+			sessionService.onExpired(hook)
+		},
+		install(app: App): void {
+			if (installed) {
+				console.warn('[@mengxi-ark/runtime] install 重复调用已忽略')
+				return
+			}
+			installed = true
+			// ① 全局上下文下发（MX_RUNTIME_CONTEXT_KEY，供业务组件 inject 探测）
+			contextService.provide(app)
+			// ② runtime 句柄下发（Layout inject 获取 tabService / menuService）
+			app.provide(ARK_RUNTIME_KEY, runtime)
+			// ③ 挂载工作台 Layout（可替换：options.layout 覆盖内置实现）
+			app.component(ARK_LAYOUT_COMPONENT_NAME, layout ?? ArkWorkbenchLayout)
+			// ④ 路由守卫包装
+			ensureGuard()
+			// ⑤ onAppInit 队列按注册顺序执行
+			void (async () => {
+				for (const hook of appInitHooks.splice(0)) {
+					try {
+						await hook()
+					} catch (error) {
+						console.error('[@mengxi-ark/runtime] onAppInit 执行异常', error)
+					}
+				}
+			})()
+		}
+	}
 
-  return runtime;
+	return runtime
 }
