@@ -9,9 +9,34 @@ import type { DefaultTheme } from 'vitepress';
 /** 仓库内编辑链接基址（本仓库默认分支为 master，内容位于 apps/docs/src） */
 const REPO_EDIT_BASE = 'https://github.com/MengXi-Studio/mengxi-ark/edit/master/apps/docs/src';
 
+/** 指南侧栏：入门 + 中台进阶 + DSL，三个板块共用（挂到 /guide/ /platform/ /dsl/ 前缀） */
+const guideSidebar: DefaultTheme.SidebarItem[] = [
+  {
+    text: '入门',
+    items: [
+      { text: '介绍', link: '/guide/introduction' },
+      { text: '快速上手（轻量模式）', link: '/guide/getting-started' },
+      { text: '反馈渠道', link: '/guide/feedback' },
+    ],
+  },
+  {
+    text: '中台进阶（Runtime 基座）',
+    items: [
+      { text: 'createArkRuntime 与工作台', link: '/platform/' },
+      { text: 'registerModule 模块开发', link: '/platform/module' },
+      { text: '全局上下文与双模式降级', link: '/platform/context' },
+    ],
+  },
+  {
+    text: 'DSL 配置渲染（加速方案）',
+    items: [{ text: 'Schema 与三渲染器', link: '/dsl/' }],
+  },
+];
+
 export const zhConfig = defineConfig({
   description: '轻量可开箱，中台可插拔的 Vue3 中台前端框架',
   themeConfig: {
+    logo: '/logo.png',
     editLink: {
       pattern: `${REPO_EDIT_BASE}/:path`,
       text: '在 GitHub 上编辑此页',
@@ -40,28 +65,19 @@ export const zhConfig = defineConfig({
           { text: 'DocumentTable', link: '/api/documenttable' },
         ],
       },
-      { text: '中台进阶', link: '/platform/' },
-      { text: 'DSL 配置渲染', link: '/dsl/' },
       { text: '更新日志', link: '/changelog' },
       {
         text: '相关链接',
         items: [
           { text: 'GitHub 仓库', link: 'https://github.com/MengXi-Studio/mengxi-ark' },
           { text: 'npm 组织', link: 'https://www.npmjs.com/org/mengxi-ark' },
-          { text: '问题反馈', link: '/faq/feedback' },
         ],
       },
     ],
     sidebar: {
-      '/guide/': [
-        {
-          text: '入门',
-          items: [
-            { text: '介绍', link: '/guide/introduction' },
-            { text: '快速上手（轻量模式）', link: '/guide/getting-started' },
-          ],
-        },
-      ],
+      '/guide/': guideSidebar,
+      '/platform/': guideSidebar,
+      '/dsl/': guideSidebar,
       '/api/': [
         {
           text: '通用包',
@@ -81,31 +97,6 @@ export const zhConfig = defineConfig({
           ],
         },
       ],
-      '/platform/': [
-        {
-          text: '中台进阶（Runtime 基座）',
-          items: [
-            { text: 'createArkRuntime 与工作台', link: '/platform/' },
-            { text: 'registerModule 模块开发', link: '/platform/module' },
-            { text: '全局上下文与双模式降级', link: '/platform/context' },
-          ],
-        },
-      ],
-      '/dsl/': [
-        {
-          text: 'DSL 配置渲染（加速方案）',
-          items: [{ text: 'Schema 与三渲染器', link: '/dsl/' }],
-        },
-      ],
-      '/': [
-        {
-          text: '其他',
-          items: [
-            { text: '更新日志', link: '/changelog' },
-            { text: '反馈渠道', link: '/faq/feedback' },
-          ],
-        },
-      ],
     } satisfies DefaultTheme.Sidebar,
   },
-} satisfies DefaultTheme.Config);
+});

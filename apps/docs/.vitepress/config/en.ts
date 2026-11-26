@@ -8,9 +8,34 @@ import type { DefaultTheme } from 'vitepress';
 
 const REPO_EDIT_BASE = 'https://github.com/MengXi-Studio/mengxi-ark/edit/master/apps/docs/src';
 
+/** Guide sidebar: Getting Started + Platform + DSL, shared across /en/guide/ /en/platform/ /en/dsl/ prefixes */
+const guideSidebar: DefaultTheme.SidebarItem[] = [
+  {
+    text: 'Getting Started',
+    items: [
+      { text: 'Introduction', link: '/en/guide/introduction' },
+      { text: 'Quick Start (Lightweight)', link: '/en/guide/getting-started' },
+      { text: 'Feedback', link: '/en/guide/feedback' },
+    ],
+  },
+  {
+    text: 'Platform (Runtime Base)',
+    items: [
+      { text: 'createArkRuntime & Workspace', link: '/en/platform/' },
+      { text: 'registerModule Module Dev', link: '/en/platform/module' },
+      { text: 'Global Context & Dual-mode Fallback', link: '/en/platform/context' },
+    ],
+  },
+  {
+    text: 'DSL Rendering (Accelerator)',
+    items: [{ text: 'Schema & Three Renderers', link: '/en/dsl/' }],
+  },
+];
+
 export const enConfig = defineConfig({
   description: 'A Vue 3 mid-platform frontend framework — lightweight out of the box, pluggable for the platform',
   themeConfig: {
+    logo: '/logo.png',
     editLink: {
       pattern: `${REPO_EDIT_BASE}/:path`,
       text: 'Edit this page on GitHub',
@@ -39,28 +64,19 @@ export const enConfig = defineConfig({
           { text: 'DocumentTable', link: '/en/api/documenttable' },
         ],
       },
-      { text: 'Platform', link: '/en/platform/' },
-      { text: 'DSL Rendering', link: '/en/dsl/' },
       { text: 'Changelog', link: '/en/changelog' },
       {
         text: 'Links',
         items: [
           { text: 'GitHub Repository', link: 'https://github.com/MengXi-Studio/mengxi-ark' },
           { text: 'npm Organization', link: 'https://www.npmjs.com/org/mengxi-ark' },
-          { text: 'Feedback', link: '/en/faq/feedback' },
         ],
       },
     ],
     sidebar: {
-      '/en/guide/': [
-        {
-          text: 'Getting Started',
-          items: [
-            { text: 'Introduction', link: '/en/guide/introduction' },
-            { text: 'Quick Start (Lightweight)', link: '/en/guide/getting-started' },
-          ],
-        },
-      ],
+      '/en/guide/': guideSidebar,
+      '/en/platform/': guideSidebar,
+      '/en/dsl/': guideSidebar,
       '/en/api/': [
         {
           text: 'Core Packages',
@@ -80,31 +96,6 @@ export const enConfig = defineConfig({
           ],
         },
       ],
-      '/en/platform/': [
-        {
-          text: 'Platform (Runtime Base)',
-          items: [
-            { text: 'createArkRuntime & Workspace', link: '/en/platform/' },
-            { text: 'registerModule Module Dev', link: '/en/platform/module' },
-            { text: 'Global Context & Dual-mode Fallback', link: '/en/platform/context' },
-          ],
-        },
-      ],
-      '/en/dsl/': [
-        {
-          text: 'DSL Rendering (Accelerator)',
-          items: [{ text: 'Schema & Three Renderers', link: '/en/dsl/' }],
-        },
-      ],
-      '/en/': [
-        {
-          text: 'Others',
-          items: [
-            { text: 'Changelog', link: '/en/changelog' },
-            { text: 'Feedback', link: '/en/faq/feedback' },
-          ],
-        },
-      ],
     } satisfies DefaultTheme.Sidebar,
   },
-} satisfies DefaultTheme.Config);
+});

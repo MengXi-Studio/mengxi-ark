@@ -100,6 +100,11 @@ apps/docs/
 - theme：`.vitepress/theme/index.ts` extends DefaultTheme，`home-hero-after` 插槽注入 `components/HomeBadges.vue`（CI / License / npm utils beta / npm biz-components beta 四徽章，shields.io）。
 - 内容迁移 16 页：13 页平移（guide/getting-started、api/×7、platform/×3、dsl/、faq/feedback）+ 3 页新增（Hero 首页、introduction、changelog）；全量内部链接改写 `/packages/*` → `/api/*`（4 处）；en 镜像 16 页全翻译并加 `/en` 前缀（10 处站内链接）；组件默认值中文文案（如 `'查询'`）作为代码真实默认值保留不译。
 - 旧文件清理：`config.mts` 删除，根目录 14 个旧 md 与 5 个空目录（guide/packages/platform/dsl/faq）移除。
+- 追加调整（用户反馈）：反馈渠道页由 FAQ 板块移入指南板块——`src/faq/feedback.md` → `src/guide/feedback.md`（en 镜像同步移动），zh/en config 的 nav「相关链接」与 `/guide/` 侧栏「入门」分组同步更新，`/faq` 目录删除；重建死链检查通过。
+- 追加调整（用户补充静态资源）：`src/public/` 新增 favicon.ico / logo.png / logo.svg / QR_code.jpg，接入四处——shared.ts 导出 `BASE` 常量并拼接 favicon head 链接（head 不参与 base 重写需手动拼接）、zh/en themeConfig `logo`（VitePress 自动加 base 前缀）、zh/en 反馈页新增「公众号」节内嵌 `/official-account.jpg`（markdown 公共资源构建期自动加 base）、zh/en 首页 hero `image.src: /logo.png`；构建产物核对 dist 含四资源且 HTML 引用均带 `/mengxi-ark/` 前缀，死链检查通过。
+- 追加调整（用户导航与徽章精简）：HomeBadges 移除两个 npm 版本徽章（留 CI + License）；QR_code.jpg 重命名为 official-account.jpg；nav「指南」恢复普通链接；`/platform/` `/dsl/` 侧栏分组并入指南侧栏（抽共用数组 `guideSidebar` 挂三前缀，zh/en 同步）；`/` 与 `/en/` 兜底侧栏删除（首页与 changelog 无侧栏）。
+- 追加调整（changelog 自动聚合，替代 Q4 手工汇总方案）：新增 `apps/docs/scripts/gen-changelog.mjs`，构建期扫描各包 CHANGELOG.md（changesets 产物）按版本倒序聚合，生成 `src/changelog.md`（中文说明）与 `src/en/changelog.md`（英文说明 + 中文条目，不做翻译）；docs package.json 的 dev / build script 前置该脚本；发布检查清单「公测期例行动作」追加第 4 步「更新 docs 更新日志页（自动聚合，跑一次 build 确认即可）」。验证：脚本聚合 1 版本 8 包条目，构建死链检查通过。落地踩坑：JS 块注释内出现 `packages/*` 的 `*/` 会提前闭合注释导致语法错误，已改为「packages 目录下各包」措辞。
+- 追加调整（用户要求：包版本日志以最终内容为主，去掉中间过程）：beta.0 尚未发布 npm，一次性整理 8 个包 CHANGELOG.md——删除 `### Major/Minor/Patch Changes` 子标题、里程碑过程叙述（M2/M3/M4 首发/增量）、提交哈希前缀（dc251b9 等）与 Updated dependencies 依赖噪音，保留包级最终能力要点（扁平无序列表）；gen-changelog.mjs 增加 cleanBody 清洗（去 changesets 模板子标题 / 哈希前缀 / 依赖块 / 压缩空行），兜底未来版本；后续质量靠 changeset 撰写规范（一个功能一个 changeset、描述最终态）控制。验证：重新聚合 8 包条目，docs 页面输出干净扁平列表，构建死链检查通过。
 
 ### 变更文件清单
 

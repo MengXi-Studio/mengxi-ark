@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vitepress dev",
-    "build": "vitepress build"
+    "dev": "node scripts/gen-changelog.mjs && vitepress dev",
+    "build": "node scripts/gen-changelog.mjs && vitepress build"
   },
   "devDependencies": {
     "vitepress": "^1.6.4",

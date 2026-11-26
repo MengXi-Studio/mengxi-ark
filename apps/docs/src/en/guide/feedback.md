@@ -20,6 +20,12 @@ When filing a bug, please include: framework package versions (`pnpm list @mengx
 - **Usage topics**: open discussions on integration approaches, dual-mode choices, base extensions, etc.;
 - **Roadmap discussions**: feedback on milestone planning.
 
+## WeChat Official Account
+
+Scan the QR code to follow the MengXi Ark official account for release announcements and framework updates:
+
+![MengXi Ark official account QR code](/official-account.jpg)
+
 ## Contributing Fixes
 
 PRs are welcome: fork → `fix/*` or `feature/*` branch → link an Issue → once CI is green, a maintainer reviews and merges. See [CONTRIBUTING](https://github.com/MengXi-Studio/mengxi-ark/blob/master/CONTRIBUTING.md) for the process.

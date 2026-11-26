@@ -20,26 +20,6 @@
         src="https://img.shields.io/npm/l/%40mengxi-ark%2Futils?style=flat-square"
       >
     </a>
-    <a
-      href="https://www.npmjs.com/package/@mengxi-ark/utils"
-      target="_blank"
-      rel="noreferrer"
-    >
-      <img
-        alt="npm utils"
-        src="https://img.shields.io/npm/v/%40mengxi-ark%2Futils/beta?style=flat-square&label=%40mengxi-ark%2Futils"
-      >
-    </a>
-    <a
-      href="https://www.npmjs.com/package/@mengxi-ark/biz-components"
-      target="_blank"
-      rel="noreferrer"
-    >
-      <img
-        alt="npm biz-components"
-        src="https://img.shields.io/npm/v/%40mengxi-ark%2Fbiz-components/beta?style=flat-square&label=%40mengxi-ark%2Fbiz-components"
-      >
-    </a>
   </div>
 </template>
 
@@ -50,6 +30,7 @@
   justify-content: center;
   gap: 8px;
   margin-top: 16px;
+  margin-bottom: 8px;
 }
 
 .home-badges img {

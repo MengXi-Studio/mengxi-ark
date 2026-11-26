@@ -4,6 +4,9 @@ layout: home
 hero:
   name: 曦舟 MengXi Ark
   text: Lightweight out of the box, pluggable for the mid-platform
+  image:
+    src: /logo.svg
+    alt: MengXi Ark
   tagline: A Vue 3 mid-platform frontend framework — layered monorepo, foundation packages installable and usable independently, dual-mode business components, and a smooth upgrade path to the full mid-platform solution as your business grows
   actions:
     - theme: brand

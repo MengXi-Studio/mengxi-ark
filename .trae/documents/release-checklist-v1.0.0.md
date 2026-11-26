@@ -68,7 +68,8 @@ Bug / 建议 / 文档问题请走 Issue 模板（见 docs 反馈渠道页）；�
 1. Issue / Discussions 分诊（打标签：bug / feature / documentation / good first issue）；
 2. 修复走 `fix/*` 分支 + patch changeset（pre 模式下自动递增 `1.0.0-beta.x`）；
 3. 每个 beta 版本发布后同步更新 Discussions 公告或追加回复；
-4. 反馈收敛后：`pnpm changeset pre exit` → `pnpm changeset version`（1.0.0 正式版）→ 按「发布步骤」重复执行（正式版走 `latest` dist-tag）→ 发布 v1.0.0 正式公告。
+4. **更新 docs 更新日志页**：`pnpm --filter docs build` 会经 `apps/docs/scripts/gen-changelog.mjs` 从各包 CHANGELOG.md 自动聚合生成 `src/changelog.md`（中英两份），无需手工编辑；仅需在发布后跑一次构建确认页面已包含新版本小节；
+5. 反馈收敛后：`pnpm changeset pre exit` → `pnpm changeset version`（1.0.0 正式版）→ 按「发布步骤」重复执行（正式版走 `latest` dist-tag）→ 发布 v1.0.0 正式公告。
 
 ## 五、回滚预案
 

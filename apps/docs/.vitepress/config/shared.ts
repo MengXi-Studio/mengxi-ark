@@ -10,6 +10,9 @@ const TITLE = '曦舟 MengXi Ark';
 /** 站点描述（SEO 与分享卡） */
 const DESCRIPTION = '轻量可开箱，中台可插拔的 Vue3 中台前端框架';
 
+/** 部署 base（index.ts 与 head 静态资源共用，head 不参与 base 重写需手动拼接） */
+export const BASE = process.env.DOCS_BASE || '/mengxi-ark/';
+
 export const sharedConfig = defineConfig({
   title: TITLE,
   /** 显示「最后更新时间」 */
@@ -21,6 +24,7 @@ export const sharedConfig = defineConfig({
     },
   },
   head: [
+    ['link', { rel: 'icon', type: 'image/x-icon', href: `${BASE}favicon.ico` }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: TITLE }],
     ['meta', { property: 'og:title', content: TITLE }],

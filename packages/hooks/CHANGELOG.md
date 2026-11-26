@@ -2,10 +2,6 @@
 
 ## 1.0.0-beta.0
 
-### Major Changes
-
-- v1.0.0-beta 公测首发：M0–M4 全量落地。utils（四类纯函数）/ theme（--mx-* Design Token + 暗色）/ hooks（useRequest / useTable / useForm 等）/ components（适配器 + 九组件）/ biz-components（Lov / DocumentTable 双模式）/ runtime（createArkRuntime + 五 service + 内置工作台 Layout）/ dsl-render（Schema 三件套 + validateSchema + 三渲染器 + 13 项映射表）/ cli（create-mengxi-ark 双模板 + 分档 .trae/rules）。
-
-### Minor Changes
-
-- 6af8318: M1 底层基础包首发：utils（六分类 22 函数）、theme（--mx-* Design Token 体系含暗色与 UI 库桥接）、hooks（useRequest / useAuth / useSession / useI18n / useTable / useForm 六 hook），附单元测试、demo-light 与 VitePress 文档。
+- v1.0.0-beta 公测首发（M0–M4 全量落地，npm dist-tag `beta`）。
+- 六个通用 hook：useRequest（竞态保护 / 取消 / 重试退避 / 可选缓存）、useAuth（权限判断 + v-permission 指令）、useSession（token 持久化 / 自动刷新 / 过期回调）、useI18n（实例 provide 下发）、useTable（查询 / 分页 / 排序 / 筛选合并）、useForm（回显 / 重置 / 校验封装）。
+- 所有 hook 卸载自动清理，组件外调用不报错；权限源支持 adapter 注入 / inject 探测 / 安全默认三级降级。

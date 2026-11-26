@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitepress';
 import { enConfig } from './en';
-import { sharedConfig } from './shared';
+import { BASE, sharedConfig } from './shared';
 import { zhConfig } from './zh';
 
 /**
@@ -10,7 +10,7 @@ import { zhConfig } from './zh';
 export default defineConfig({
   ...sharedConfig,
   srcDir: './src',
-  base: process.env.DOCS_BASE || '/mengxi-ark/',
+  base: BASE,
   locales: {
     root: {
       label: '简体中文',

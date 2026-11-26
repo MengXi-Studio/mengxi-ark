@@ -4,6 +4,9 @@ layout: home
 hero:
   name: 曦舟 MengXi Ark
   text: 轻量可开箱，中台可插拔
+  image:
+    src: /logo.svg
+    alt: 曦舟 MengXi Ark
   tagline: Vue 3 中台前端框架 —— 分层 monorepo，基础包按需安装独立使用，业务组件双模式，业务长大后平滑升级到完整中台方案
   actions:
     - theme: brand

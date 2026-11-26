@@ -20,6 +20,12 @@
 - **使用交流**：集成方案、双模式选型、基座扩展等开放讨论；
 - **Roadmap 讨论**：里程碑规划的意见征集。
 
+## 公众号
+
+扫码关注曦舟公众号，获取版本公告与框架更新动态：
+
+![曦舟公众号二维码](/official-account.jpg)
+
 ## 贡献修复
 
 欢迎直接提 PR：fork → `fix/*` 或 `feature/*` 分支 → 关联 Issue → CI 全绿后由维护者 review 合并，流程见 [CONTRIBUTING](https://github.com/MengXi-Studio/mengxi-ark/blob/master/CONTRIBUTING.md)。
