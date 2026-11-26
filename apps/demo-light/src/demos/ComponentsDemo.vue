@@ -13,7 +13,7 @@
 				</div>
 				<div class="mini-box">
 					<div class="row">
-						<StatusTag :value="row.status" :mapping="STATUS_MAPPING" v-for="row in tagRows" :key="row.status" />
+						<StatusTag v-for="row in tagRows" :key="row.status" :value="row.status" :mapping="STATUS_MAPPING" />
 					</div>
 				</div>
 				<div class="mini-box mini-box--half">

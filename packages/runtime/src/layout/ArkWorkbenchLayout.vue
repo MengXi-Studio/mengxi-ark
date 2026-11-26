@@ -10,7 +10,7 @@
 				<slot name="header-actions" />
 			</a-layout-header>
 			<div class="ark-layout__tabs">
-				<a-tabs type="editable-card" hide-add v-model:active-key="activeTabKey" @edit="onTabEdit">
+				<a-tabs v-model:active-key="activeTabKey" type="editable-card" hide-add @edit="onTabEdit">
 					<a-tab-pane v-for="tab in tabs" :key="tab.key" :tab="tab.title" :closable="tab.closable !== false" />
 				</a-tabs>
 			</div>

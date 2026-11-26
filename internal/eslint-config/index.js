@@ -54,6 +54,13 @@ export default [
 			'vue/one-component-per-file': 'off'
 		}
 	},
+	{
+		// 适配层单文件集中定义多个 UI 库包装组件是架构约定（UI 差异收敛到 adapter/），规则不适用
+		files: ['**/adapter/**'],
+		rules: {
+			'vue/one-component-per-file': 'off'
+		}
+	},
 	// 关闭与 prettier 冲突的格式规则（必须放最后，prettier 负责格式，eslint 负责质量）
 	prettierConfig
 ]
