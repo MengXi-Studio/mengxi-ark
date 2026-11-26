@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import { MX_I18N_KEY, createI18n, vPermission } from '@mengxi-ark/hooks';
 import '@mengxi-ark/theme';
+// 默认适配器为 Ant Design Vue：引入 antd reset 基线样式（组件样式经 CSS-in-JS 注入）
+import 'ant-design-vue/dist/reset.css';
 import App from './App.vue';
 
 // i18n 实例经 provide 下发，组件内 useI18n() inject 复用（文档与 demo 保持一致）

@@ -1,0 +1,50 @@
+// ResultPage 结果页：状态色一律映射 theme 功能色 token（§6.4）
+.mx-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--mx-spacing-md);
+  padding: var(--mx-spacing-xl) var(--mx-spacing-md);
+  text-align: center;
+}
+
+.mx-result__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--mx-spacing-xl);
+  height: var(--mx-spacing-xl);
+  font-size: var(--mx-font-size-lg);
+  font-weight: var(--mx-font-weight-bold);
+  color: var(--mx-gray-1);
+  border-radius: var(--mx-radius-round);
+  background-color: var(--mx-color-success);
+}
+
+.mx-result--error .mx-result__icon {
+  background-color: var(--mx-color-danger);
+}
+
+.mx-result--warning .mx-result__icon {
+  background-color: var(--mx-color-warning);
+}
+
+.mx-result--info .mx-result__icon {
+  background-color: var(--mx-color-info);
+}
+
+.mx-result__title {
+  font-size: var(--mx-font-size-lg);
+  color: var(--mx-color-text-primary);
+}
+
+.mx-result__sub-title {
+  font-size: var(--mx-font-size-sm);
+  color: var(--mx-color-text-secondary);
+}
+
+.mx-result__extra {
+  display: flex;
+  align-items: center;
+  gap: var(--mx-spacing-sm);
+}

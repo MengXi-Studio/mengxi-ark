@@ -11,10 +11,12 @@ import dts from 'vite-plugin-dts';
  * @param {object} options
  * @param {string} options.name 包名短横线形式（如 "utils"）
  * @param {boolean} [options.sourcemap=false] 是否产出 sourcemap
+ * @param {Array<string|RegExp>} [options.externals=[]] 额外外部化说明符（如 optional peer 的 UI 库）
+ * @param {string} [options.cssFileName] lib 模式 CSS 抽离产物文件名（默认 Vite 内置 style.css）
  * @returns {import('vite').UserConfig} Vite 用户配置
  */
 export function defineLibConfig(options) {
-  const { name, sourcemap = false } = options;
+  const { name, sourcemap = false, externals = [], cssFileName } = options;
 
   return defineConfig({
     plugins: [
@@ -22,6 +24,10 @@ export function defineLibConfig(options) {
       dts({
         include: ['src'],
         entryRoot: 'src',
+        // SFC 声明支持：显式指定 vue processor（自动探测在本工程 include 形式下不生效，
+        // 缺失时 dist 中 `./Xxx.vue` 引用无对应 .d.ts，下游 TS2307）
+        processor: 'vue',
+        cleanVueFileName: true,
       }),
     ],
     build: {
@@ -30,6 +36,7 @@ export function defineLibConfig(options) {
         formats: ['es', 'cjs'],
         fileName: (format) => (format === 'es' ? 'index.js' : 'index.cjs'),
         name,
+        ...(cssFileName ? { cssFileName } : {}),
       },
       rollupOptions: {
         external: [
@@ -38,6 +45,7 @@ export function defineLibConfig(options) {
           /^vue-router($|\/)/,
           /^@vue\//,
           /^@mengxi-ark\//,
+          ...externals,
         ],
       },
       target: 'es2022',

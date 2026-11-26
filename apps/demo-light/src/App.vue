@@ -1,16 +1,18 @@
 <script setup lang="ts">
 /* global document */
 import { ref } from 'vue';
+import ComponentsDemo from './demos/ComponentsDemo.vue';
 import HooksDemo from './demos/HooksDemo.vue';
 import ThemeDemo from './demos/ThemeDemo.vue';
 import UtilsDemo from './demos/UtilsDemo.vue';
 
-type TabKey = 'utils' | 'theme' | 'hooks';
+type TabKey = 'utils' | 'theme' | 'hooks' | 'components';
 
 const tabs: Array<{ key: TabKey; label: string }> = [
   { key: 'utils', label: 'Utils 工具函数' },
   { key: 'theme', label: 'Theme 设计令牌' },
   { key: 'hooks', label: 'Hooks 组合式函数' },
+  { key: 'components', label: '组件（components / biz-components）' },
 ];
 
 const activeTab = ref<TabKey>('utils');
@@ -53,7 +55,8 @@ function toggleDark(): void {
     <main class="page-main">
       <UtilsDemo v-if="activeTab === 'utils'" />
       <ThemeDemo v-else-if="activeTab === 'theme'" />
-      <HooksDemo v-else />
+      <HooksDemo v-else-if="activeTab === 'hooks'" />
+      <ComponentsDemo v-else />
     </main>
   </div>
 </template>

@@ -1,0 +1,14 @@
+// EnhanceTable 增强表格：工具栏与容器样式仅引用 --mx-* token
+.mx-enhance-table {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mx-spacing-md);
+  background-color: var(--mx-color-bg-container);
+}
+
+.mx-enhance-table__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mx-spacing-sm);
+}

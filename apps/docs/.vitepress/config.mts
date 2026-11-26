@@ -26,6 +26,15 @@ export default defineConfig({
           { text: '@mengxi-ark/hooks', link: '/packages/hooks' },
         ],
       },
+      {
+        text: '组件库（M2）',
+        items: [
+          { text: 'SearchForm 高级查询区', link: '/packages/searchform' },
+          { text: 'EnhanceTable 增强表格', link: '/packages/enhancetable' },
+          { text: 'Lov 值集选择器', link: '/packages/lov' },
+          { text: 'DocumentTable 单据表格', link: '/packages/documenttable' },
+        ],
+      },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/MengXi-Studio/mengxi-ark' },
