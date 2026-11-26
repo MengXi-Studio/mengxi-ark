@@ -1,0 +1,24 @@
+{
+  "name": "demo-platform",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@mengxi-ark/biz-components": "workspace:*",
+    "@mengxi-ark/components": "workspace:*",
+    "@mengxi-ark/runtime": "workspace:*",
+    "@mengxi-ark/theme": "workspace:*",
+    "ant-design-vue": "^4.0.0",
+    "vue": "^3.5.0",
+    "vue-router": "^5.5.1"
+  },
+  "devDependencies": {
+    "@mengxi-ark-internal/tsconfig": "workspace:*",
+    "@vitejs/plugin-vue": "^6.0.11",
+    "vite": "^8.3.8"
+  }
+}

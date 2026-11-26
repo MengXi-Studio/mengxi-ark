@@ -7,12 +7,14 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: '快速上手', link: '/guide/getting-started' },
+      { text: '中台进阶', link: '/platform/' },
       {
         text: 'API 文档',
         items: [
           { text: '@mengxi-ark/utils', link: '/packages/utils' },
           { text: '@mengxi-ark/theme', link: '/packages/theme' },
           { text: '@mengxi-ark/hooks', link: '/packages/hooks' },
+          { text: '@mengxi-ark/runtime', link: '/platform/' },
         ],
       },
     ],
@@ -33,6 +35,14 @@ export default defineConfig({
           { text: 'EnhanceTable 增强表格', link: '/packages/enhancetable' },
           { text: 'Lov 值集选择器', link: '/packages/lov' },
           { text: 'DocumentTable 单据表格', link: '/packages/documenttable' },
+        ],
+      },
+      {
+        text: '中台进阶（Runtime 基座）',
+        items: [
+          { text: 'createArkRuntime 与工作台', link: '/platform/' },
+          { text: 'registerModule 模块开发', link: '/platform/module' },
+          { text: '全局上下文与双模式降级', link: '/platform/context' },
         ],
       },
     ],

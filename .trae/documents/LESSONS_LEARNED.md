@@ -36,3 +36,22 @@
 ### stub 适配器给 flatMap 返回展开内容时要包数组
 
 - `expandedNode = cond ? h(...) : []` 直接 `...expandedNode` 展开会抛「expandedNode is not iterable」——VNode 不是可迭代对象。三元真分支必须包成 `[h(...)] : []`，保证 flatMap 回调始终返回数组。
+
+## 2026-11-26 · M3 中台基座（runtime）
+
+### Agent 沙箱虚拟化会把 pnpm workspace junction 指到镜像副本（模块解析假性失败）
+
+- **现象**：runtime 内 import `@mengxi-ark/biz-components`，typecheck TS2307 / vitest「Cannot find package」，但 `packages/runtime/node_modules/@mengxi-ark/biz-components` 链接存在、目标包 dist 齐全。
+- **根因**：在沙箱内执行 `pnpm install` 时，workspace 链接（Windows junction）指向了沙箱的 unified-storage 镜像路径（`C:\Users\...\sandbox-storage\...\packages\biz-components`）而非真实工作区；镜像副本内容不完整（无 package.json），junction 穿透后解析失败。用 `(Get-Item <link>).Target` 查看链接目标即可确认。
+- **处理**：`pnpm install`（`--no-frozen-lockfile`）在关闭沙箱（真实文件系统）下重跑，junction 恢复指向真实包路径后一切正常。涉及 node_modules 链接/安装的命令应直接在沙箱外执行。
+- **关联**：biz-components 的 package.json 曾以 `workspace:^` 落盘但锁文件记录为 `workspace:*`，frozen-lockfile 安装会直接报 OUTDATED_LOCKFILE——改过任何包 manifest 后需要 `--no-frozen-lockfile` 刷新锁文件。
+
+### `router.resolve(homeTab)` 必须在模块路由注册之后调用
+
+- **现象**：demo 首屏控制台出现 vue-router R0004「No match found for location with path /system/users」warning（非 error，但违反「无控制台报错」验收）。
+- **根因**：`createArkRuntime` 内先 `createTabService`（首页页签经 `router.resolve(route).fullPath` 取 key）后注册模块路由——resolve 时模块路由尚未 `addRoute`，vue-router 对不可解析路径告警。
+- **修复**：调整创建顺序：先 registerModule 注册全部初始模块路由，再创建 tabService。推广：凡在运行时拼装里做 `router.resolve` 的初始化逻辑，必须放在所有动态路由注册之后。
+
+### Vue `app.use` 自身拦截重复插件，插件级防重入要直接调 install 才测得到
+
+- 对同一 plugin `app.use(p)` 两次，Vue 打印「Plugin has already been applied to target app」且**不会**进入插件 `install`——插件内部的防重入告警（如 runtime install 的「重复调用已忽略」）通过 `app.use` 复现不了，单测需第二次直接调 `runtime.install(app)` 验证。
