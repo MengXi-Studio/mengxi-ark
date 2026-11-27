@@ -1,5 +1,11 @@
 # @mengxi-ark/theme
 
+## 1.0.0-beta.2
+
+### Minor Changes
+
+- 00b3af5: 新增反白文字语义 token `--mx-color-text-inverse`：用于 primary / 功能色底上的文字（logo 标记、头像等），含暗色取值
+
 ## 1.0.0-beta.1
 
 ### Patch Changes
