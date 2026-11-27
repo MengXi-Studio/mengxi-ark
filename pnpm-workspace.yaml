@@ -2,3 +2,9 @@ packages:
   - packages/*
   - apps/*
   - internal/*
+
+# pnpm 12 起安装时若存在被忽略的构建脚本会直接报错，需显式放行
+allowBuilds:
+  '@parcel/watcher': true
+  core-js: true
+  esbuild: true
