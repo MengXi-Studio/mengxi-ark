@@ -1,7 +1,10 @@
 import { createApp } from 'vue'
 import { createArkRuntime } from '@mengxi-ark/runtime'
 import '@mengxi-ark/theme'
+// 组件布局样式随包独立 css 产物（Vite lib mode 抽离，不自动注入），需按用到的包显式引入
 import '@mengxi-ark/runtime/style.css'
+import '@mengxi-ark/components/style.css'
+import '@mengxi-ark/biz-components/style.css'
 import 'ant-design-vue/dist/reset.css'
 import App from './App.vue'
 import { router } from './router'

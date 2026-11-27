@@ -5,6 +5,13 @@ copy and run; example styles only reference `--mx-*` tokens. Prerequisites: [Cor
 
 Every step follows the same principle: **props-driven first, slots as fallback** — configurable items always go through props; slots exist only for customization that props cannot cover.
 
+> **Style imports**: component layout styles ship as standalone css artifacts (extracted by Vite lib mode, not auto-injected). Import them once at the application entry before using components:
+>
+> ```ts
+> import '@mengxi-ark/components/style.css'
+> import '@mengxi-ark/biz-components/style.css' // required when using Lov / DocumentTable
+> ```
+
 ## Step 1: Minimal Usage (Props-Driven + Static Data)
 
 No backend, no requests: pass the minimal props to each of the two components and you get a complete query area and table. SearchForm manages its form values internally — just listen to the `search` / `reset` events for

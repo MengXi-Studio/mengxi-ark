@@ -27,5 +27,5 @@ alwaysApply: true
 ## 按需导入
 
 - 组件：`import { SearchForm, EnhanceTable } from '@mengxi-ark/components'`（ESM Tree-Shaking 生效，无需手动按需）。
-- 样式：入口只需 `import '@mengxi-ark/theme'` + `import 'ant-design-vue/dist/reset.css'`（组件样式 CSS-in-JS 自注入）。
+- 样式：入口需 `import '@mengxi-ark/theme'` + `import '@mengxi-ark/components/style.css'` + `import '@mengxi-ark/biz-components/style.css'`（组件布局样式为独立 css 产物，不自动注入）+ `import 'ant-design-vue/dist/reset.css'`（UI 库控件样式经 CSS-in-JS 注入）。
 - UI 库切换：默认 Ant Design Vue；切换 Element Plus 时 `app.provide(UI_ADAPTER_KEY, createElementPlusAdapter())`（来自 `@mengxi-ark/components`）。

@@ -15,6 +15,8 @@ pnpm add @mengxi-ark/dsl-render
 `dsl-render` is an optional package (dependency layer 4; it may reference components / biz-components); not installing it does not affect the other framework packages. Dual-mode support is built in: under the runtime
 base, Lov / DocumentTable automatically probe the global context (value-set cache / permissions); without a base they fall back to standalone mode via same-named props.
 
+> Renderer layout styles ship as a standalone css artifact (not auto-injected); import it at the entry: `import '@mengxi-ark/dsl-render/style.css'`.
+
 ## Three Schema Types
 
 All Schemas carry a `kind` discriminator and come with `validateSchema()` structural validation (validate at the integration point during development):

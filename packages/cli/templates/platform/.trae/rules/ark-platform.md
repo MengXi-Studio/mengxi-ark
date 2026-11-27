@@ -9,7 +9,7 @@ alwaysApply: true
 
 - 基座能力：`@mengxi-ark/runtime`（createArkRuntime / registerModule / 五大 service）。
 - 业务组件双模式：`@mengxi-ark/biz-components`（Lov / DocumentTable）。
-- 样式只允许引用 `var(--mx-*)` token；入口需引入 `@mengxi-ark/runtime/style.css`。
+- 样式只允许引用 `var(--mx-*)` token；入口需引入 `@mengxi-ark/runtime/style.css` + `@mengxi-ark/components/style.css` + `@mengxi-ark/biz-components/style.css`（布局样式为独立 css 产物，不自动注入）。
 
 ## 模块注册（唯一落点：src/modules/）
 

@@ -15,6 +15,8 @@ pnpm add @mengxi-ark/dsl-render
 未安装不影响其余框架包使用。已内置支持双模式：在 runtime 基座下，Lov / DocumentTable
 自动探测全局上下文（值集缓存 / 权限）；无基座时回退同名 props 独立模式。
 
+> 渲染器布局样式为独立 css 产物（不自动注入），需在入口引入：`import '@mengxi-ark/dsl-render/style.css'`。
+
 ## 三类 Schema
 
 所有 Schema 均带 `kind` 判别字段，且提供 `validateSchema()` 结构校验（开发期建议在接入处先校验）：

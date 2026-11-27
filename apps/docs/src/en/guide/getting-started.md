@@ -25,7 +25,7 @@ import '@mengxi-ark/theme'
 ```ts
 import { createApp } from 'vue'
 import { MX_I18N_KEY, createI18n, vPermission } from '@mengxi-ark/hooks'
-import '@mengxi-ark/theme/dist/index.css'
+import '@mengxi-ark/theme'
 import App from './App.vue'
 
 // The i18n instance is delivered via provide; useI18n() inside components reuses it automatically

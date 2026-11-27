@@ -5,6 +5,13 @@ token。前置知识：[核心概念](/guide/core-concepts)。
 
 每一步都遵循同一原则：**props 驱动优先，插槽兜底**——可配置项一律走 props，插槽只用于 props 覆盖不了的定制场景。
 
+> **样式引入**：组件布局样式随包独立 css 产物（Vite lib mode 抽离，不自动注入），使用组件前需在应用入口引入一次：
+>
+> ```ts
+> import '@mengxi-ark/components/style.css'
+> import '@mengxi-ark/biz-components/style.css' // 使用 Lov / DocumentTable 时引入
+> ```
+
 ## 第 1 步：最简用法（props 驱动 + 静态数据）
 
 不接后端、不写请求，两个组件各传最少 props 即可渲染完整查询区与表格。SearchForm 内部自维护表单值，只需监听 `search` / `reset` 事件取值；EnhanceTable 直接吃静态数组。

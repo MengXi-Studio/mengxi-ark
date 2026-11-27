@@ -2,6 +2,9 @@
 
 > 每完成一个任务（`workflow.md` 第四步），在此追加一行：日期 · 任务文档相对链接 · 一句话结果。
 
+- 2026-11-27 · [修复/2026-11-27/repo-组件样式style-css缺失引入.md](./修复/2026-11-27/repo-组件样式style-css缺失引入.md) · 修复四包 style.css 布局样式未被消费侧引入：demo 双工程 / cli 双模板 / docs 八处入口装配补齐引入并纠正「CSS-in-JS 自注入」错误表述与 theme 子路径导入，浏览器修复前后实证 padding 0px→12px、门禁全绿。
+- 2026-11-27 · 8 个发布包补齐 README（定位/安装/真实 API 示例/文档链接），npm 打包自动携带，无需 changeset。
+
 - 2026-11-24 · [新增/2026-11-24/repo-M0-monorepo基建.md](./新增/2026-11-24/repo-M0-monorepo基建.md) · M0 monorepo 基建完成：8 包壳 + internal 三件套 +
   CI/Release 工作流，install/deps:check/peer:check/lint/typecheck/test/build 全部通过。
 - 2026-11-25 · [新增/2026-11-24/M1-底层基础包.md](./新增/2026-11-24/M1-底层基础包.md) · M1 底层基础包完成：utils 22 函数 + theme token 体系 + hooks 六 hook（115 用例）+

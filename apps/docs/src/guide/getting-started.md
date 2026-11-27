@@ -25,7 +25,7 @@ import '@mengxi-ark/theme'
 ```ts
 import { createApp } from 'vue'
 import { MX_I18N_KEY, createI18n, vPermission } from '@mengxi-ark/hooks'
-import '@mengxi-ark/theme/dist/index.css'
+import '@mengxi-ark/theme'
 import App from './App.vue'
 
 // i18n 实例经 provide 下发，组件内 useI18n() 会自动复用
