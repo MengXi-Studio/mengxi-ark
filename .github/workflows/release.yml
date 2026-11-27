@@ -15,6 +15,10 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    # GITHUB_TOKEN 默认只读：创建版本分支 / PR、git tag、GitHub Release 均需写权限
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v7
         with:
