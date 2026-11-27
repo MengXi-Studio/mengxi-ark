@@ -29,6 +29,8 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # 发布前必须构建：各包 files 声明了 dist，未构建时 tarball 只含 package.json/LICENSE
+      - run: pnpm build
       - uses: changesets/action@v2
         with:
           version-script: pnpm version-packages
