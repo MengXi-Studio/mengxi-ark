@@ -185,15 +185,42 @@ importers:
 
   .:
     devDependencies:
+      '@ant-design/icons-vue':
+        specifier: ^7.0.1
+        version: 7.0.1(vue@3.5.46(typescript@5.9.3))
       '@changesets/cli':
         specifier: ^3.0.3
         version: 3.0.3
       '@mengxi-ark-internal/eslint-config':
         specifier: workspace:*
         version: link:internal/eslint-config
+      '@mengxi-ark/biz-components':
+        specifier: workspace:*
+        version: link:packages/biz-components
+      '@mengxi-ark/components':
+        specifier: workspace:*
+        version: link:packages/components
+      '@mengxi-ark/hooks':
+        specifier: workspace:*
+        version: link:packages/hooks
+      '@mengxi-ark/runtime':
+        specifier: workspace:*
+        version: link:packages/runtime
+      '@mengxi-ark/theme':
+        specifier: workspace:*
+        version: link:packages/theme
+      '@mengxi-ark/utils':
+        specifier: workspace:*
+        version: link:packages/utils
       '@playwright/test':
         specifier: ^1.60.0
         version: 1.65.1
+      '@vitejs/plugin-vue':
+        specifier: ^6.0.11
+        version: 6.0.11(vite@8.3.8(@types/node@26.6.7)(sass@1.108.2)(yaml@2.9.1))(vue@3.5.46(typescript@5.9.3))
+      ant-design-vue:
+        specifier: ^4.0.0
+        version: 4.2.6(vue@3.5.46(typescript@5.9.3))
       eslint:
         specifier: ^10.15.0
         version: 10.15.0
@@ -203,6 +230,15 @@ importers:
       turbo:
         specifier: ^2.11.13
         version: 2.11.13
+      vite:
+        specifier: ^8.3.8
+        version: 8.3.8(@types/node@26.6.7)(sass@1.108.2)(yaml@2.9.1)
+      vue:
+        specifier: ^3.5.0
+        version: 3.5.46(typescript@5.9.3)
+      vue-router:
+        specifier: ^5.5.1
+        version: 5.5.1(@vue/compiler-sfc@3.5.46)(pinia@4.1.0(@vue/devtools-api@8.2.1)(typescript@5.9.3)(vue@3.5.46(typescript@5.9.3)))(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.7)(sass@1.108.2)(yaml@2.9.1))(vue@3.5.46(typescript@5.9.3))
 
   apps/demo-light:
     dependencies:
@@ -243,6 +279,9 @@ importers:
 
   apps/demo-platform:
     dependencies:
+      '@ant-design/icons-vue':
+        specifier: ^7.0.1
+        version: 7.0.1(vue@3.5.46(typescript@5.9.3))
       '@mengxi-ark/biz-components':
         specifier: workspace:*
         version: link:../../packages/biz-components

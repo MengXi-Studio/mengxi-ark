@@ -1,6 +1,7 @@
 /**
  * 示例模块二：业务（单据页，演示 DocumentTable 基座权限源 + 降级切换演示页）。
  */
+import { AppstoreOutlined } from '@ant-design/icons-vue'
 import type { ModuleDefinition } from '@mengxi-ark/runtime'
 
 export const bizModule: ModuleDefinition = {
@@ -29,6 +30,7 @@ export const bizModule: ModuleDefinition = {
 		{
 			key: 'biz',
 			title: '业务管理',
+			icon: AppstoreOutlined,
 			children: [
 				{ key: 'biz-orders', title: '单据管理', path: '/biz/orders' },
 				{ key: 'biz-context-fallback', title: '降级切换演示', path: '/biz/context-fallback' },

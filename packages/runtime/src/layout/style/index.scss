@@ -1,34 +1,158 @@
 /**
  * 样式仅引用 @mengxi-ark/theme 的 --mx-* token（规范 §6.4，禁止硬编码色值）；
  * antdv 组件变量经 theme/adapters/antdv.scss 桥接，暗色由宿主 data-theme="dark" 生效。
+ * antd 部分默认样式是两级选择器（如 .ant-layout .ant-layout-header），
+ * 单类覆盖会因特异性不足失效（历史上 header 漏出深色即此原因），
+ * 因此对 antd 默认样式的覆盖统一提升为 .ark-layout 前缀的两级选择器。
  */
 .ark-layout {
-	min-height: 100vh;
+	/* 视口锁定：侧栏 / header / 页签条固定，仅内容区滚动（中台工作台标准行为） */
+	height: 100vh;
+	overflow: hidden;
+	background: var(--mx-color-bg-layout);
 
-	&__sider {
-		background-color: var(--mx-color-bg-container);
+	// —— Sider：白底 + 接管折叠（antd Sider/Trigger 默认深色主题，禁用默认 trigger） ——
+	& .ark-layout__sider {
+		background: var(--mx-color-bg-container);
+
+		:deep(.ant-layout-sider-children) {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+		}
 	}
 
 	&__logo {
 		display: flex;
+		gap: var(--mx-spacing-sm);
 		align-items: center;
-		justify-content: center;
-		height: 48px;
-		font-size: var(--mx-font-size-md);
-		font-weight: var(--mx-font-weight-bold);
-		color: var(--mx-color-primary);
-		background-color: var(--mx-color-bg-container);
+		height: 56px;
+		padding: 0 var(--mx-spacing-lg);
+		overflow: hidden;
 		border-bottom: 1px solid var(--mx-color-border-split);
 	}
 
-	&__header {
+	&__logo-mark {
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		font-size: var(--mx-font-size-sm);
+		font-weight: var(--mx-font-weight-bold);
+		color: var(--mx-color-text-inverse);
+		background: var(--mx-color-primary);
+		border-radius: var(--mx-radius-base);
+	}
+
+	&__logo-img {
+		flex: none;
+		width: 28px;
+		height: 28px;
+		object-fit: contain;
+		border-radius: var(--mx-radius-sm);
+	}
+
+	&__logo-comp {
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		font-size: var(--mx-font-size-lg);
+		color: var(--mx-color-primary);
+	}
+
+	&__logo-text {
+		flex: 1;
+		overflow: hidden;
+		font-size: var(--mx-font-size-md);
+		font-weight: var(--mx-font-weight-bold);
+		color: var(--mx-color-text-primary);
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	// 收起态：logo 只留方块标记
+	&--collapsed &__logo {
+		justify-content: center;
+		padding: 0;
+	}
+
+	&--collapsed &__logo-text {
+		display: none;
+	}
+
+	// 菜单区占据侧栏剩余高度并独立滚动
+	&__menu {
+		flex: 1;
+		overflow: auto;
+		border-inline-end: none;
+	}
+
+	// 自绘折叠条钉在侧栏底部（替代 antd 深色 trigger）
+	&__sider-footer {
 		display: flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		height: 44px;
+		color: var(--mx-color-text-secondary);
+		cursor: pointer;
+		user-select: none;
+		border-top: 1px solid var(--mx-color-border-split);
+		transition:
+			color 0.2s ease,
+			background-color 0.2s ease;
+
+		&:hover {
+			color: var(--mx-color-primary);
+			background: var(--mx-color-bg-hover);
+		}
+	}
+
+	&__collapse-icon {
+		width: 14px;
+		height: 14px;
+		transition: transform 0.2s ease;
+	}
+
+	&--collapsed &__collapse-icon {
+		transform: rotate(180deg);
+	}
+
+	// —— Header：48px 白底工具条（两级选择器覆盖 antd 默认深色与 64px 高度） ——
+	& .ark-layout__header {
+		display: flex;
+		gap: var(--mx-spacing-sm);
 		align-items: center;
 		justify-content: flex-end;
-		gap: var(--mx-spacing-md);
+		height: 48px;
 		padding: 0 var(--mx-spacing-lg);
-		background-color: var(--mx-color-bg-container);
+		line-height: normal;
+		background: var(--mx-color-bg-container);
 		border-bottom: 1px solid var(--mx-color-border-split);
+	}
+
+	&__avatar {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 24px;
+		height: 24px;
+		font-size: var(--mx-font-size-xs);
+		font-weight: var(--mx-font-weight-bold);
+		color: var(--mx-color-text-inverse);
+		background: var(--mx-color-primary);
+		border-radius: var(--mx-radius-round);
+	}
+
+	&__user-trigger {
+		display: inline-flex;
+		gap: var(--mx-spacing-sm);
+		align-items: center;
+		height: 100%;
+		cursor: pointer;
 	}
 
 	&__user {
@@ -36,23 +160,91 @@
 		color: var(--mx-color-text-primary);
 	}
 
+	// —— 页签条：贴底对齐，与 header 共用 1px split 分隔 ——
 	&__tabs {
-		padding: var(--mx-spacing-xs) var(--mx-spacing-md) 0;
-		background-color: var(--mx-color-bg-container);
+		padding: var(--mx-spacing-sm) var(--mx-spacing-md) 0;
+		background: var(--mx-color-bg-container);
 		border-bottom: 1px solid var(--mx-color-border-split);
+
+		:deep(.ant-tabs-nav) {
+			margin-bottom: 0;
+
+			&::before {
+				border-bottom: none;
+			}
+		}
+	}
+
+	// —— 主区：header / 页签条 flex:none 固定，内容区占满剩余高度独立滚动 ——
+	& .ark-layout__body {
+		height: 100vh;
 	}
 
 	&__content {
-		padding: var(--mx-spacing-md);
-		background-color: var(--mx-color-bg-layout);
+		flex: 1;
+		overflow: auto;
+		padding: var(--mx-spacing-lg);
+		background: var(--mx-color-bg-layout);
 	}
 
 	&--missing {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		min-height: 100vh;
+		height: 100vh;
 		font-size: var(--mx-font-size-md);
 		color: var(--mx-color-text-secondary);
+	}
+}
+
+// —— 页签右键菜单（Teleport 至 body，z-index 取下拉层 + 10 微调，规范 §7.3） ——
+.ark-tab-context-backdrop {
+	position: fixed;
+	inset: 0;
+	z-index: var(--mx-z-dropdown);
+}
+
+.ark-tab-context {
+	position: fixed;
+	z-index: calc(var(--mx-z-dropdown) + 10);
+	min-width: 140px;
+	padding: var(--mx-spacing-xs);
+	background: var(--mx-color-bg-container);
+	border: 1px solid var(--mx-color-border-base);
+	border-radius: var(--mx-radius-base);
+	box-shadow: var(--mx-shadow-lg);
+
+	&__item {
+		display: flex;
+		gap: var(--mx-spacing-sm);
+		align-items: center;
+		padding: 0 var(--mx-spacing-md);
+		font-size: var(--mx-font-size-sm);
+		line-height: 28px;
+		color: var(--mx-color-text-primary);
+		cursor: pointer;
+		border-radius: var(--mx-radius-sm);
+		transition: background-color 0.2s ease;
+
+		&:hover {
+			color: var(--mx-color-primary);
+			background: var(--mx-color-bg-hover);
+		}
+	}
+
+	&__item--disabled {
+		color: var(--mx-color-text-disabled);
+		cursor: not-allowed;
+
+		&:hover {
+			color: var(--mx-color-text-disabled);
+			background: none;
+		}
+	}
+
+	&__divider {
+		height: 1px;
+		margin: var(--mx-spacing-xs) 0;
+		background: var(--mx-color-border-split);
 	}
 }

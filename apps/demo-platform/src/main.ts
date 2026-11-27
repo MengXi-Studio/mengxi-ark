@@ -1,4 +1,6 @@
 import { createApp } from 'vue'
+import { CloudFilled, LogoutOutlined, UserOutlined } from '@ant-design/icons-vue'
+import { message } from 'ant-design-vue'
 import { createArkRuntime } from '@mengxi-ark/runtime'
 import '@mengxi-ark/theme'
 // 组件布局样式随包独立 css 产物（Vite lib mode 抽离，不自动注入），需按用到的包显式引入
@@ -18,6 +20,18 @@ const router$ = router
 // createArkRuntime：Vue 插件 + 实例句柄二合一（模块路由在其内部即注册，早于首次导航）
 const runtime = createArkRuntime({
 	router: router$,
+	logo: CloudFilled, // 也可传图片地址字符串；不传则降级为 appName 首字方块
+	userMenu: {
+		// 声明式用户菜单：保留内置头像 + 用户名，点击弹出下拉（如需整体替换用户区，传 user: 自定义组件）
+		items: [
+			{ key: 'profile', label: '个人中心', icon: UserOutlined },
+			{ key: 'logout', label: '退出登录', icon: LogoutOutlined, divided: true }
+		],
+		onClick: key => {
+			if (key === 'profile') message.info('演示：跳转个人中心')
+			if (key === 'logout') message.info('演示：在此调用登出逻辑')
+		}
+	},
 	context: {
 		appName: '曦舟中台示例',
 		user: { id: 1, name: '基座用户' },

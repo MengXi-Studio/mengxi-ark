@@ -2,6 +2,7 @@
 
 > 每完成一个任务（`workflow.md` 第四步），在此追加一行：日期 · 任务文档相对链接 · 一句话结果。
 
+- 2026-11-27 · [优化/2026-11-27/runtime-内置Layout视觉重设计.md](./优化/2026-11-27/runtime-内置Layout视觉重设计.md) · 内置工作台 Layout 视觉重设计：修复 header 特异性漏色与深色 trigger，接管折叠、重排 logo/用户区/页签，theme 新增 text-inverse token（Minor+Patch changeset），demo-platform 实测含暗色通过。
 - 2026-11-27 · [修复/2026-11-27/repo-组件样式style-css缺失引入.md](./修复/2026-11-27/repo-组件样式style-css缺失引入.md) · 修复四包 style.css 布局样式未被消费侧引入：demo 双工程 / cli 双模板 / docs 八处入口装配补齐引入并纠正「CSS-in-JS 自注入」错误表述与 theme 子路径导入，浏览器修复前后实证 padding 0px→12px、门禁全绿。
 - 2026-11-27 · 8 个发布包补齐 README（定位/安装/真实 API 示例/文档链接），npm 打包自动携带，无需 changeset。
 
@@ -31,3 +32,7 @@
   @ 开头标量需引号），preview 浏览器抽验中英双站 3 项 PASS 零报错。
 - 2026-11-26 · [优化/2026-11-26/docs-渐进式学习路径.md](./优化/2026-11-26/docs-渐进式学习路径.md) · docs 渐进式学习路径重构完成：新增核心概念 / 组件实战（五步渐进示例对齐 demo-light）/ 迁移指南 3 页（中英同步），api
   7 页补适用场景并与 types.ts 核对修正 2 处不一致，platform/dsl 页补前置知识与下一步串联，首页增学习路径卡，侧栏改「入门/核心/进阶/精通/其他」五组；构建死链检查通过（修复 frontmatter 冒号值加引号），浏览器抽验 4 项 PASS 零报错，轻量模式红线（introduction/getting-started 无 runtime）自检通过。
+
+- 2026-11-27 · [优化/2026-11-27/cli-模板能力对齐.md](./优化/2026-11-27/cli-模板能力对齐.md) · cli 双模板能力对齐完成：platform 模板 main.ts 演示 logo / userMenu / tabContextMenu / homeTab 新配置（+icons 依赖、菜单图标），README 与 .trae/rules 补内置 Layout 配置速览；light 模板补 useRequest 演示卡片与 README 样式引入章节；cli build 通过，demo-platform 浏览器实测同套 API 全部 PASS 零报错；cli changeset 留待下次发版并入。
+- 2026-11-27 · [优化/2026-11-27/docs-文档可用性优化.md](./优化/2026-11-27/docs-文档可用性优化.md) · docs 可用性优化完成：getting-started 重组「从零到跑起来」四步链路（分层安装表 + 样式引入一条规则表 + main.ts 完整样板），platform/index 新增页签规则 / 页签右键菜单 / 品牌配置三板块并补 tabService 批量方法，platform/module 补 MenuItem 字段表，en 镜像三页同步重写（代码块逐字一致 18 块）；docs build 死链检查通过。
+- 2026-11-27 · [优化/2026-11-27/cli-模板能力对齐.md](./优化/2026-11-27/cli-模板能力对齐.md) · 追加：修复模板目录 TS 报错——两模板 tsconfig 移除重复 `types: ["vite/client"]`（保留 vite-env.d.ts 三斜线），根 package.json devDependencies 补齐模板依赖（vue/vue-router/ant-design-vue/icons/vite/plugin-vue + 6 个 @mengxi-ark workspace:*，根 private 不影响发布与 changesets）使 IDE 可解析；实证模板代码本身无类型错误，tsc 仅剩 .vue 单文件（Volar 处理）；cli build 通过，lockfile +39 行，cli README 增「仓库内开发模板」说明。

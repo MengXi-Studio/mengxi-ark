@@ -1,5 +1,5 @@
 ---
-description: 曦舟 MengXi Ark 中台基座用法速查（模块注册 / 全局上下文 / 双模式 / 生命周期钩子）
+description: 曦舟 MengXi Ark 中台基座用法速查（模块注册 / 全局上下文 / 内置 Layout 配置 / 页签与右键菜单 / 双模式 / 生命周期钩子）
 alwaysApply: true
 ---
 
@@ -25,6 +25,16 @@ alwaysApply: true
 - Lov 基座联动：只传 `lov-code`，不传 `lovApi` / `lovOptions`；
   DocumentTable 权限：列级 `permissionCode`，上下文 `permissions` 命中即可编辑。
 - 上下文字段全部支持同名 props 兜底；未安装 / 未登录场景组件自动降级独立模式，不抛异常。
+
+## 内置 Layout 配置（createArkRuntime options，全部可选）
+
+- 品牌：`logo`（图片地址或图标组件，不传降级 appName 首字方块）、`headerActions`（header 右侧操作区组件）、
+  `user`（整体替换用户区组件）/ `userMenu`（声明式下拉菜单，二选一，user 优先）、`collapsible`（默认 true）。
+- 页签：路由导航自动建签（key = fullPath 去重）；标题回退 `options.title → meta.title → fullPath`；
+  `homeTab` 首页页签不可关闭；`openMode`：`tab`（默认新页签）/ `current`（原地更新）/ `dialog`（业务组件弹窗）。
+- 页签右键菜单 `tabContextMenu`：内置 刷新 / 关闭左侧 / 右侧 / 其他（自动禁用）；
+  `items` 追加自定义项，`onClick(itemKey, tabKey)`；`builtin: false` 只留自定义项。
+- 命令式：`runtime.tabService` 提供 open / close / activate / refresh / closeLeft / closeRight / closeOther。
 
 ## 生命周期扩展
 

@@ -2,6 +2,7 @@
  * 示例模块：模块包只依赖 @mengxi-ark/runtime 的 ModuleDefinition 类型（声明式字段），
  * 不 import runtime 内部实现。
  */
+import { HomeOutlined, SettingOutlined } from '@ant-design/icons-vue'
 import type { ModuleDefinition } from '@mengxi-ark/runtime'
 
 export const systemModule: ModuleDefinition = {
@@ -21,14 +22,17 @@ export const systemModule: ModuleDefinition = {
 		}
 	],
 	menus: [
+		// 菜单项：key / title 必填，叶子菜单带 path 供点击跳转（页签打开），icon 可选
 		{
 			key: 'home',
 			title: '首页',
-			path: '/home'
+			path: '/home',
+			icon: HomeOutlined
 		},
 		{
 			key: 'system',
 			title: '系统管理',
+			icon: SettingOutlined,
 			children: [{ key: 'system-users', title: '用户管理', path: '/system/users' }]
 		}
 	],

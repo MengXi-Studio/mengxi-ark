@@ -106,8 +106,18 @@ export interface TabService {
 	readonly tabs: Ref<TabItem[]>
 	readonly activeKey: Ref<string>
 	readonly dialogs: Ref<DialogItem[]>
+	/** 页签刷新信号计数：refresh() 递增，Layout 以此作为 router-view 重挂载依据 */
+	readonly refreshTick: Ref<number>
 	open(target: RouteLocationRaw | DialogPayload, options?: TabOpenOptions): void
 	close(key: string): void
+	/** 关闭左侧所有可关闭页签（目标页签与不可关闭页签保留） */
+	closeLeft(key: string): void
+	/** 关闭右侧所有可关闭页签（目标页签与不可关闭页签保留） */
+	closeRight(key: string): void
+	/** 关闭除目标页签外的所有可关闭页签 */
+	closeOther(key: string): void
+	/** 刷新页签：非激活页签先激活再递增 refreshTick 触发重挂载 */
+	refresh(key: string): void
 	activate(key: string): void
 	closeDialog(key: string): void
 }
@@ -176,10 +186,68 @@ export interface ArkRuntimeOptions {
 	modules?: ModuleDefinition[]
 	/** 自定义工作台 Layout（不传用内置 ArkWorkbenchLayout） */
 	layout?: Component
+	/** 品牌 logo：图片地址渲染 <img>，或自定义组件；不传降级为 appName 首字方块（内置 Layout） */
+	logo?: string | Component
+	/** 头部右侧操作区组件（退出登录 / 消息铃铛等，渲染在内置 Layout header-actions 区） */
+	headerActions?: Component
+	/** 自定义用户区组件（如头像 + 下拉菜单：个人中心 / 退出登录）；传后替换内置头像 + 用户名渲染 */
+	user?: Component
+	/** 声明式用户菜单：保留内置头像 + 用户名，点击弹出下拉菜单（user 自定义组件存在时忽略本项） */
+	userMenu?: { items: UserMenuItem[]; onClick?: (key: string) => void }
+	/** 页签右键菜单配置：内置 刷新 / 关闭左侧 / 右侧 / 其他，可追加自定义项 */
+	tabContextMenu?: TabContextMenuConfig
+	/** 是否显示侧栏折叠条（默认 true；传 false 隐藏左下折叠条并禁用收起） */
+	collapsible?: boolean
 	/** 首页页签（不可关闭；不传则无首页页签） */
 	homeTab?: { route: RouteLocationRaw; title: string }
 	/** 会话过期快捷钩子（等价 runtime.onSessionExpired） */
 	onSessionExpired?: SessionExpiredHook
+}
+
+/** 内置 Layout 的品牌配置（经 ARK_LAYOUT_OPTIONS_KEY 下发，install 时由 options.logo / options.headerActions 装配） */
+export interface ArkLayoutOptions {
+	logo?: string | Component
+	headerActions?: Component
+	user?: Component
+	userMenu?: { items: UserMenuItem[]; onClick?: (key: string) => void }
+	tabContextMenu?: TabContextMenuConfig
+	collapsible?: boolean
+}
+
+/** 页签右键菜单自定义项（options.tabContextMenu.items，渲染在内置项之后） */
+export interface TabContextMenuItem {
+	/** 菜单项 key（onClick 回调入参） */
+	key: string
+	/** 菜单文案 */
+	label: string
+	/** 菜单图标组件 */
+	icon?: Component
+	/** 是否禁用 */
+	disabled?: boolean
+	/** 是否与前面项之间显示分隔线 */
+	divided?: boolean
+}
+
+/** 页签右键菜单配置 */
+export interface TabContextMenuConfig {
+	/** 是否包含内置项（刷新 / 关闭左侧 / 关闭右侧 / 关闭其他），默认 true；传 false 仅渲染自定义项 */
+	builtin?: boolean
+	/** 追加的自定义菜单项（渲染在内置项之后，自动加分隔线） */
+	items?: TabContextMenuItem[]
+	/** 自定义项点击回调（itemKey 为菜单项 key，tabKey 为右键目标页签 key） */
+	onClick?: (itemKey: string, tabKey: string) => void
+}
+
+/** 声明式用户菜单项（options.userMenu） */
+export interface UserMenuItem {
+	/** 菜单 key（onClick 回调入参） */
+	key: string
+	/** 菜单文案 */
+	label: string
+	/** 菜单图标组件 */
+	icon?: Component
+	/** 是否与前一项之间显示分隔线 */
+	divided?: boolean
 }
 
 /** createArkRuntime 返回的实例句柄（Vue 插件 + 命令式 API 二合一，见任务文档 Q1） */

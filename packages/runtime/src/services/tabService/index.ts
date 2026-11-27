@@ -38,6 +38,7 @@ export function createTabService(router: Router, options: CreateTabServiceOption
 	const tabs = ref<TabItem[]>([])
 	const activeKey = ref('')
 	const dialogs = ref<DialogItem[]>([])
+	const refreshTick = ref(0)
 	let dialogSeq = 0
 
 	if (options.homeTab) {
@@ -107,6 +108,44 @@ export function createTabService(router: Router, options: CreateTabServiceOption
 		void router.push(tab.route)
 	}
 
+	/** 批量关闭：仅保留不可关闭页签与 keepKeys 命中页签；激活页签被关时回退到锚点页签 */
+	function closeMany(keepKeys: Set<string>, anchorKey: string): void {
+		const kept = tabs.value.filter(tab => tab.closable === false || keepKeys.has(tab.key))
+		const activeClosed = activeKey.value !== '' && !kept.some(tab => tab.key === activeKey.value)
+		tabs.value = kept
+		if (!activeClosed) return
+		const fallback = kept.find(tab => keepKeys.has(tab.key) && tab.key === anchorKey) ?? kept[kept.length - 1]
+		if (fallback) {
+			activeKey.value = fallback.key
+			void router.push(fallback.route)
+		} else {
+			activeKey.value = ''
+		}
+	}
+
+	function closeLeft(key: string): void {
+		const index = tabs.value.findIndex(tab => tab.key === key)
+		if (index <= 0) return
+		closeMany(new Set(tabs.value.slice(index).map(tab => tab.key)), key)
+	}
+
+	function closeRight(key: string): void {
+		const index = tabs.value.findIndex(tab => tab.key === key)
+		if (index < 0 || index === tabs.value.length - 1) return
+		closeMany(new Set(tabs.value.slice(0, index + 1).map(tab => tab.key)), key)
+	}
+
+	function closeOther(key: string): void {
+		if (!tabs.value.some(tab => tab.key === key)) return
+		closeMany(new Set([key]), key)
+	}
+
+	function refresh(key: string): void {
+		if (!tabs.value.some(tab => tab.key === key)) return
+		if (activeKey.value !== key) activate(key)
+		refreshTick.value += 1
+	}
+
 	function openDialog(payload: DialogPayload): void {
 		dialogSeq += 1
 		dialogs.value.push({ key: `ark-dialog-${dialogSeq}`, ...payload })
@@ -117,5 +156,5 @@ export function createTabService(router: Router, options: CreateTabServiceOption
 		if (index >= 0) dialogs.value.splice(index, 1)
 	}
 
-	return { tabs, activeKey, dialogs, open, close, activate, closeDialog }
+	return { tabs, activeKey, dialogs, refreshTick, open, close, closeLeft, closeRight, closeOther, refresh, activate, closeDialog }
 }

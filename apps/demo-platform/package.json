@@ -8,6 +8,7 @@
 		"build": "vite build"
 	},
 	"dependencies": {
+		"@ant-design/icons-vue": "^7.0.1",
 		"@mengxi-ark/biz-components": "workspace:*",
 		"@mengxi-ark/components": "workspace:*",
 		"@mengxi-ark/dsl-render": "workspace:*",

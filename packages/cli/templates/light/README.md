@@ -19,6 +19,17 @@ pnpm dev
 | `@mengxi-ark/components`     | SearchForm / EnhanceTable 等通用组件           |
 | `@mengxi-ark/biz-components` | Lov / DocumentTable 双模式业务组件             |
 
+## 入口样式引入（重要）
+
+组件布局样式随包独立 css 产物（Vite lib mode 抽离，不自动注入），需在 `src/main.ts` 按用到的包显式引入：
+
+```ts
+import '@mengxi-ark/theme' // Design Token（--mx-* CSS Variables）
+import '@mengxi-ark/components/style.css' // 使用 components 组件时
+import '@mengxi-ark/biz-components/style.css' // 使用 Lov / DocumentTable 时
+import 'ant-design-vue/dist/reset.css' // UI 库 reset 基线（控件样式经 CSS-in-JS 注入）
+```
+
 ## 主题覆盖
 
 在自有样式表中重定义同名 `--mx-*` 变量即可（运行时覆盖，无需 fork）：

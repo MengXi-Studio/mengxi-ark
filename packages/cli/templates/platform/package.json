@@ -9,6 +9,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@ant-design/icons-vue": "^7.0.1",
 		"@mengxi-ark/biz-components": "__ARK_VERSION__",
 		"@mengxi-ark/components": "__ARK_VERSION__",
 		"@mengxi-ark/hooks": "__ARK_VERSION__",

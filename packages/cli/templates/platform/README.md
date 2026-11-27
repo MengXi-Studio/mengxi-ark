@@ -19,6 +19,22 @@ pnpm dev
 | 全局上下文 | `context` 经 `MX_RUNTIME_CONTEXT_KEY` 下发，biz-components 自动探测复用         |
 | 生命周期   | `onAppInit` / `onBeforeRouteChange` / `onSessionExpired` 钩子扩展，不 fork 源码 |
 
+## 内置 Layout 配置速览
+
+全部在 `createArkRuntime(options)` 中配置（见 `src/main.ts`），均可选、不传行为不变：
+
+| 配置项           | 说明                                                                             |
+| ---------------- | -------------------------------------------------------------------------------- |
+| `logo`           | 图片地址或图标组件；不传降级为 appName 首字方块                                  |
+| `userMenu`       | 声明式用户下拉菜单（保留内置头像）；整体替换用户区传 `user` 自定义组件           |
+| `headerActions`  | header 右侧操作区组件（消息铃铛 / 全屏等）                                       |
+| `tabContextMenu` | 页签右键菜单：内置 刷新 / 关闭左侧 / 右侧 / 其他（自动禁用），`items` 追加自定义 |
+| `collapsible`    | 侧栏折叠条（默认 true，传 false 隐藏并禁用收起）                                 |
+| `homeTab`        | 首页页签（不可关闭常驻）                                                         |
+
+页签规则：路由导航自动建签（key = 路由 fullPath 去重）；标题回退 `options.title → meta.title → fullPath`；
+`tabService.open` 三种策略：`tab`（新页签，默认）/ `current`（当前页签原地更新）/ `dialog`（弹窗承载业务组件）。
+
 ## 模块开发
 
 在 `src/modules/` 中声明 `ModuleDefinition`（routes / menus / permissions / lifecycle），

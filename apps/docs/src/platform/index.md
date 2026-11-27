@@ -19,11 +19,14 @@ runtime 依赖 `vue` / `vue-router`（peerDependencies）；内置工作台 Layo
 
 ```ts
 import { createApp } from 'vue'
+import { CloudFilled, LogoutOutlined, UserOutlined } from '@ant-design/icons-vue'
+import { message } from 'ant-design-vue'
 import { createArkRuntime } from '@mengxi-ark/runtime'
 import '@mengxi-ark/theme'
 import '@mengxi-ark/runtime/style.css'
 import '@mengxi-ark/components/style.css'
 import '@mengxi-ark/biz-components/style.css'
+import 'ant-design-vue/dist/reset.css'
 import App from './App.vue'
 import { router } from './router'
 import { systemModule } from './modules/system'
@@ -31,6 +34,20 @@ import { bizModule } from './modules/biz'
 
 const runtime = createArkRuntime({
 	router, // 必传：Tab 工作台与路由守卫基于该 router
+	// 品牌 logo：图标组件（也可传图片地址字符串；不传则降级为 appName 首字方块）
+	logo: CloudFilled,
+	// 声明式用户菜单：保留内置头像 + 用户名，点击弹出下拉
+	// （需整体替换用户区时传 user: 自定义组件，传后 userMenu 忽略）
+	userMenu: {
+		items: [
+			{ key: 'profile', label: '个人中心', icon: UserOutlined },
+			{ key: 'logout', label: '退出登录', icon: LogoutOutlined, divided: true }
+		],
+		onClick: key => {
+			if (key === 'profile') message.info('跳转个人中心')
+			if (key === 'logout') message.info('调用登出逻辑')
+		}
+	},
 	context: {
 		// 全局上下文（下发给 biz-components 探测）
 		appName: '曦舟中台',
@@ -105,9 +122,84 @@ runtime.tabService.open({
 })
 runtime.tabService.activate(key) // 激活并跳转
 runtime.tabService.close(key) // 关闭（首页页签 closable false 不可关闭）
+runtime.tabService.closeLeft(key) // 关闭左侧可关闭页签
+runtime.tabService.closeRight(key) // 关闭右侧可关闭页签
+runtime.tabService.closeOther(key) // 关闭其他可关闭页签
+runtime.tabService.refresh(key) // 刷新页签（非激活页签先激活再重挂载）
 ```
 
 内置 Layout 将 tabs / activeKey / dialogs 渲染为页签条与 MxDialog 弹窗容器；自定义 Layout 时消费同样的响应式状态即可。
+
+## 页签规则
+
+| 规则     | 说明                                                                         |
+| -------- | ---------------------------------------------------------------------------- |
+| 自动建签 | 路由导航自动创建页签，key = 路由 `fullPath`（同 fullPath 幂等合并，不会重复） |
+| 标题回退 | `open` 的 `options.title` → 路由 `meta.title` → `fullPath`                    |
+| 首页页签 | `homeTab` 配置的页签 `closable: false` 常驻，不可关闭                         |
+| 关闭激活 | 关闭激活页签后优先激活左侧相邻页签，其次右侧                                  |
+| 打开策略 | `openMode: 'tab'`（新页签，默认）/ `'current'`（当前页签原地更新）/ `'dialog'`（弹窗） |
+
+## 页签右键菜单
+
+页签右键默认弹出**内置菜单**：刷新 / 关闭左侧 / 关闭右侧 / 关闭其他——禁用状态自动计算（目标页签不可关闭、或对应侧没有可关闭页签时置灰）。刷新通过重挂载页面实现（激活目标页签后触发 router-view 重建）。
+
+自定义：`tabContextMenu` 配置内置项开关、追加自定义项与点击回调（示例对应 demo-platform）：
+
+```ts
+createArkRuntime({
+	router,
+	tabContextMenu: {
+		builtin: true, // 默认含内置项；传 false 仅渲染自定义项
+		items: [
+			// 追加的自定义项渲染在内置项之后（自动加分隔线）
+			{ key: 'pin', label: '固定页签' },
+			{ key: 'copy-path', label: '复制路径', disabled: false }
+		],
+		onClick: (itemKey, tabKey) => {
+			// 仅自定义项触发该回调；内置项由 Layout 直接调 tabService
+			if (itemKey === 'pin') console.log('固定页签：', tabKey)
+		}
+	}
+})
+```
+
+需要完全自定义菜单 UI 时，可传 `options.layout` 整体替换 Layout，或消费 `runtime.tabService` 的 closeLeft / closeRight / closeOther / refresh 自行实现。
+
+## 内置 Layout 品牌配置
+
+内置工作台 Layout（侧栏菜单 + header 用户区 + 页签条）的全部品牌项在 `createArkRuntime(options)` 中配置，**全部可选，不传行为不变**：
+
+| 配置项           | 类型                                | 说明                                                                        |
+| ---------------- | ----------------------------------- | --------------------------------------------------------------------------- |
+| `logo`           | `string \| Component`               | 图片地址渲染 `<img>`，或自定义组件；不传降级为 appName 首字方块             |
+| `headerActions`  | `Component`                         | header 右侧操作区（消息铃铛 / 全屏等，渲染在用户区左侧）                    |
+| `user`           | `Component`                         | 整体替换用户区（如自定义头像 + 下拉）；传后 `userMenu` 忽略                 |
+| `userMenu`       | `{ items, onClick? }`               | 声明式用户菜单：保留内置头像 + 用户名，点击弹下拉；项含 `key / label / icon? / divided?` |
+| `tabContextMenu` | `TabContextMenuConfig`              | 页签右键菜单配置（见上节）                                                  |
+| `collapsible`    | `boolean`                           | 侧栏折叠条，默认 `true`；传 `false` 隐藏折叠条并禁用收起                    |
+| `layout`         | `Component`                         | 整体替换内置 Layout（替换后本表其余配置不再生效）                           |
+
+`headerActions` / `user` 为自定义组件示例（消息铃铛 + 整体替换用户区）：
+
+```vue
+<!-- src/layout/MyHeaderActions.vue：渲染在 header 右侧、用户区左侧 -->
+<template>
+	<button class="bell" type="button" @click="visible = !visible">铃铛</button>
+</template>
+```
+
+```ts
+import MyHeaderActions from './layout/MyHeaderActions.vue'
+import MyUser from './layout/MyUser.vue'
+
+createArkRuntime({
+	router,
+	context: { /* ... */ },
+	headerActions: MyHeaderActions,
+	user: MyUser // 传后内置头像被替换，userMenu 不再生效
+})
+```
 
 ## 五个 service
 

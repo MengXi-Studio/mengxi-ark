@@ -181,3 +181,76 @@ describe('tabService', () => {
 		expect(service.activeKey.value).toBe('/')
 	})
 })
+
+describe('tabService 批量关闭与刷新', () => {
+	beforeEach(() => {
+		vi.spyOn(console, 'warn').mockImplementation(() => undefined)
+	})
+	afterEach(() => {
+		vi.restoreAllMocks()
+	})
+
+	/** 准备 homeTab(/) + /a /b /c 三个页签，当前激活 /b */
+	async function setup() {
+		const router = createTestRouter()
+		const service = createTabService(router, { homeTab: { route: '/', title: '首页' } })
+		await router.push('/')
+		service.open('/a')
+		await flushNavigation()
+		service.open('/b')
+		await flushNavigation()
+		service.open('/c')
+		await flushNavigation()
+		return { router, service }
+	}
+
+	it('closeLeft：保留目标及右侧，关闭左侧可关闭页签', async () => {
+		const { service } = await setup()
+		service.closeLeft('/b')
+		expect(service.tabs.value.map(t => t.key)).toEqual(['/', '/b', '/c'])
+		// 激活页签 /c 未被关闭，保持激活
+		expect(service.activeKey.value).toBe('/c')
+	})
+
+	it('closeRight：保留目标及左侧，激活页签被关时回退锚点', async () => {
+		const { service } = await setup()
+		service.closeRight('/b')
+		expect(service.tabs.value.map(t => t.key)).toEqual(['/', '/a', '/b'])
+		expect(service.activeKey.value).toBe('/b')
+	})
+
+	it('closeOther：仅保留不可关闭页签与目标，激活被关时回退目标', async () => {
+		const { service } = await setup()
+		service.activate('/a')
+		await flushNavigation()
+		service.closeOther('/b')
+		expect(service.tabs.value.map(t => t.key)).toEqual(['/', '/b'])
+		expect(service.activeKey.value).toBe('/b')
+	})
+
+	it('closeMany 边界：目标不存在 / 首尾页签时为无操作', async () => {
+		const { service } = await setup()
+		service.closeLeft('/nonexistent')
+		service.closeLeft(service.tabs.value[0].key)
+		service.closeRight(service.tabs.value[service.tabs.value.length - 1].key)
+		expect(service.tabs.value.map(t => t.key)).toEqual(['/', '/a', '/b', '/c'])
+	})
+
+	it('refresh：递增 refreshTick，非激活页签先激活', async () => {
+		const { router, service } = await setup()
+		expect(service.refreshTick.value).toBe(0)
+		service.refresh('/a')
+		await flushNavigation()
+		expect(service.activeKey.value).toBe('/a')
+		expect(service.refreshTick.value).toBe(1)
+		service.refresh('/a')
+		expect(service.refreshTick.value).toBe(2)
+		expect(router.currentRoute.value.fullPath).toBe('/a')
+	})
+
+	it('refresh：不存在的页签为无操作', async () => {
+		const { service } = await setup()
+		service.refresh('/nonexistent')
+		expect(service.refreshTick.value).toBe(0)
+	})
+})

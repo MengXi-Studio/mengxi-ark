@@ -21,6 +21,8 @@
 	--mx-color-text-primary: #{color.$mx-text-primary};
 	--mx-color-text-secondary: #{color.$mx-text-secondary};
 	--mx-color-text-disabled: #{color.$mx-text-disabled};
+	// 反白文字：primary / 功能色底上的文字（logo 标记、头像等）
+	--mx-color-text-inverse: #{color.$mx-text-inverse};
 
 	// —— 背景色 ——
 	--mx-color-bg-container: #{color.$mx-bg-container};

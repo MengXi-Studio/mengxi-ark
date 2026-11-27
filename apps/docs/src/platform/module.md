@@ -40,6 +40,20 @@ export const systemModule: ModuleDefinition = {
 }
 ```
 
+## 菜单项字段（MenuItem）
+
+| 字段       | 类型        | 说明                                                                 |
+| ---------- | ----------- | -------------------------------------------------------------------- |
+| `key`      | `string`    | 必填，唯一标识（同 key 覆盖；`parentKey` 嵌套时也用它寻址）          |
+| `title`    | `string`    | 必填，菜单文案                                                       |
+| `path`     | `string`    | 叶子菜单点击跳转的路由路径（点击经 `tabService.open` 打开页签）      |
+| `icon`     | `Component` | 菜单图标组件（如 `@ant-design/icons-vue` 的图标）                    |
+| `children` | `MenuItem[]`| 子菜单（有 children 时按分组节点渲染）                               |
+
+> 路由 `meta.title` 与页签标题联动：页签标题回退链为 `options.title → meta.title → fullPath`，
+> 给每条路由配好 `meta.title` 即可让页签显示业务标题（见[页签规则](/platform/#页签规则)）。
+
+
 ## 注册时机
 
 - **安装时**：`createArkRuntime({ modules: [...] })`，模块路由在首次导航前完成注册；

@@ -32,6 +32,13 @@ pnpm create mengxi-ark
 
 > 模板内框架包版本与 cli 自身版本绑定对齐（`__ARK_VERSION__` 注入），保证生成工程各 `@mengxi-ark/*` 版本一致。
 
+## 仓库内开发模板
+
+`templates/*` 是随包发布的静态脚手架目录（含 `__PROJECT_NAME__` / `__ARK_VERSION__` 占位符，不是 workspace 包），
+目录内没有 `node_modules`。为了让 IDE 能解析模板源码的 `vue` / `vite` / `@mengxi-ark/*` 等依赖，
+仓库根 `package.json` 的 `devDependencies` 声明了模板所需的这些包（根为 private，不参与发布与 changesets）。
+清理根依赖时请勿删除它们，否则模板目录会重新出现「找不到模块」的 TS 报错；生成工程由 `pnpm install` 自行安装，不受影响。
+
 ## 文档
 
 - 完整文档：<https://mengxi-studio.github.io/mengxi-ark/>

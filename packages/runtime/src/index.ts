@@ -10,7 +10,7 @@
  */
 import type { App } from 'vue'
 import ArkWorkbenchLayout from './layout'
-import { ARK_LAYOUT_COMPONENT_NAME, ARK_RUNTIME_KEY } from './key'
+import { ARK_LAYOUT_COMPONENT_NAME, ARK_LAYOUT_OPTIONS_KEY, ARK_RUNTIME_KEY } from './key'
 import { createContextService } from './services/contextService'
 import { createMenuService } from './services/menuService'
 import { createModuleRegistry } from './services/moduleRegistryService'
@@ -18,7 +18,7 @@ import { createSessionService } from './services/sessionService'
 import { createTabService } from './services/tabService'
 import type { AppInitHook, ArkRuntime, ArkRuntimeOptions, BeforeRouteHook, ModuleDefinition, SessionExpiredHook } from './types'
 
-export { ARK_LAYOUT_COMPONENT_NAME, ARK_RUNTIME_KEY }
+export { ARK_LAYOUT_COMPONENT_NAME, ARK_LAYOUT_OPTIONS_KEY, ARK_RUNTIME_KEY }
 
 // —— services（纯逻辑，可独立组合使用） ——
 export { createModuleRegistry } from './services/moduleRegistryService'
@@ -32,6 +32,7 @@ export { ArkWorkbenchLayout } from './layout'
 
 export type {
 	AppInitHook,
+	ArkLayoutOptions,
 	ArkRuntime,
 	ArkRuntimeOptions,
 	BeforeRouteHook,
@@ -46,12 +47,15 @@ export type {
 	RuntimeContext,
 	SessionExpiredHook,
 	SessionService,
+	TabContextMenuItem,
+	TabContextMenuConfig,
 	TabItem,
 	TabOpenMode,
 	TabOpenOptions,
 	TabService,
 	TokenGetter,
-	TokenRefreshOptions
+	TokenRefreshOptions,
+	UserMenuItem
 } from './types'
 
 /** 包版本常量（M0 包壳遗留，保持兼容） */
@@ -64,7 +68,7 @@ export const MENGXI_ARK_VERSION = '0.0.0'
  * biz-components 组件 inject 探测命中即复用基座值集缓存 / 用户信息 / 权限，
  * 缺失字段自动回退同名 props（独立模式），无需业务显式切换。
  *
- * @param options 路由 / 上下文 / 初始模块 / 自定义 Layout / 首页页签 / 会话过期钩子
+ * @param options 路由 / 上下文 / 初始模块 / 自定义 Layout / 品牌（logo、headerActions）/ 首页页签 / 会话过期钩子
  * @returns ArkRuntime 实例（app.use(runtime) 装配；runtime.registerModule 延迟注册模块）
  *
  * @example
@@ -74,6 +78,7 @@ export const MENGXI_ARK_VERSION = '0.0.0'
  */
 export function createArkRuntime(options: ArkRuntimeOptions): ArkRuntime {
 	const { router, context, modules = [], layout } = options
+	const layoutOptions = { logo: options.logo, headerActions: options.headerActions, user: options.user, userMenu: options.userMenu, tabContextMenu: options.tabContextMenu, collapsible: options.collapsible }
 	const registry = createModuleRegistry()
 	const menuService = createMenuService()
 	const sessionService = createSessionService()
@@ -150,7 +155,8 @@ export function createArkRuntime(options: ArkRuntimeOptions): ArkRuntime {
 			contextService.provide(app)
 			// ② runtime 句柄下发（Layout inject 获取 tabService / menuService）
 			app.provide(ARK_RUNTIME_KEY, runtime)
-			// ③ 挂载工作台 Layout（可替换：options.layout 覆盖内置实现）
+			// ③ 挂载工作台 Layout（可替换：options.layout 覆盖内置实现），品牌配置经 ARK_LAYOUT_OPTIONS_KEY 下发
+			app.provide(ARK_LAYOUT_OPTIONS_KEY, layoutOptions)
 			app.component(ARK_LAYOUT_COMPONENT_NAME, layout ?? ArkWorkbenchLayout)
 			// ④ 路由守卫包装
 			ensureGuard()

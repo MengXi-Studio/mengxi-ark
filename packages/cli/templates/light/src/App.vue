@@ -5,6 +5,7 @@
  */
 import { ref } from 'vue'
 import { formatMoney } from '@mengxi-ark/utils'
+import { useRequest } from '@mengxi-ark/hooks'
 import { EnhanceTable, StatusTag } from '@mengxi-ark/components'
 import type { StatusTagMapping } from '@mengxi-ark/components'
 import { Lov } from '@mengxi-ark/biz-components'
@@ -29,6 +30,15 @@ const rows = [
 	{ id: 1, name: '用户一', amount: formatMoney(12345.6), status: '1' },
 	{ id: 2, name: '用户二', amount: formatMoney(889), status: '0' }
 ]
+
+// useRequest：请求 / loading / 错误 / 竞态保护 / retry 重试（默认创建即发起请求）
+function fetchUser(): Promise<{ name: string }> {
+	return new Promise(resolve => {
+		setTimeout(() => resolve({ name: '曦舟' }), 500)
+	})
+}
+
+const { data, loading, error, retry } = useRequest(fetchUser)
 </script>
 
 <template>
@@ -42,6 +52,12 @@ const rows = [
 				<h3>Lov 静态值集（独立模式 props）</h3>
 				<Lov v-model="gender" :lov-options="GENDER_OPTIONS" style="width: 160px" />
 				<p>当前值：{{ JSON.stringify(gender) }}</p>
+			</section>
+			<section class="card">
+				<h3>useRequest（hooks：loading / error / retry）</h3>
+				<p v-if="loading">加载中…</p>
+				<p v-else-if="error">加载失败，<button class="card-btn" type="button" @click="retry">重试</button></p>
+				<p v-else-if="data">用户：{{ data.name }}</p>
 			</section>
 			<section class="card">
 				<h3>EnhanceTable + StatusTag + utils</h3>
@@ -101,5 +117,14 @@ body {
 	margin: 0 0 12px;
 	font-size: 14px;
 	color: var(--mx-color-text-primary);
+}
+
+.card-btn {
+	padding: 0 var(--mx-spacing-sm);
+	border: 1px solid var(--mx-color-border-base);
+	border-radius: var(--mx-radius-base);
+	color: var(--mx-color-primary);
+	background: var(--mx-color-bg-container);
+	cursor: pointer;
 }
 </style>
