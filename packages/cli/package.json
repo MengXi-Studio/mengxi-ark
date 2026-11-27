@@ -3,6 +3,11 @@
 	"version": "1.0.0-beta.0",
 	"description": "曦舟 MengXi Ark 脚手架：pnpm create mengxi-ark",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/MengXi-Studio/mengxi-ark.git",
+		"directory": "packages/cli"
+	},
 	"type": "module",
 	"bin": {
 		"create-mengxi-ark": "./bin/create-mengxi-ark.js"

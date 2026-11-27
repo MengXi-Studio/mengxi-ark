@@ -2,6 +2,11 @@
 	"name": "@mengxi-ark/hooks",
 	"version": "1.0.0-beta.0",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/MengXi-Studio/mengxi-ark.git",
+		"directory": "packages/hooks"
+	},
 	"type": "module",
 	"files": [
 		"dist"
