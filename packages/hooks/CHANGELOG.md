@@ -1,5 +1,11 @@
 # @mengxi-ark/hooks
 
+## 1.0.0-beta.1
+
+### Patch Changes
+
+- 4d48d24: 修复预发布包缺失构建产物：beta.0 发布时未执行构建，tarball 仅含 package.json 与 LICENSE；发布流程补充 pnpm build 后以 beta.1 重新发布完整产物
+
 ## 1.0.0-beta.0
 
 - v1.0.0-beta 公测首发（M0–M4 全量落地，npm dist-tag `beta`）。
